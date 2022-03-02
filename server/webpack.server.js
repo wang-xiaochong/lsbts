@@ -16,8 +16,8 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                // use: 'ts-loader', //隐藏掉报错
-                use: 'awesome-typescript-loader', // 明显提示错误是什么
+                use: 'ts-loader', //隐藏掉报错
+                // use: 'awesome-typescript-loader', // 明显提示错误是什么
                 exclude: /node_modules/,
             },
             {
@@ -28,9 +28,10 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.tx', '.tsx', 'js', 'jsx'],
+        extensions: ['.ts', '.tsx', 'js', 'jsx'],
         alias: {
-            '@':path.resolve(__dirname,'../web/src')
+            '@': path.resolve(__dirname, '../web/src'),
+            '~':path.resolve(__dirname,'./src')
         }
     }
 }
