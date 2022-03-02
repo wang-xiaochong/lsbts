@@ -3,12 +3,19 @@
 
 import Koa from 'koa'
 import Router from '@koa/router'
+// import main from '../componernts/main.js'
+
+import React from 'react'
+import ReactDomServer from 'react-dom/server'
+
+import App from '@/App'
 
 const app = new Koa()
 const router = new Router()
 
+// 服务端进行渲染
 router.get('/', async ctx => {
-    ctx.body = 'server'
+    ctx.body = ReactDomServer.renderToString(<App />)
 })
 
 app.use(router.routes())

@@ -2,7 +2,7 @@ const path = require('path')
 const webpackNodeExternals = require('webpack-node-externals')
 
 module.exports = {
-    entry: './src/server.ts',
+    entry: './src/server.tsx',
     output: {
         path: path.resolve(__dirname, 'build'),
         filename:'server.js'
@@ -16,9 +16,21 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use:['ts-loader']
+                // use: 'ts-loader', //隐藏掉报错
+                use: 'awesome-typescript-loader', // 明显提示错误是什么
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.(jpg|png|svg|gif|css)/,
+                use:'file-loader'
             }
         ]
-        
+    },
+
+    resolve: {
+        extensions: ['.tx', '.tsx', 'js', 'jsx'],
+        alias: {
+            '@':path.resolve(__dirname,'../web/src')
+        }
     }
 }

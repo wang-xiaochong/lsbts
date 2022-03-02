@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOMServer from 'react-dom/server'
 import logo from './logo.svg';
 import './App.css';
 
@@ -24,3 +25,8 @@ function App() {
 }
 
 export default App;
+
+// export function render() {
+//   return ReactDOMServer.renderToString(<App />)
+//   // return ReactDOMServer.renderToStaticMarkup(<App/>)
+// }

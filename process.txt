@@ -39,4 +39,7 @@ node+ts
     typescript
     koa koa-router
     webpack-node-externals
+    awesome-typescript-loader
+    file-loader
+    react react-dom
 
