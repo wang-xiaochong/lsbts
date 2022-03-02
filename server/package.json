@@ -11,9 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@koa/router": "^10.1.1",
+    "@types/koa": "^2.13.4",
+    "@types/koa__router": "^8.0.11",
+    "koa": "^2.13.4",
     "ts-loader": "^9.2.7",
     "typescript": "^4.6.2",
     "webpack": "^5.69.1",
-    "webpack-cli": "^4.9.2"
+    "webpack-cli": "^4.9.2",
+    "webpack-node-externals": "^3.0.0"
   }
 }

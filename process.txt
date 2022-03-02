@@ -1,13 +1,19 @@
 
 --------------------------------------------------------------------------
-1.新建web项目
+1.web项目
 create-react-app web --template=typescript
 
 --------------------------------------------------------------------------
-2.server项目初始化
+2.server项目
      npm init -y
      npm install -g typescript
+     tsc init -y
+     yarn add @types/xxx
 
+
+--------------------------------------------------------------------------
+node不认识typescript  ==> ts->js
+ts不认识node库 ==> webpack-node-externals
 
 --------------------------------------------------------------------------
 web
@@ -31,4 +37,6 @@ node+ts
     webpack webpack-cli
     ts-loader
     typescript
+    koa koa-router
+    webpack-node-externals
 
