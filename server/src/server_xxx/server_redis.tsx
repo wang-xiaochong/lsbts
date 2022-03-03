@@ -1,5 +1,5 @@
 
-import app from './libs/server'
+import app from '~/libs/server'
 
 // 使用
 import * as redis from '~/libs/redis'

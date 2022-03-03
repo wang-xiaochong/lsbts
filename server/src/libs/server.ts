@@ -6,7 +6,7 @@ import {port} from '~/config/server'
 
 const app = new Koa();
 app.listen(port, () => {
-    console.log('server start at localhost:7001');
+    console.log(`server start at localhost:${port}`);
 })
 
 export default app
