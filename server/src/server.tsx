@@ -1,20 +1,7 @@
-
 import app from './libs/server'
-import * as redis from '~/libs/redis'
-
-(async () => {
-    redis.set('name', '456')
-})();
-
-(async () => {
-    let a = await redis.get('name')
-    console.log(a)
-})();
-
+import { getAllBanner } from '~/models/banner'
 
 app.use(async ctx => {
-    // let [rows] = await db.query('SELECT * FROM banner_table');
-    ctx.body = "rows";
+    let banners = await getAllBanner();
+    ctx.body = banners
 })
-
-
