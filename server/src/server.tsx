@@ -1,10 +1,20 @@
 
 import app from './libs/server'
-import db from './libs/database'
+import * as redis from '~/libs/redis'
+
+(async () => {
+    redis.set('name', '456')
+})();
+
+(async () => {
+    let a = await redis.get('name')
+    console.log(a)
+})();
+
 
 app.use(async ctx => {
-    let [rows] = await db.query('SELECT * FROM banner_table');
-    ctx.body = rows;
+    // let [rows] = await db.query('SELECT * FROM banner_table');
+    ctx.body = "rows";
 })
 
 

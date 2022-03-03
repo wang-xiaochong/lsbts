@@ -24,11 +24,15 @@ server
     
     热更新
 
-
-
-
     依赖项
     mysql2
     npm-run-all
     nodemon
+
+    redis
+
+    依赖项
+    redis@3.0.2
+    @types/redis@2.8.28
+
 
