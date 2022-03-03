@@ -1,11 +1,10 @@
 import Router from '@koa/router'
-import * as API from '~/routers/api/api'
-import *as Render from '~/routers/render/render'
+import APIRouters from '~/routers/api/api'
+import RenderRouters from '~/routers/render/render'
 
 const router = new Router();
 
-API.init(router);
-Render.init(router);
-
+router.use(APIRouters)
+router.use(RenderRouters)
 
 export default router.routes();

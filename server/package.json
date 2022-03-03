@@ -9,7 +9,7 @@
     "dev:server": "webpack --config webpack.server.js --mode=development",
     "watch:server": "webpack --config webpack.server.js --mode=development -w",
     "start:server": "nodemon build/server.js",
-    "start": "npm-run-all --parallel watch:server start:server"
+    "start": "npm run dev:server & npm-run-all --parallel watch:server start:server"
   },
   "keywords": [],
   "author": "",

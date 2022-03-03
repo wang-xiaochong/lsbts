@@ -15,8 +15,13 @@ server：
     koa-static @types/koa-static
     css-loader
     style-loader
-    
+
 ----------------------------------------
 server:
     API
+
+web:
+
+    依赖项：
+    axios
 
