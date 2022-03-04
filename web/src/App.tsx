@@ -1,20 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // import ReactDOMServer from 'react-dom/server'
 // import logo from './logo.svg';
 import './App.css';
-import axios from 'axios'
+import { getAllBanners } from './models/banner'
+import { BannerData } from 'models/banner'
 
 function App() {
-  axios('http://localhost:7001/api/getusers', {
-    headers:{a:12}
-  }).then(res => {
-    console.log(res)
-  })
+
+  const [banners, setBanners] = useState<BannerData[]>([]);
+  useEffect(() => {
+    (async () => {
+      let banners = await getAllBanners()
+      setBanners(banners)
+    })();
+  }, [])
+  console.log(banners)
+
 
 
   return (
     <div>
-      aaa
+      {/* aaa */}
+      <ul>
+        {banners.map(banner =>
+          <li key={banner.ID}>{banner.href}</li>
+        )}
+      </ul>
     </div>
     // <div className="App">
     //   <header className="App-header">

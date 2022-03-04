@@ -40,5 +40,10 @@ server
 models
     数据规范化-模型建模
 
+    web
+    依赖项 
+    craco
+    craco-alias
+
 
 
