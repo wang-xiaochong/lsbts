@@ -1,9 +1,17 @@
 import React from 'react';
-import ReactDOMServer from 'react-dom/server'
-import logo from './logo.svg';
+// import ReactDOMServer from 'react-dom/server'
+// import logo from './logo.svg';
 import './App.css';
+import axios from 'axios'
 
 function App() {
+  axios('http://localhost:7001/api/getusers', {
+    headers:{a:12}
+  }).then(res => {
+    console.log(res)
+  })
+
+
   return (
     <div>
       aaa
