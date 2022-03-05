@@ -6,7 +6,11 @@ import { promisify } from 'util'
 let client = redis.createClient(redisConf)
 
 export const get = promisify(client.get).bind(client);
-export const set =  promisify(client.set).bind(client);
+export const set = promisify(client.set).bind(client);
+
+
+//KEYS
+export const KEY_APP_CATEGORY_CACHE = 'KEY_APP_CATEGORY_CACHE'
 
 
 // 回调取值 服务器为异步 所以需要更改
