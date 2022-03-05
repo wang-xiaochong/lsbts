@@ -1,14 +1,46 @@
 export default function Category() {
     const categories = [
+        // category
+            // ID number
+            // title string
+            // items? category[]
+            // children? category[]
         {
-            title: 'IT互联网', sublist: ['前端开发', 'Java', '产品策划'], children: [
-                { title: '前沿技术', children: ['云计算', '云原生', '区块链'] },
-                { title: '前沿技术', children: ['云计算', '云原生', '区块链'] }
+            ID: 1, title: 'IT互联网', items: [
+                { ID: 1, title: '前端开发' },
+                { ID: 2, title: 'Java' },
+                { ID: 3, title: '产品策划' },
+            ],
+            children: [
+                {
+                    ID: 2, title: '前沿技术', items: [
+                        { ID: 4, title: '云计算' },
+                        { ID: 5, title: '云原生' },
+                        { ID: 6, title: '区块链' },
+                    ]
+                },
+                {
+                    ID: 3, title: '互联网产品', items: [
+                        { ID: 7, title: '云计算' },
+                        { ID: 8, title: '云原生' },
+                    ]
+                }
             ]
         },
         {
-            title: 'IT互联网', sublist: ['前端开发', 'Java', '产品策划'], children: [
-                { title: '前沿技术', children: ['云计算', '云原生', '区块链', '物联网'] }
+            ID: 4, title: '设计创作', items: [
+                { ID: 9, title: '平面设计' },
+                { ID: 10, title: '室内设计' },
+                { ID: 11, title: '绘画创作' },
+            ],
+            children: [
+                {
+                    ID: 5, title: '环境艺术设计', items: [
+                        { ID: 12, title: '建筑设计' },
+                        { ID: 13, title: '景观设计' },
+                        { ID: 14, title: '其他' },
+                    ]
+                }
             ]
         }
     ];
@@ -29,8 +61,8 @@ export default function Category() {
                                 <div className="title">{category.title}</div>
                                 <div className="sub-title">
                                     <ul>
-                                        {category.sublist.map(item => (
-                                            <li>{item}</li>
+                                        {category.items.map(item => (
+                                            <li>{item.title}</li>
                                         ))}
                                     </ul>
                                 </div>
@@ -44,14 +76,13 @@ export default function Category() {
                                             </div>
                                             <div className="list">
                                                 <ul>
-                                                    {item.children.map(item => (
-                                                        <li>{item}</li>
+                                                    {item.items.map(item => (
+                                                        <li>{item.title}</li>
                                                     ))}
                                                 </ul>
                                             </div>
                                         </li>
                                     ))}
-
                                 </ul>
                             </div>
                         </li>
