@@ -1,4 +1,5 @@
 const CracoAlias = require('craco-alias');
+const CracoLess = require('craco-less')
 const path = require('path')
 module.exports = {
     plugins: [
@@ -11,6 +12,9 @@ module.exports = {
                     
                 }
             }
+        },
+        {
+            plugin:CracoLess,
         }
     ]
 }

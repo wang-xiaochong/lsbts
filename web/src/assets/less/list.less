@@ -1,0 +1,197 @@
+.main-container {
+  overflow:hidden;
+  margin-top:20px;
+
+  .left {float:left;width:928px;}
+  .right {float:right;width:240px;}
+}
+
+.search-info {
+  margin-bottom:20px;
+  overflow: hidden;
+
+  .keyword {
+    float:left;
+    height:25px;
+    line-height:25px;
+
+    padding-left:8px;
+    padding-right:26px;
+
+    border:1px dotted #e85308;
+    position: relative;
+
+    .icon {
+      width:14px;height:14px;
+      position: absolute;
+      right:6px;top:6px;
+      cursor: pointer;
+    }
+  }
+  .bold {color:#e85308; padding:0 4px;}
+  .info {
+    float:left;
+    margin-left:20px;
+
+  }
+}
+.course-category {
+  height:54px;
+  border-top:1px solid #ddd;
+  border-bottom:1px solid #ddd;
+  margin-bottom:-1px;
+
+  .title, .options, li {float:left;}
+
+  .title {color:#949494;width:93px;height:52px;line-height:52px;}
+  .options {
+    li {
+      float:left;
+      margin-left:9px;
+      padding-left:10px;
+      padding-left:19px;
+      height:52px;line-height:52px;
+    }
+    .active {color:#23b8ff;}
+  }
+}
+
+.footpoint {
+  margin-bottom: 20px;
+  a {
+    font-size:14px;
+  }
+  span {
+    padding:0 4px;
+    .icon {width:14px;height:14px;}
+  }
+}
+
+.course-filter {
+  margin-top:21px;
+  height:90px;
+  width:926px;
+  border:1px solid #efefef;
+  margin-bottom:20px;
+
+  .filter {
+    width:926px;
+    height:50px;
+    padding:10px 15px;
+    background:#f7f7f7;
+
+    .group {
+      float:left;
+      height:30px;line-height:30px;
+      padding:0 4px;
+    }
+    .split {float:left;color:#ddd;height:30px;line-height:30px;}
+
+    .radio {
+      overflow: hidden;
+      .btn {
+        float:left;
+        padding:0 15px;
+        height:30px;line-height:30px;
+        cursor: pointer;
+      }
+      .btn:hover {color:#23b8ff;}
+      .active {background:#23b8ff;color:#FFF}
+      .active:hover {color:#FFF;}
+    }
+    .check {
+      label {padding:0 6px;}
+      input {margin-right:4px;}
+    }
+  }
+  .order {
+    overflow:hidden;
+    height:40px;
+    padding:10px 15px;
+
+    .btn {
+      float:left;
+      padding-right:15px;
+      cursor: pointer;
+
+      .icon {
+        width:12px;height:12px;
+        position: relative;
+      }
+    }
+    .btn:hover {color:#23b8ff;}
+
+    .active {
+      color:#23b8ff;
+    }
+  }
+}
+
+.pagination {
+  text-align:center;
+  height:40px;
+  margin:20px 0;
+
+  span {
+    display:inline-block;
+    width:80px;height:40px;
+    border:1px solid #d9d9d9;
+    margin:0 4px;
+
+    font-size:16px;
+    cursor: pointer;
+
+    text-align:center;
+    line-height:40px;
+  }
+  span:hover {background:#f1f1f1;}
+
+  .disabled {
+    cursor:default;
+    background-color:#e3e3e3!important;
+    color:#bcbcbc;
+  }
+  .active {
+    cursor:default;
+    background-color:#23b8ff!important;
+    color:#FFF;
+  }
+}
+
+.ad-aside {
+  background:#f7f8f9;
+  padding:10px 0;
+
+  .cap {
+    font-size:16px;
+    height:36px;
+    line-height:32px;
+    border-bottom:1px solid #dfdee0;
+    margin:0 10px;
+  }
+
+  .list {
+    .item {
+      margin-top:20px;
+      padding:7px 7px 9px 9px;
+
+      .cover {
+        width:224px;height:126px;
+        img {width:100%;height:100%;}
+      }
+      .title {
+        margin-top:6px;
+        height:40px;
+        line-height:20px;
+        overflow: hidden;
+      }
+      .info {
+        margin-top:8px;
+        overflow: hidden;
+
+        .price {float:left;color:#e85308;}
+        .author {float:right;color:#999;font-size:12px;}
+      }
+    }
+  }
+}

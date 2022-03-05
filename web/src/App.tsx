@@ -2,31 +2,38 @@ import React, { useState, useEffect } from 'react';
 // import ReactDOMServer from 'react-dom/server'
 // import logo from './logo.svg';
 import './App.css';
-import { getAllBanners } from './models/banner'
-import { BannerData } from 'models/banner'
+// import { getAllBanners } from './models/banner'
+// import { BannerData } from 'models/banner'
+
+import Login from './commponents/login'
 
 function App() {
 
-  const [banners, setBanners] = useState<BannerData[]>([]);
-  useEffect(() => {
-    (async () => {
-      let banners = await getAllBanners()
-      setBanners(banners)
-    })();
-  }, [])
-  console.log(banners)
-
-
+  // const [banners, setBanners] = useState<BannerData[]>([]);
+  // useEffect(() => {
+  //   (async () => {
+  //     let banners = await getAllBanners()
+  //     setBanners(banners)
+  //   })();
+  // }, [])
+  // console.log(banners)
 
   return (
     <div>
-      {/* aaa */}
-      <ul>
-        {banners.map(banner =>
-          <li key={banner.ID}>{banner.href}</li>
-        )}
-      </ul>
+      <Login />
     </div>
+
+
+
+    // <div>
+    //   {/* aaa */}
+    //   <ul>
+    //     {banners.map(banner =>
+    //       <li key={banner.ID}>{banner.href}</li>
+    //     )}
+    //   </ul>
+    // </div>
+
     // <div className="App">
     //   <header className="App-header">
     //     <img src={logo} className="App-logo" alt="logo" />
