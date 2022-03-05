@@ -15,7 +15,8 @@ const router = new Router()
 
 // 服务端进行渲染
 router.get('/', async ctx => {
-    ctx.body = ReactDomServer.renderToString(<App />)
+    // ctx.body = ReactDomServer.renderToString(<App />)
+    ctx.body = 'server_react'
 })
 
 app.use(router.routes())

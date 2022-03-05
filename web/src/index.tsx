@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import '@/assets/less/base.less'
 import '@/assets/less/common.less'
+import { CategoryData } from 'models/category';
+import { isDev } from '@/config/app'
 
 // ReactDOM.render(
 //   <React.StrictMode>
@@ -13,8 +15,11 @@ import '@/assets/less/common.less'
 //   document.getElementById('root')
 // );
 
-ReactDOM.render(
-    <App />,
+let render = isDev ? ReactDOM.render : ReactDOM.hydrate
+let categories: CategoryData[] = (window as any).categories
+// console.log(categories)
+render(
+  <App categories={categories} />,
   document.getElementById('root')
 );
 

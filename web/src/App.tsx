@@ -8,8 +8,13 @@ import './App.css';
 
 // import Login from './commponents/login'
 import Header from '@/commponents/header/header'
+import { CategoryData } from 'models/category';
 
-function App() {
+interface Props {
+  categories: CategoryData[]
+}
+
+function App(props: Props) {
 
   // const [banners, setBanners] = useState<BannerData[]>([]);
   // useEffect(() => {
@@ -23,7 +28,7 @@ function App() {
   return (
     <div>
       {/* <Login /> */}
-      <Header />
+      <Header categories={props.categories} />
     </div>
 
 

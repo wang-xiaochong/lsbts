@@ -1,15 +1,20 @@
+import { CategoryData } from 'models/category';
 import React from 'react';
 import Category from './category'
 import Searchbar from './searchbar'
 import User from './user'
 
-export default function Header() {
+interface Props {
+  categories: CategoryData[]
+}
+
+export default function Header(props: Props) {
   return (
     <div className="g-header">
       <div className="page">
         <div className="left">
           <Logo />
-          <Category />
+          <Category categories={props.categories} />
           <Searchbar />
         </div>
         <div className="right">
