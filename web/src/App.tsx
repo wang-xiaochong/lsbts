@@ -6,6 +6,7 @@ import './App.css';
 // import { BannerData } from 'models/banner'
 
 import Login from './commponents/login'
+import Header from './commponents/header'
 
 function App() {
 
@@ -20,7 +21,8 @@ function App() {
 
   return (
     <div>
-      <Login />
+      {/* <Login /> */}
+      <Header />
     </div>
 
 
