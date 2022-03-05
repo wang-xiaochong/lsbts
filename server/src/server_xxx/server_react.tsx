@@ -8,7 +8,7 @@ import Router from '@koa/router'
 import React from 'react'
 import ReactDomServer from 'react-dom/server'
 
-import App from '@/App'
+import App from '@/views/Home'
 
 const app = new Koa()
 const router = new Router()

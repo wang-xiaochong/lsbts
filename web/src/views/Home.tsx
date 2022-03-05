@@ -1,21 +1,23 @@
 import React from 'react';
 // import { useState, useEffect } from 'react'
 // import ReactDOMServer from 'react-dom/server'
-// import logo from './logo.svg';
-import './App.css';
-// import { getAllBanners } from './models/banner'
+// import logo from '../logo.svg';
+import '../App.css';
+// import { getAllBanners } from '../models/banner'
 // import { BannerData } from 'models/banner'
 
-// import Login from './commponents/login'
+// import Login from '../commponents/login'
 import Header from '@/commponents/header/header'
 import { CategoryData } from 'models/category';
+import { setAppData, AppData } from 'models/app';
 
 interface Props {
-  categories: CategoryData[]
+  // categories: CategoryData[]
+  appData?: AppData
 }
 
 function App(props: Props) {
-
+  props.appData && setAppData(props.appData);
   // const [banners, setBanners] = useState<BannerData[]>([]);
   // useEffect(() => {
   //   (async () => {
@@ -28,7 +30,8 @@ function App(props: Props) {
   return (
     <div>
       {/* <Login /> */}
-      <Header categories={props.categories} />
+      {/* <Header categories={props.categories} /> */}
+      <Header />
     </div>
 
 

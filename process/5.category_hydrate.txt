@@ -12,6 +12,6 @@ category数据渲染思路：
 
 
 
-
+    appData 共享数据
 
 

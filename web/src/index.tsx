@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Home from '@/views/Home';
 import reportWebVitals from './reportWebVitals';
 import '@/assets/less/base.less'
 import '@/assets/less/common.less'
 import { CategoryData } from 'models/category';
+import { AppData } from 'models/app';
 import { isDev } from '@/config/app'
 
 // ReactDOM.render(
@@ -16,10 +17,13 @@ import { isDev } from '@/config/app'
 // );
 
 let render = isDev ? ReactDOM.render : ReactDOM.hydrate
-let categories: CategoryData[] = (window as any).categories
+// let categories: CategoryData[] = (window as any).categories
+let appData:AppData = (window as any).appData
 // console.log(categories)
 render(
-  <App categories={categories} />,
+  // <App categories={categories} />,
+  <Home appData={appData}/>,
+  // <Home />,
   document.getElementById('root')
 );
 

@@ -5,7 +5,7 @@ import Searchbar from './searchbar'
 import User from './user'
 
 interface Props {
-  categories: CategoryData[]
+  // categories: CategoryData[]
 }
 
 export default function Header(props: Props) {
@@ -14,7 +14,8 @@ export default function Header(props: Props) {
       <div className="page">
         <div className="left">
           <Logo />
-          <Category categories={props.categories} />
+          {/* <Category categories={props.categories} /> */}
+          <Category />
           <Searchbar />
         </div>
         <div className="right">

@@ -1,8 +1,8 @@
 import { CategoryData, getCategory } from "models/category";
 import React, { useState, useEffect } from "react";
-
+import { appData } from 'models/app'
 interface Props {
-    categories: CategoryData[]
+    // categories: CategoryData[]
 }
 
 //   const categories = [
@@ -51,8 +51,13 @@ interface Props {
 //         }
 //     ];
 
+// let categories: CategoryData[] = (window as any).categories
+
+
 export default function Category(props: Props) {
-    const [categories,setCategories] = useState(props.categories)
+    // const [categories,setCategories] = useState(props.categories)
+    const [categories, setCategories] = useState<CategoryData[] | undefined>( appData.categories)
+    // console.log(categories)
     useEffect(() => {
         if (!categories) {
             getCategory().then(arr => {

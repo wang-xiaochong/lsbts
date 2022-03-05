@@ -1,11 +1,12 @@
 import Router from '@koa/router'
 import React from 'react'
 import ReactDomServer from 'react-dom/server'
-import App from '@/App'
+import Home from '@/views/Home'
 import path from 'path'
 import fs from 'fs'
 import { staticRoot } from '~/config/app'
 import { getCategory } from '~/models/category'
+import {AppData} from '@/models/app'
 
 let router = new Router()
 
@@ -14,11 +15,14 @@ if (process.env.NODE_ENV === 'production') {
     router.get('/', async ctx => {
         let index = fs.readFileSync(path.resolve(staticRoot, 'index.html')).toString()
         let categories = await getCategory()
-        let str = ReactDomServer.renderToString(<App categories={categories} />)
+        let appData:AppData = {
+            categories:categories
+        }
+        let str = ReactDomServer.renderToString(<Home appData={appData} />)
         let ret = index.replace('<div id="root"></div>',
             `
             <script>
-            window.categories=${JSON.stringify(categories)}
+            window.appData=${JSON.stringify(appData)}
             </script>
             <div id="root">${str}</div>`)
         ctx.body = ret
