@@ -17,6 +17,13 @@ router.get('/getHotKeyWords', async ctx => {
     ctx.body = hotKeyWords
 })
 
+// searchKey
+router.get('/getSuggest/:kw', async ctx => {
+    const {kw} = ctx.params
+    let searchKeyWords = await getSuggest(kw)
+    ctx.body = searchKeyWords
+})
+
 
 
 export default router.routes()
