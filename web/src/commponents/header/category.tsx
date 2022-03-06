@@ -56,7 +56,7 @@ interface Props {
 
 export default function Category(props: Props) {
     // const [categories,setCategories] = useState(props.categories)
-    const [categories, setCategories] = useState<CategoryData[] | undefined>( appData.categories)
+    const [categories, setCategories] = useState<CategoryData[] | undefined>( appData?.categories)
     // console.log(categories)
     useEffect(() => {
         if (!categories) {

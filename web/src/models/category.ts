@@ -8,6 +8,6 @@ export interface CategoryData {
 }
 
 export async function getCategory(): Promise<CategoryData[]> {
-    let { data } = await axios('/api/category/getCategories')
+    let { data } = await axios('/api/site/getCategories')
     return data
 }

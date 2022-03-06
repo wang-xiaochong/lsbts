@@ -1,6 +1,7 @@
 import Router from '@koa/router'
 import bannerRoutes from './banner/banner'
 import categoryRoutes from './category/category'
+import siteRoutes from './site/site'
 
 let router = new Router()
 // api
@@ -12,5 +13,6 @@ router.get('/getAPI', async ctx => {
 
 router.use(bannerRoutes)
 router.use(categoryRoutes)
+router.use(siteRoutes)
 
 export default router.routes()
