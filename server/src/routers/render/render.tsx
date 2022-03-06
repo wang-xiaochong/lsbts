@@ -8,6 +8,8 @@ import { staticRoot } from '~/config/app'
 import { getCategory } from '~/models/category'
 import { AppData } from '@/models/app'
 import { getSuggest } from '~/models/search'
+import { getAllBanners } from '~/models/banner'
+
 
 let router = new Router()
 
@@ -17,12 +19,12 @@ if (process.env.NODE_ENV === 'production') {
         let index = fs.readFileSync(path.resolve(staticRoot, 'index.html')).toString()
         let categories = await getCategory()
         let hotKeyWords = await getSuggest('')
-
-
+        let banners = await getAllBanners()
 
         let appData: AppData = {
             categories: categories,
             hotKeyWords: hotKeyWords,
+            banners: banners
         }
         let str = ReactDomServer.renderToString(<Home appData={appData} />)
         let ret = index.replace('<div id="root"></div>',

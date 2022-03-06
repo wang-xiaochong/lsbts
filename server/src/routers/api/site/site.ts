@@ -1,5 +1,7 @@
 
 import Router from '@koa/router'
+
+import { getAllBanners } from '~/models/banner'
 import { getCategory } from '~/models/category'
 import { getSuggest } from '~/models/search'
 
@@ -22,6 +24,11 @@ router.get('/getSuggest/:kw', async ctx => {
     const {kw} = ctx.params
     let searchKeyWords = await getSuggest(kw)
     ctx.body = searchKeyWords
+})
+// banners
+router.get('/getAllBanners', async ctx => {
+    let banners = await getAllBanners()
+    ctx.body = banners
 })
 
 

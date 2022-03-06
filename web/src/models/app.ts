@@ -1,9 +1,11 @@
 import { CategoryData } from "./category";
 import { SearchResult } from "./search";
+import { BannerData } from "./banner";
 
 export interface AppData {
-    categories: CategoryData[] | undefined
-    hotKeyWords: SearchResult | undefined
+    categories?: CategoryData[]
+    hotKeyWords?: SearchResult
+    banners?: BannerData[]
 }
 
 export function setAppData(data: AppData) {
@@ -21,7 +23,8 @@ if (typeof window != 'undefined') {
     appData = (window as any).appData
 } else {
     appData = {
-        categories: undefined,
-        hotKeyWords: undefined,
+        // categories: undefined,
+        // hotKeyWords: undefined,
+        // banners: undefined,
     }
 }

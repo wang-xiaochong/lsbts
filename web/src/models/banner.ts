@@ -4,12 +4,10 @@ export interface BannerData {
     ID: number,
     img: string,
     href: string,
-    sort: number
+    color:string,
 }
 
-export async function getAllBanners(): Promise<BannerData[]> {
-    let { data } = await axios('api/banner/getAllBanners', {
-        headers: { a: 12 }
-    });
+export async function getAllBanners():Promise<BannerData[]> {
+    let { data } = await axios('/api/site/getAllBanners');
     return data
 }
