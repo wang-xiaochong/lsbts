@@ -1,6 +1,8 @@
 .banner {
   height:300px;
   background:#020b1f;
+  transition: .3s all ease;
+
 
   .content {
     float:left;
@@ -36,13 +38,16 @@
       li {
         position: absolute;
         left:0;top:0;
-        display:none;
-
+        // display:none;
+        opacity: 0;
+        transition: .5s all ease;
         width:710px;height:300px;
+        z-index: 1;
 
         img {width:100%;height:100%;}
 
-        &.active {display:block;}
+        // &.active {display:block;}
+        &.active {opacity: 1;z-index: 2;}
       }
     }
 
