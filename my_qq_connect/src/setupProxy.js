@@ -1,7 +1,7 @@
 const { createProxyMiddleware } = require('http-proxy-middleware')
 
 module.exports = function (app) {
-    app.use( createProxyMiddleware('/oauth2.0',{
+    app.use( createProxyMiddleware('/oauth2.0/me',{
         target: 'https://graph.qq.com/',
         changeOrigin: true,
         // target: 'http://localhost:7001/',
@@ -12,8 +12,12 @@ module.exports = function (app) {
         //     ws: true, // 启用websocket
         // },
     }))
-    app.use( createProxyMiddleware('/user',{
+    app.use( createProxyMiddleware('/user/get_user_info',{
         target: 'https://graph.qq.com/',
+        changeOrigin: true,
+    }))
+    app.use( createProxyMiddleware('/api',{
+        target: 'http://localhost:7001/',
         changeOrigin: true,
     }))
 }
