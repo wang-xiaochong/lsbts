@@ -32,7 +32,7 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.ts', '.tsx', 'js', 'jsx'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
         alias: {
             '@': path.resolve(__dirname, '../web/src'),
             '~': path.resolve(__dirname, './src'),

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import Home from '@/views/Home';
 import reportWebVitals from './reportWebVitals';
 import '@/assets/less/base.less'

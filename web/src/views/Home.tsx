@@ -2,7 +2,6 @@ import React from 'react';
 // import { useState, useEffect } from 'react'
 // import ReactDOMServer from 'react-dom/server'
 // import logo from '../logo.svg';
-import '../App.css';
 
 // import { getAllBanners } from '../models/banner'
 // import { BannerData } from 'models/banner'
@@ -13,6 +12,10 @@ import Banner from '@/commponents/index/banner'
 // import { CategoryData } from 'models/category';
 import { setAppData, AppData } from 'models/app';
 
+import querystring from '@/libs/querystring';
+import store from '@/store/store'
+import { saveToken } from '@/store/actions'
+
 interface Props {
   // categories: CategoryData[]
   appData?: AppData
@@ -20,6 +23,15 @@ interface Props {
 
 function App(props: Props) {
   props.appData && setAppData(props.appData);
+  const { token } = querystring(['token']);
+  if (token) {
+    console.log(token)
+    store.dispatch(saveToken({ token }))
+    // window.location.href = '/';
+  }
+
+  
+
   // const [banners, setBanners] = useState<BannerData[]>([]);
   // useEffect(() => {
   //   (async () => {
@@ -37,8 +49,6 @@ function App(props: Props) {
       <Banner />
     </div>
 
-
-
     // <div>
     //   {/* aaa */}
     //   <ul>
@@ -46,23 +56,6 @@ function App(props: Props) {
     //       <li key={banner.ID}>{banner.href}</li>
     //     )}
     //   </ul>
-    // </div>
-
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.tsx</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
     // </div>
   );
 }

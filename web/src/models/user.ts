@@ -3,14 +3,10 @@ import axios from "@/libs/axios";
 export interface UserData {
     ID: number;
     token: string;
-    qq_unionid?: string;
     avatar: string;
     nickname: string;
-    points?: number;
-    currentcy?: number;
-    mobile?: string;
-    address?: string;
-    blocked?: number;
+    points: number;
+    currentcy: number;
 }
 
 export async function getUserInfo(): Promise<UserData> {
