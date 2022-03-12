@@ -1,7 +1,7 @@
 
 import Router from '@koa/router'
 import { ParesPostData } from '~/libs/req'
-import { getUserCheck, getUserAdd, userData } from '~/models/user'
+import { getUserCheck, getUserAdd, userData, getUserInfo } from '~/models/user'
 
 let router = new Router()
 
@@ -10,13 +10,11 @@ router.prefix('/user')
 router.get('/userCheck', async ctx => {
     const nickname = ctx.URL.searchParams.get('nickname')
     if (nickname) {
-        // console.log(nickname)
         let ret = await getUserCheck(nickname)
         ctx.body = ret
     } else {
         ctx.body = { token: '' };
     }
-
 })
 
 router.post('/userAdd', async ctx => {
@@ -28,5 +26,20 @@ router.post('/userAdd', async ctx => {
         ctx.body = false;
     }
 })
+
+router.get('/getUserInfo', async ctx => {
+    const token = ctx.URL.searchParams.get('token')
+    if (token) {
+        let ret = await getUserInfo(token)
+        ctx.body = ret
+    } else {
+        ctx.body = '';
+    }
+})
+
+
+
+
+
 
 export default router.routes()

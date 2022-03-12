@@ -1,25 +1,33 @@
-import React from "react";
+import axios from "@/libs/axios";
+import { getUserInfo, UserData } from "models/user";
+import React, { useEffect, useState } from "react";
+
+
+
 export default function User() {
 
-  console.log(window.location.search)
-
-
-
-
+  const [userInfo, setUserInfo] = useState<UserData | undefined>()
+  useEffect(() => {
+    if (!userInfo) {
+      getUserInfo().then(res => {
+        setUserInfo(res)
+      })
+    }
+  }, [userInfo])
 
   return (
     <>
       {/* <span className="btn">登录</span> */}
-      <a href="https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=101490224&response_type=token&scope=all&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fproxy" className="btn">登录</a>
-      {/* or */}
-      {/* <div className="user">
-            <div className="title">
-              <div className="avatar">
-                <img src="/image/tmp_avatar.jpg" alt="头像" />
-              </div>
-              <div className="nickname">张三的学习账号很长</div>
+      {!userInfo ? (<a href="https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=101490224&response_type=token&scope=all&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fproxy" className="btn">登录</a>) : (
+        <div className="user">
+          <div className="title">
+            <div className="avatar">
+              <img src={userInfo.avatar} alt="头像" />
             </div>
-          </div> */}
+            <div className="nickname">{userInfo.nickname}</div>
+          </div>
+        </div>)}
+
     </>
   )
 }

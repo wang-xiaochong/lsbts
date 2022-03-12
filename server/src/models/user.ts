@@ -1,6 +1,7 @@
 
 import db from '~/libs/database'
 import { RowDataPacket } from 'mysql2'
+import { UserData } from 'models/user'
 
 // 用户相关
 type Result = boolean
@@ -46,4 +47,19 @@ export async function getUserAdd(payload: userData): Promise<Result> {
         return true
     }
     return false
+}
+
+
+export async function getUserInfo(token:string): Promise<UserData> {
+    let [data] = (await db.query(`
+    SELECT 
+    * 
+    FROM user_table 
+    WHERE token=?
+    `,
+        [
+            token
+        ]
+    ))[0] as RowDataPacket[];
+    return data as UserData
 }

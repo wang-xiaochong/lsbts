@@ -65,7 +65,7 @@ async function QQLogin(userData) {
         }
     } else {
         // 更换用户状态
-        return { token: ret.data.token }
+        return  ret.data.token 
 
     }
 }
