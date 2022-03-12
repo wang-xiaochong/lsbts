@@ -2,11 +2,10 @@ import axios from "@/libs/axios";
 
 export interface UserData {
     ID: number;
-    token: string;
     avatar: string;
     nickname: string;
     points: number;
-    currentcy: number;
+    currency: number;
 }
 
 export async function getUserInfo(): Promise<UserData> {

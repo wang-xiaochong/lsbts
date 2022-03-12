@@ -25,7 +25,7 @@ function App(props: Props) {
   props.appData && setAppData(props.appData);
   const { token } = querystring(['token']);
   if (token) {
-    console.log(token)
+    // console.log(token)
     store.dispatch(saveToken({ token }))
     // window.location.href = '/';
   }

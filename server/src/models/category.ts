@@ -17,8 +17,8 @@ export async function getCategory(): Promise<CategoryData[]> {
 
     // 2- 万一没有
     let result: CategoryData[] = [];
-    let categories = (await db.query('SELECT * FROM category_table'))[0] as any[];
-    let items = (await db.query('SELECT * FROM category_item_table ORDER BY sort ASC'))[0] as any[];
+    let categories = await db.query('SELECT * FROM category_table');
+    let items = await db.query('SELECT * FROM category_item_table ORDER BY sort ASC');
     // 组装数据
 
     categories.forEach(data => {

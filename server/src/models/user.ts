@@ -9,7 +9,7 @@ type Token = {
     token: string
 }
 export async function getUserCheck(kw: string): Promise<Token> {
-    let data = (await db.query(`
+    let rows = await db.query(`
     SELECT 
     token 
     FROM user_table 
@@ -18,10 +18,10 @@ export async function getUserCheck(kw: string): Promise<Token> {
         [
             kw,
         ]
-    ))[0] as RowDataPacket[];
-    if (data.length > 0) {
+    );
+    if (rows.length > 0) {
         let ret = { token: '' }
-        ret.token = data[0].token
+        ret.token = rows[0].token
         return ret
     }
     return { token: '' }
@@ -50,16 +50,16 @@ export async function getUserAdd(payload: userData): Promise<Result> {
 }
 
 
-export async function getUserInfo(token:string): Promise<UserData> {
-    let [data] = (await db.query(`
+export async function getUserInfo(token: string): Promise<UserData | undefined> {
+    let rows = await db.query(`
     SELECT 
-    * 
+    ID,avatar,nickname,points,currency
     FROM user_table 
     WHERE token=?
     `,
         [
             token
         ]
-    ))[0] as RowDataPacket[];
-    return data as UserData
+    );
+    return rows[0]
 }

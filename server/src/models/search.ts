@@ -11,7 +11,7 @@ import { RowDataPacket } from 'mysql2'
 
 // 关键字相关
 export async function getSuggest(kw: string): Promise<SearchResult> {
-    let data = (await db.query(`
+    let data = await db.query(`
     SELECT 
     keyword 
     FROM search_record_table 
@@ -21,6 +21,6 @@ export async function getSuggest(kw: string): Promise<SearchResult> {
         [
             kw + '%'
         ]
-    ))[0] as RowDataPacket[];
+    );
     return data.map(row => row.keyword)
 }

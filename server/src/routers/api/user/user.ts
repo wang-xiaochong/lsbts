@@ -28,7 +28,8 @@ router.post('/userAdd', async ctx => {
 })
 
 router.get('/getUserInfo', async ctx => {
-    const token = ctx.URL.searchParams.get('token')
+    const token = ctx.get('token')
+    // const token = ctx.URL.searchParams.get('token')
     if (token) {
         let ret = await getUserInfo(token)
         ctx.body = ret
