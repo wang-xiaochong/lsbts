@@ -20,3 +20,4 @@ web
 
     依赖项：
         redux @reduxjs/toolkit redux-saga
+        react-redux  @types/react-redux

@@ -9,8 +9,9 @@ export interface UserData {
 }
 
 export async function getUserInfo(): Promise<UserData> {
-    let token = (window.location.search).split('=')[1]
-    let { data } = await axios.get(`/api/user/getUserInfo?token=${token}`)
+    // let token = (window.location.search).split('=')[1]
+    // let { data } = await axios.get(`/api/user/getUserInfo?token=${token}`)
+    let { data } = await axios.get(`/api/user/getUserInfo`)
     return data
 }
 

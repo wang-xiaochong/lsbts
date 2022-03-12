@@ -1,9 +1,9 @@
 
-import token from './saga/token'
+import user from './saga/user'
 import createSagaMiddleWare from 'redux-saga'
 
 export function* saga() {
-    yield token();
+    yield user();
 }
 
 let sagaMiddleWare = createSagaMiddleWare();

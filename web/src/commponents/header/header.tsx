@@ -1,4 +1,4 @@
-import { CategoryData } from 'models/category';
+// import { CategoryData } from 'models/category';
 import React from 'react';
 import Category from './category'
 import Searchbar from './searchbar'
