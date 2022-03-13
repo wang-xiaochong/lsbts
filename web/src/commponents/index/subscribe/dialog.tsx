@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { getAllSubscribe, SubscribeData } from '@/models/site';
+import { SubscribeData } from '@/models/site';
+import { connect } from 'react-redux';
+import { SiteState } from '@/store/modules/site';
+import { Dispatch } from 'redux';
+import actions from '@/store/actions';
 
 interface Props {
   onClose: () => void;
+  site?: SiteState;
+  dispatch: Dispatch;
 }
 
 function Dialog(props: Props) {
-
-  const [allSubscribe,setAllSubscribe] = useState<SubscribeData[] | undefined>(undefined)
-
+  const [allSubscribe, setAllSubscribe] = useState<SubscribeData[] | undefined>(props.site?.SubscribeData)
   useEffect(() => {
     if (!allSubscribe) {
-      getAllSubscribe().then(res => {
-        setAllSubscribe(res)
-      })
+      props.dispatch(actions.site.getSubscribeData());
     }
-  },[allSubscribe])
-  
+  }, [allSubscribe])
+
   //拆成左右两边
   const list: SubscribeData[][] = [
     [], []
@@ -61,4 +63,6 @@ function Dialog(props: Props) {
 
 };
 
-export default Dialog;
+export default connect(state => {
+  return state;
+})(Dialog);

@@ -1,6 +1,7 @@
 import * as user from './user'
+import * as site from './site'
 
 const actions = {
-    user,
+    user,site
 }
 export default actions

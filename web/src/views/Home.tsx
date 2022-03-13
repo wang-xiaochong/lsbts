@@ -11,10 +11,14 @@ import { RootState } from '@/store/index'
 import { getUserData, saveToken, setToken } from '@/store/actions/user'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux';
+import { getSubscribeData } from '@/store/actions/site';
+import { UserState } from '@/store/modules/user';
+import { SiteState } from '@/store/modules/site';
 
 interface Props {
   appData?: AppData;
-  token?: string;
+  user: UserState;
+  site: SiteState;
   dispatch: Dispatch;
 }
 
@@ -31,10 +35,16 @@ function Home(props: Props) {
   });
 
   useEffect(() => {
-    const { token } = props
-    if (token) {
+    const { user } = props
+    if (user.token) {
       props.dispatch(getUserData())
+    }
+  })
 
+  useEffect(() => {
+    const { site } = props
+    if (!site.SubscribeData) {
+      props.dispatch(getSubscribeData())
     }
   })
 
@@ -51,7 +61,7 @@ function Home(props: Props) {
 }
 
 export default connect((state: RootState) => {
-  return state.user
+  return state
 })(Home);
 
 // export function render() {

@@ -1,4 +1,3 @@
-import axios from "@/libs/axios";
 
 export interface SubscribeData {
     ID: number;
@@ -8,9 +7,4 @@ export interface SubscribeData {
         title: string;
         checked: boolean;
     }[];
-}
-
-export async function getAllSubscribe() {
-    let { data } = await axios.get(`/api/site/getAllSubscibe`)
-    return data
 }
