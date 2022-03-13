@@ -1,5 +1,5 @@
 
-import user from './saga/user'
+import user from './user'
 import createSagaMiddleWare from 'redux-saga'
 
 export function* saga() {

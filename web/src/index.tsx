@@ -9,7 +9,7 @@ import '@/assets/less/index.less'
 import { AppData } from 'models/app';
 import { isDev } from '@/config/app'
 import { Provider } from 'react-redux'
-import store from '@/store/store'
+import store from '@/store/index'
 
 // ReactDOM.render(
 //   <React.StrictMode>

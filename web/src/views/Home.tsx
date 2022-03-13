@@ -1,16 +1,13 @@
 import React from 'react';
 import { useEffect } from 'react'
 // import ReactDOMServer from 'react-dom/server'
-
-// import Login from '../commponents/login'
 import Header from '@/commponents/header/header'
 import Banner from '@/commponents/index/banner'
 
 import { setAppData, AppData } from 'models/app';
 import querystring from '@/libs/querystring';
-import store from '@/store/store'
-import { saveToken } from '@/store/actions'
-
+import store, { RootState } from '@/store/index'
+import { saveToken, setToken } from '@/store/actions/user'
 import { connect } from 'react-redux'
 
 interface Props {
@@ -32,7 +29,7 @@ function Home(props: Props) {
   useEffect(() => {
     const { token } = props
     if (token) {
-      console.log(token)
+      store.dispatch(setToken({ token }))
     }
   })
 
@@ -47,9 +44,8 @@ function Home(props: Props) {
   );
 }
 
-export default connect((state) => {
-  // console.log(state)
-  return state
+export default connect((state:RootState) => {
+  return state.user
 })(Home);
 
 // export function render() {

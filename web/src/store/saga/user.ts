@@ -1,16 +1,16 @@
 import {  put, takeEvery } from 'redux-saga/effects'
-import * as actions from '../actions'
+import actions from '../actions/index'
 
 
 export default function* token() {
-    yield takeEvery(actions.restoreToken, function* () {
+    yield takeEvery(actions.user.restoreToken, function* () {
         let token = localStorage.token;
         if (token) {
-            yield put(actions.setToken({ token }))
+            yield put(actions.user.setToken({ token }))
         }
     })
 
-    yield takeEvery(actions.saveToken, function (action) {
+    yield takeEvery(actions.user.saveToken, function (action) {
         localStorage.token = action.payload.token
 
     })
