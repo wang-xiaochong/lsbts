@@ -9,11 +9,14 @@ import { getCategory } from '~/models/category'
 import { AppData } from '@/models/app'
 import { getSuggest } from '~/models/search'
 import { getAllBanners } from '~/models/banner'
+import { Provider } from 'react-redux'
+import store from './store'
 
 
 let router = new Router()
-
-if (process.env.NODE_ENV === 'production') {
+let enableRender = process.env.NODE_ENV === 'production'
+// enableRender = true
+if (enableRender) {
     // 服务端进行渲染
     router.get('/', async ctx => {
         let index = fs.readFileSync(path.resolve(staticRoot, 'index.html')).toString()
@@ -26,7 +29,11 @@ if (process.env.NODE_ENV === 'production') {
             hotKeyWords: hotKeyWords,
             banners: banners
         }
-        let str = ReactDomServer.renderToString(<Home appData={appData} />)
+        let str = ReactDomServer.renderToString(
+            <Provider store={store}>
+                <Home appData={appData} />
+            </Provider>
+        );
         let ret = index.replace('<div id="root"></div>',
             `
             <script>

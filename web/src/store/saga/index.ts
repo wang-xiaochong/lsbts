@@ -1,9 +1,12 @@
 
 import user from './user'
 import createSagaMiddleWare from 'redux-saga'
+import { all } from 'redux-saga/effects';
 
 export function* saga() {
-    yield user();
+    yield all([
+        user(),
+    ])
 }
 
 let sagaMiddleWare = createSagaMiddleWare();

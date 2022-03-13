@@ -10,6 +10,7 @@ import { AppData } from 'models/app';
 import { isDev } from '@/config/app'
 import { Provider } from 'react-redux'
 import store from '@/store/index'
+import actions from '@/store/actions/index'
 
 // ReactDOM.render(
 //   <React.StrictMode>
@@ -17,6 +18,7 @@ import store from '@/store/index'
 //   </React.StrictMode>,
 //   document.getElementById('root')
 // );
+store.dispatch(actions.user.restoreToken())
 
 let render = isDev ? ReactDOM.render : ReactDOM.hydrate
 // let categories: CategoryData[] = (window as any).categories

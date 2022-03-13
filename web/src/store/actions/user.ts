@@ -8,3 +8,4 @@ export const saveToken = createAction<{ token: string }>('saveToken');
 export const restoreToken = createAction<void>('restoreToken');
 export const clearToken = createAction<void>('clearToken')
 export const setUserData = createAction<UserData>('setUserData')
+export const getUserData = createAction<void>('getUserData')

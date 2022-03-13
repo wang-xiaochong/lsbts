@@ -7,7 +7,7 @@ export interface UserState {
 }
 
 
-const initState:UserState = {}
+export const initState:UserState = {}
 
 export const userReducer = createReducer(
     initState,

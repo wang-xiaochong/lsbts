@@ -6,13 +6,15 @@ import Banner from '@/commponents/index/banner'
 
 import { setAppData, AppData } from 'models/app';
 import querystring from '@/libs/querystring';
-import store, { RootState } from '@/store/index'
-import { saveToken, setToken } from '@/store/actions/user'
+import { RootState } from '@/store/index'
+import { getUserData, saveToken, setToken } from '@/store/actions/user'
 import { connect } from 'react-redux'
+import { Dispatch } from 'redux';
 
 interface Props {
   appData?: AppData;
   token?: string;
+  dispatch: Dispatch;
 }
 
 function Home(props: Props) {
@@ -21,7 +23,8 @@ function Home(props: Props) {
     const { token } = querystring(['token']);
     if (token) {
       // console.log(token)
-      store.dispatch(saveToken({ token }))
+      props.dispatch(saveToken({ token }))
+      props.dispatch(setToken({ token }))
       window.location.href = '/';
     }
   });
@@ -29,7 +32,8 @@ function Home(props: Props) {
   useEffect(() => {
     const { token } = props
     if (token) {
-      store.dispatch(setToken({ token }))
+      props.dispatch(getUserData())
+
     }
   })
 
@@ -44,7 +48,7 @@ function Home(props: Props) {
   );
 }
 
-export default connect((state:RootState) => {
+export default connect((state: RootState) => {
   return state.user
 })(Home);
 

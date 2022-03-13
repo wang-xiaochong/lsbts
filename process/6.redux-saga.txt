@@ -17,7 +17,11 @@ redux + saga
 ------------------------------------------
 web
 
-
     依赖项：
         redux @reduxjs/toolkit redux-saga
+        react-redux  @types/react-redux
+
+server
+
+    依赖项：
         react-redux  @types/react-redux
