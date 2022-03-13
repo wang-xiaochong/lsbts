@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import '@/assets/less/base.less'
 import '@/assets/less/common.less'
 import '@/assets/less/index.less'
+import '@/assets/less/subscribe.less'
 // import { CategoryData } from 'models/category';
 import { AppData } from 'models/app';
 import { isDev } from '@/config/app'

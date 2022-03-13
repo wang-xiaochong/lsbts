@@ -4,6 +4,7 @@ import Router from '@koa/router'
 import { getAllBanners } from '~/models/banner'
 import { getCategory } from '~/models/category'
 import { getSuggest } from '~/models/search'
+import { getAllSubscibe } from '~/models/subscribe'
 
 let router = new Router()
 
@@ -11,7 +12,7 @@ router.prefix('/site')
 // category
 router.get('/getCategories', async ctx => {
     let categories = await getCategory();
-        ctx.body = categories
+    ctx.body = categories
 })
 //hotKeyWords
 router.get('/getHotKeyWords', async ctx => {
@@ -21,7 +22,7 @@ router.get('/getHotKeyWords', async ctx => {
 
 // searchKey
 router.get('/getSuggest/:kw', async ctx => {
-    const {kw} = ctx.params
+    const { kw } = ctx.params
     let searchKeyWords = await getSuggest(kw)
     ctx.body = searchKeyWords
 })
@@ -31,6 +32,10 @@ router.get('/getAllBanners', async ctx => {
     ctx.body = banners
 })
 
-
+//subscribe
+router.get('/getAllSubscibe', async ctx => {
+    let subscibes = await getAllSubscibe(0)
+    ctx.body = subscibes
+})
 
 export default router.routes()

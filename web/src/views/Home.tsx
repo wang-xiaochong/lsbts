@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 // import ReactDOMServer from 'react-dom/server'
 import Header from '@/commponents/header/header'
 import Banner from '@/commponents/index/banner'
+import Subscribe from '@/commponents/index/subscribe'
 
 import { setAppData, AppData } from 'models/app';
 import querystring from '@/libs/querystring';
@@ -44,6 +45,7 @@ function Home(props: Props) {
       {/* <Header categories={props.categories} /> */}
       <Header />
       <Banner />
+      <Subscribe />
     </div>
   );
 }
