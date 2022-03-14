@@ -63,3 +63,19 @@ export async function getUserInfo(token: string): Promise<UserData | undefined> 
     );
     return rows[0]
 }
+
+export async function getUserID(token: string | undefined): Promise<number> {
+    if (!token) return 0;
+    else {
+        let rows = await db.query(
+            'SELECT ID FROM user_table WHERE token=?', [token]
+        );
+        let user = rows[0];
+        if (user) return user.ID;
+        else return 0
+    }
+
+
+
+    return 0
+}

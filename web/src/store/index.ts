@@ -10,7 +10,7 @@ export {
     connect,actions,
 }
 export type {
-    Dispatch,SiteState
+    Dispatch,SiteState,UserState,
 }
 
 export interface RootState {

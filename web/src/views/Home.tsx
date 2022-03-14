@@ -11,7 +11,7 @@ import { RootState } from '@/store/index'
 import { getUserData, saveToken, setToken } from '@/store/actions/user'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux';
-import { getSubscribeData } from '@/store/actions/site';
+import { getAllSubscribeData } from '@/store/actions/site';
 import { UserState } from '@/store/modules/user';
 import { SiteState } from '@/store/modules/site';
 
@@ -44,7 +44,7 @@ function Home(props: Props) {
   useEffect(() => {
     const { site } = props
     if (!site.SubscribeData) {
-      props.dispatch(getSubscribeData())
+      props.dispatch(getAllSubscribeData())
     }
   })
 

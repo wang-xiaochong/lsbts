@@ -7,6 +7,7 @@ import store from '../store'
 
 
 export default function* token() {
+    // token
     yield takeEvery(actions.user.restoreToken, function* () {
         let token = localStorage.token;
         if (token) {
@@ -17,13 +18,21 @@ export default function* token() {
     yield takeEvery(actions.user.saveToken, function (action) {
         localStorage.token = action.payload.token
     })
-
+    // userdata
     yield takeEvery(actions.user.getUserData, function* () {
         const { user } = store.getState();
-
         if (user.token && !user.userData) {
             let { data } = yield axios.get(`/api/user/getUserInfo`)
             yield put(actions.user.setUserData(data))
         }
     })
+    // subscribe
+    yield takeEvery(actions.user.getMySubscribe, function* () {
+        const { user } = store.getState()
+        if (!user.mySubscribe) {
+            let { data } = yield axios.get(`/api/user/mysubscribe`)
+            yield put(actions.user.setMySubscribe(data))
+        }
+    })
+
 }

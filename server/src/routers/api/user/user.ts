@@ -1,7 +1,8 @@
 
 import Router from '@koa/router'
 import { ParesPostData } from '~/libs/req'
-import { getUserCheck, getUserAdd, userData, getUserInfo } from '~/models/user'
+import { getSubscibe } from '~/models/subscribe'
+import { getUserCheck, getUserAdd, userData, getUserInfo, getUserID } from '~/models/user'
 
 let router = new Router()
 
@@ -38,11 +39,19 @@ router.get('/getUserInfo', async ctx => {
             ctx.status = 404;
             ctx.body = 'Not Found'
         }
-        
+
     } else {
         ctx.body = '';
     }
 })
+
+router.get('/mysubscribe', async ctx => {
+    let ID = await getUserID(ctx.get('token'))
+    ctx.body = await getSubscibe(ID);
+   
+})
+
+
 
 
 

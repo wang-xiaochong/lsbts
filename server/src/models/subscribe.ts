@@ -9,10 +9,28 @@ interface CategoryRow {
     title: string;
 }
 
-// 用户已选 (横条)
-export function getSubscibe() {
-
+interface UserSubscribeRow {
+    ID: number;
+    user_id: number;
+    category_id: string;
 }
+
+// 用户已选 (横条)
+export async function getSubscibe(userID: number):Promise<SubscribeData[]> {
+    let rows = await db.query('SELECT * FROM user_subscribe_table WHERE user_id=?', [userID]) as UserSubscribeRow[]
+    let data = rows[0];
+    if (!data) {
+        return [
+            { ID: 0, title: '精选推荐' },
+            { ID: 2, title: '前沿技术' },
+            { ID: 3, title: '互联网产品' },
+            { ID: 5, title: '环境艺术设计' },
+        ];
+    } else {
+        return JSON.parse(data.category_id)
+    }
+}
+
 
 // 所有数据 (对话框)
 export async function getAllSubscibe(userID: number): Promise<SubscribeData[]> {
@@ -29,10 +47,9 @@ export async function getAllSubscibe(userID: number): Promise<SubscribeData[]> {
                     children: [],
                 })
             } else {
-                result.find(item => item.ID == row.parent_id)?.children.push({
+                result.find(item => item.ID == row.parent_id)?.children?.push({
                     ID: row.ID,
                     title: row.title,
-                    checked: false,
                 })
             }
         })

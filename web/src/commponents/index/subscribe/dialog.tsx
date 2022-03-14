@@ -1,19 +1,26 @@
 import React from 'react';
 import { SubscribeData } from '@/models/site';
-import { connect, SiteState, Dispatch, actions, RootState } from '@/store/index'
+import { connect, SiteState, Dispatch, actions, RootState, UserState } from '@/store/index'
 
 
 interface Props {
   onClose: () => void;
+  user?: UserState;
   site?: SiteState;
   dispatch: Dispatch;
 }
 
 function Dialog(props: Props) {
+  const mySubscribe = props.user?.mySubscribe
   const allSubscribe = props.site?.SubscribeData
+  console.log(mySubscribe)
 
   if (!allSubscribe) {
-    props.dispatch(actions.site.getSubscribeData());
+    props.dispatch(actions.site.getAllSubscribeData());
+  }
+  const isChecked = (item: { ID: number }) => {
+    if (!mySubscribe) return false;
+    else return mySubscribe.find(myitem => (myitem.ID === item.ID));
   }
   //拆成左右两边
   const list: SubscribeData[][] = [
@@ -37,8 +44,11 @@ function Dialog(props: Props) {
                 <li className="items" key={item.ID}>
                   <h4 className="item-title">{item.title}</h4>
                   <ul className="options">
-                    {item.children.map(item => (
-                      <li className={`op ${item.checked ? 'active' : ''}`} key={item.ID}>{item.title}</li>
+                    {item.children?.map(item => (
+                      <li
+                        className={`op ${isChecked(item) ? 'active' : ''}`}
+                        key={item.ID}
+                      >{item.title}</li>
                     ))}
                   </ul>
                 </li>

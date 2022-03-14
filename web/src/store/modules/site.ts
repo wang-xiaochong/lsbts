@@ -12,7 +12,7 @@ export const initState: SiteState = {}
 export const siteReducer = createReducer(
     initState,
     builder => builder
-        .addCase(actions.site.setSubscribeData, (state, action) => {
+        .addCase(actions.site.setAllSubscribeData, (state, action) => {
             return { ...state, SubscribeData:action.payload  }
         })
         
