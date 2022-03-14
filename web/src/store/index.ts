@@ -1,28 +1,19 @@
-import { configureStore } from '@reduxjs/toolkit'
-import sagaMiddleWare, { saga } from './saga/index';
-import { UserState, userReducer } from './modules/user';
-import { SiteState, siteReducer } from './modules/site';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import actions from '@/store/actions';
+import { SiteState } from './modules/site';
+import { UserState } from './modules/user';
 
-// state    ==> modules
+// 合到一起导出
+
+export {
+    connect,actions,
+}
+export type {
+    Dispatch,SiteState
+}
 
 export interface RootState {
     user: UserState,
     site: SiteState,
 }
-
-// 1.action    ==>actions
-
-// 2.reducer    ==>modules
-
-// 3.store
-const store = configureStore({
-    reducer: {
-        user: userReducer,
-        site: siteReducer,
-    },
-    middleware: [sagaMiddleWare],
-});
-
-sagaMiddleWare.run(saga);
-
-export default store;

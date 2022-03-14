@@ -1,6 +1,11 @@
 import redis from 'redis'
 import redisConf from '~/config/redis'
 import { promisify } from 'util'
+import { enableCache } from '~/config/app';
+
+//KEYS
+export const KEY_APP_CATEGORY_CACHE = 'KEY_APP_CATEGORY_CACHE'
+export const KEY_APP_ALL_SUBSCRIBE_CACHE = 'KEY_APP_ALL_SUBSCRIBE_CACHE'
 
 
 let client = redis.createClient(redisConf)
@@ -9,9 +14,28 @@ export const get = promisify(client.get).bind(client);
 export const set = promisify(client.set).bind(client);
 
 
-//KEYS
-export const KEY_APP_CATEGORY_CACHE = 'KEY_APP_CATEGORY_CACHE'
-export const KEY_APP_ALL_SUBSCRIBE_CACHE = 'KEY_APP_ALL_SUBSCRIBE_CACHE'
+
+export async function readCache(key: string): Promise<any> {
+    if (enableCache) {
+        let str = await get(key)
+        if (str) {
+            try {
+                return JSON.parse(str)
+            } catch (e) { }
+        }
+    }
+    return undefined
+}
+
+export async function writeCache(key: string, data: any): Promise<any> {
+    if (enableCache) {
+        let setRedisCache = await set(key, JSON.stringify(data))
+        if (!setRedisCache) {
+            console.error("SetRedisCache Failed!")
+        }
+    }
+    return undefined
+}
 
 
 // 回调取值 服务器为异步 所以需要更改

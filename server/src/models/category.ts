@@ -1,26 +1,16 @@
 import { CategoryData } from '@/models/category';
 import db from '../libs/database';
 import * as redis from '../libs/redis';
-import { enableCache } from '~/config/app'
 
 export async function getCategory(): Promise<CategoryData[]> {
     // 1- 找redis要
-
-    if (enableCache) {
-        let str = await redis.get(redis.KEY_APP_CATEGORY_CACHE)
-        if (str) {
-            try {
-                return JSON.parse(str)
-            } catch (e) { }
-        }
-    }
-
+    let data = await redis.readCache(redis.KEY_APP_CATEGORY_CACHE)
+    if(data) return data
     // 2- 万一没有
     let result: CategoryData[] = [];
     let categories = await db.query('SELECT * FROM category_table');
     let items = await db.query('SELECT * FROM category_item_table ORDER BY sort ASC');
     // 组装数据
-
     categories.forEach(data => {
         const { parent_id } = data;
         delete data.parent_id
@@ -48,13 +38,8 @@ export async function getCategory(): Promise<CategoryData[]> {
             parent.items.push(data);
         }
     })
-    if (enableCache) {
-        let setRedisCache = await redis.set(redis.KEY_APP_CATEGORY_CACHE, JSON.stringify(result))
-        if (!setRedisCache) {
-            console.error("SetRedisCache Failed!")
-        }
-    }
-
+    // 写入缓存
+    await redis.writeCache(redis.KEY_APP_CATEGORY_CACHE,result)
     // console.log(JSON.stringify(result))
     return result
 }

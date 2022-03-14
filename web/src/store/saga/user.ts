@@ -1,7 +1,9 @@
 import axios from '@/libs/axios';
 import { put, takeEvery } from 'redux-saga/effects'
 import actions from '../actions/index'
-import store from '../index'
+import store from '../store'
+
+
 
 
 export default function* token() {
