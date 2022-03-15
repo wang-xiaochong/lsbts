@@ -10,6 +10,8 @@ interface Props {
   dispatch: Dispatch;
 }
 
+const MAX_SELECT = 2;
+
 function Dialog(props: Props) {
   const [mySubscribe, setMySubscribe] = useState(props.user?.mySubscribe ? [...props.user?.mySubscribe] : [])
   const allSubscribe = props.site?.SubscribeData
@@ -34,14 +36,19 @@ function Dialog(props: Props) {
     if (index !== -1) {
       newData.splice(index, 1)
     } else {
-      newData.push(item)
+      if (newData.length - 1 < MAX_SELECT) { // 0是默认推荐
+        newData.push(item)
+      } else {
+        alert(`最多选择${MAX_SELECT}个`)
+      }
     }
     setMySubscribe(newData)
   }
 
   const saveMySubscribe = (newMySubscribe: SubscribeData[]) => {
     props.dispatch(actions.user.submitMySubscribe(newMySubscribe))
-      // props.onClose()
+    
+    props.onClose()
   }
 
 
@@ -60,7 +67,7 @@ function Dialog(props: Props) {
       <div className="g-subscribe-dialog">
         <h3 className="title">
           设置学习兴趣
-          <span>已选择 {mySubscribe ? mySubscribe.length - 1 : 0}/6 个学院</span>
+          <span>已选择 {mySubscribe ? mySubscribe.length - 1 : 0}/{MAX_SELECT} 个学院</span>
         </h3>
         <div>
           {list.map((data, index) => (

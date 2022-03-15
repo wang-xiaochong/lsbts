@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Dialog from './subscribe/dialog';
 import { Dispatch, actions, UserState, connect, RootState } from '@/store/index'
@@ -8,18 +8,31 @@ interface Props {
 }
 function Subscribe(props: Props) {
   const mySubscribe = props.user?.mySubscribe
+  const cur = props.user?.myCurSubscribe
+  const [dialogVisible, setDialogVisible] = useState(false);
+
+  useEffect(() => {
+    if (!mySubscribe?.find(item => item.ID === cur)) {
+      props.dispatch(actions.user.setMyCurSubscribe(0))
+    }
+  }, [mySubscribe, cur]);
+
+
   if (!mySubscribe) {
     props.dispatch(actions.user.getMySubscribe());
   }
-  const [cur] = useState(0);
-  const [dialogVisible, setDialogVisible] = useState(false);
+ 
   return (
     <>
       <div className="subscribe">
         <div className="page">
           <ul className="list">
             {mySubscribe?.map(item => (
-              <li key={item.ID} className={cur === item.ID ? "active" : ""}>
+              <li
+                key={item.ID}
+                className={cur === item.ID ? "active" : ""}
+                onClick={() => { props.dispatch(actions.user.setMyCurSubscribe(item.ID)) }}
+              >
                 {item.title}
               </li>
             ))}

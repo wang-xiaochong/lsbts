@@ -6,10 +6,11 @@ export interface UserState {
     token?: string;
     userData?: UserData;
     mySubscribe?: CategoryData[],
+    myCurSubscribe?: number,
 }
 
 
-export const initState: UserState = {}
+export const initState: UserState = { myCurSubscribe: 0 }
 
 export const userReducer = createReducer(
     initState,
@@ -32,5 +33,8 @@ export const userReducer = createReducer(
         // subscribe
         .addCase(actions.user.setMySubscribe, (state, action) => {
             return { ...state, mySubscribe: action.payload }
+        })
+        .addCase(actions.user.setMyCurSubscribe, (state, action) => {
+            return { ...state, myCurSubscribe: action.payload }
         })
 );

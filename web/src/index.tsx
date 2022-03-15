@@ -23,6 +23,11 @@ import actions from '@/store/actions/index'
 //   document.getElementById('root')
 // );
 common.dispatch = store.dispatch
+window.alert = function (str: string) {
+  store.dispatch(actions.app.showAlert({
+    content: str,
+  }))
+}
 store.dispatch(actions.user.restoreToken());
 let render = isDev ? ReactDOM.render : ReactDOM.hydrate
 // let categories: CategoryData[] = (window as any).categories

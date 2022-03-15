@@ -36,7 +36,6 @@ export default function* user() {
     })
     yield takeEvery(actions.user.submitMySubscribe, function* ({ payload }) {
         yield axios.post(`/api/user/mysubscribe`, JSON.stringify(payload))
+        yield put(actions.user.setMySubscribe(payload))
     })
-
-
 }

@@ -97,8 +97,6 @@ export async function setMySubscribe(userID: number, data: SubscribeData[]): Pro
     (?,?)
     `, [userID, category_id])
         }
-        // if (ret.affectedRows)
-
     }
 
 }
