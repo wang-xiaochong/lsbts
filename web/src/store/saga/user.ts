@@ -6,7 +6,7 @@ import store from '../store'
 
 
 
-export default function* token() {
+export default function* user() {
     // token
     yield takeEvery(actions.user.restoreToken, function* () {
         let token = localStorage.token;
@@ -34,5 +34,9 @@ export default function* token() {
             yield put(actions.user.setMySubscribe(data))
         }
     })
+    yield takeEvery(actions.user.submitMySubscribe, function* ({ payload }) {
+        yield axios.post(`/api/user/mysubscribe`, JSON.stringify(payload))
+    })
+
 
 }

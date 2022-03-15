@@ -21,7 +21,7 @@ class DataBase {
     }
     async execute(sql: string, args: any[]) {
         let res = await this.db.execute(sql,args)
-        return res
+        return res[0] as any[]
     }
 
 }

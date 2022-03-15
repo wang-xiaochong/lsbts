@@ -8,6 +8,13 @@ type Result = boolean
 type Token = {
     token: string
 }
+
+export type userData = {
+    nickname?: string,
+    token?: string,
+    avatar?: string,
+}
+
 export async function getUserCheck(kw: string): Promise<Token> {
     let rows = await db.query(`
     SELECT 
@@ -27,11 +34,6 @@ export async function getUserCheck(kw: string): Promise<Token> {
     return { token: '' }
 }
 
-export type userData = {
-    nickname?: string,
-    token?: string,
-    avatar?: string,
-}
 export async function getUserAdd(payload: userData): Promise<Result> {
     let ret = await db.execute(`
     INSERT INTO user_table
@@ -48,7 +50,6 @@ export async function getUserAdd(payload: userData): Promise<Result> {
     }
     return false
 }
-
 
 export async function getUserInfo(token: string): Promise<UserData | undefined> {
     let rows = await db.query(`
@@ -79,3 +80,5 @@ export async function getUserID(token: string | undefined): Promise<number> {
 
     return 0
 }
+
+

@@ -1,6 +1,8 @@
 import { CategoryData, getCategory } from "models/category";
 import React, { useState, useEffect } from "react";
 import { appData } from 'models/app'
+import { connect } from "react-redux";
+import { RootState } from "@/store";
 interface Props {
     // categories: CategoryData[]
 }
@@ -53,8 +55,10 @@ interface Props {
 
 // let categories: CategoryData[] = (window as any).categories
 
-
-export default function Category(props: Props) {
+export default connect((state: RootState) => {
+    return state
+  })(Category)
+function Category(props: Props) {
     // const [categories,setCategories] = useState(props.categories)
     const [categories, setCategories] = useState<CategoryData[] | undefined>( appData?.categories)
     // console.log(categories)

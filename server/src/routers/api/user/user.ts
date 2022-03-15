@@ -1,7 +1,8 @@
 
+import { SubscribeData } from '@/models/site'
 import Router from '@koa/router'
 import { ParesPostData } from '~/libs/req'
-import { getSubscibe } from '~/models/subscribe'
+import { getSubscibe, setMySubscribe } from '~/models/subscribe'
 import { getUserCheck, getUserAdd, userData, getUserInfo, getUserID } from '~/models/user'
 
 let router = new Router()
@@ -48,8 +49,24 @@ router.get('/getUserInfo', async ctx => {
 router.get('/mysubscribe', async ctx => {
     let ID = await getUserID(ctx.get('token'))
     ctx.body = await getSubscibe(ID);
-   
+
 })
+
+router.post('/mysubscribe', async ctx => {
+    try {
+    let ID = await getUserID(ctx.get('token'))
+    var data = (await ParesPostData(ctx)) as SubscribeData[]
+        await setMySubscribe(ID, data);
+        ctx.body = 'OK'
+    } catch (e: any) {
+        console.log(e)
+        ctx.body = e.msg
+        ctx.status = e.code
+    }
+    
+})
+
+
 
 
 

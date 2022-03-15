@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import sagaMiddleWare, { saga } from './saga/index';
 import { UserState, userReducer } from './modules/user';
 import { SiteState, siteReducer } from './modules/site';
+import { appReducer } from './modules/app';
 
 
 // state    ==> modules
@@ -20,6 +21,7 @@ const store = configureStore({
     reducer: {
         user: userReducer,
         site: siteReducer,
+        app: appReducer,
     },
     middleware: [sagaMiddleWare],
 });

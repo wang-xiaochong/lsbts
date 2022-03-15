@@ -17,4 +17,4 @@ router.use(categoryRoutes)
 router.use(siteRoutes)
 router.use(userRoutes)
 
-export default router.routes()
+export default router.routes();

@@ -1,5 +1,5 @@
-import React from 'react';
-import { SubscribeData } from '@/models/site';
+import React, { useState } from 'react';
+import { SubscribeData, SubscribeItem } from '@/models/site';
 import { connect, SiteState, Dispatch, actions, RootState, UserState } from '@/store/index'
 
 
@@ -11,17 +11,43 @@ interface Props {
 }
 
 function Dialog(props: Props) {
-  const mySubscribe = props.user?.mySubscribe
+  const [mySubscribe, setMySubscribe] = useState(props.user?.mySubscribe ? [...props.user?.mySubscribe] : [])
   const allSubscribe = props.site?.SubscribeData
-  console.log(mySubscribe)
 
   if (!allSubscribe) {
     props.dispatch(actions.site.getAllSubscribeData());
   }
+  if (!mySubscribe) {
+    props.dispatch(actions.user.getMySubscribe());
+  }
+
   const isChecked = (item: { ID: number }) => {
     if (!mySubscribe) return false;
     else return mySubscribe.find(myitem => (myitem.ID === item.ID));
   }
+
+  const triggerCheck = (item: SubscribeItem) => {
+    let newData = [...mySubscribe];
+    let index = mySubscribe.findIndex(myitem => (
+      myitem.ID === item.ID
+    ))
+    if (index !== -1) {
+      newData.splice(index, 1)
+    } else {
+      newData.push(item)
+    }
+    setMySubscribe(newData)
+  }
+
+  const saveMySubscribe = (newMySubscribe: SubscribeData[]) => {
+    props.dispatch(actions.user.submitMySubscribe(newMySubscribe))
+    props.dispatch(actions.app.showAlert({content:'home',visible:true}))
+      // props.onClose()
+  }
+
+
+
+
   //拆成左右两边
   const list: SubscribeData[][] = [
     [], []
@@ -35,7 +61,7 @@ function Dialog(props: Props) {
       <div className="g-subscribe-dialog">
         <h3 className="title">
           设置学习兴趣
-          <span>已选择 4/6 个学院</span>
+          <span>已选择 {mySubscribe ? mySubscribe.length - 1 : 0}/6 个学院</span>
         </h3>
         <div>
           {list.map((data, index) => (
@@ -48,6 +74,7 @@ function Dialog(props: Props) {
                       <li
                         className={`op ${isChecked(item) ? 'active' : ''}`}
                         key={item.ID}
+                        onClick={ev => triggerCheck(item)}
                       >{item.title}</li>
                     ))}
                   </ul>
@@ -58,14 +85,11 @@ function Dialog(props: Props) {
         </div>
         <div className="btns">
           <div className="btn btn-default" onClick={props.onClose}>下次再选</div>
-          <div className="btn btn-primary">保存</div>
+          <div className="btn btn-primary" onClick={ev => saveMySubscribe(mySubscribe)}>保存</div>
         </div>
       </div >
     </>
   );
-
-
-
 
 };
 

@@ -16,3 +16,4 @@ export const getUserData = createAction<void>('getUserData')
 // subscribe
 export const setMySubscribe = createAction<SubscribeData[]>('setMySubscribe')
 export const getMySubscribe = createAction<void>('getMySubscribe')
+export const submitMySubscribe = createAction<SubscribeData[]>('submitMySubscribe')
