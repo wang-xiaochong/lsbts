@@ -41,7 +41,6 @@ function Dialog(props: Props) {
 
   const saveMySubscribe = (newMySubscribe: SubscribeData[]) => {
     props.dispatch(actions.user.submitMySubscribe(newMySubscribe))
-    props.dispatch(actions.app.showAlert({content:'home',visible:true}))
       // props.onClose()
   }
 
