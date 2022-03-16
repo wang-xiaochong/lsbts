@@ -12,8 +12,14 @@ export interface SubscribeData {
 }
 
 
-export interface TopicData{
+export interface TopicData {
     ID: number;
     title: string;
     children?: TopicData[];
+}
+
+export interface LinkData {
+    ID: number;
+    title: string;
+    href: string;
 }

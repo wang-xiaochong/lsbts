@@ -1,0 +1,14 @@
+
+
+
+1.web           model     前台定义model，用于前台需要
+2.server        model     后台定义model，用于后台需要
+3.server        model     引入前台的model，数据库查找或者读取redis后，整合数据并返回
+4.server        roters     配置路由信息
+5.web           store      配置 action=>state=>reducer=>saga
+6.web           model      state初始值使用到appdata时对应添加
+7.web           commpoent  得到数据，进行渲染
+
+
+
+

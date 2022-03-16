@@ -3,6 +3,7 @@ import Router from '@koa/router'
 
 import { getAllBanners } from '~/models/banner'
 import { getCategory } from '~/models/category'
+import { getSiteLink } from '~/models/link'
 import { getSuggest } from '~/models/search'
 import { getAllSubscibe } from '~/models/subscribe'
 import { getTopics } from '~/models/topic'
@@ -44,5 +45,12 @@ router.get('/getTopics', async ctx => {
     let topics = await getTopics()
     ctx.body = topics
 })
+
+// link
+router.get('/getSiteLink', async ctx => {
+    let links = await getSiteLink()
+    ctx.body = links
+})
+
 
 export default router.routes()

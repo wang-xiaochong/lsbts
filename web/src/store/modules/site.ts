@@ -1,4 +1,4 @@
-import { SubscribeData, TopicData } from 'models/site'
+import { LinkData, SubscribeData, TopicData } from 'models/site'
 import { createReducer } from '@reduxjs/toolkit'
 import actions from '../actions/index'
 import { appData } from 'models/app';
@@ -6,11 +6,13 @@ import { appData } from 'models/app';
 export interface SiteState {
     SubscribeData?: SubscribeData[];
     topics?: TopicData[];
+    links?: LinkData[];
 }
 
 
 export const initState: SiteState = {
     topics: appData?.topics,
+    links: appData?.links,
 }
 
 export const siteReducer = createReducer(
@@ -23,6 +25,10 @@ export const siteReducer = createReducer(
         // topics
         .addCase(actions.site.setTopics, (state, action) => {
             return { ...state, topics: action.payload }
+        })
+        //links
+        .addCase(actions.site.setSiteLink, (state, action) => {
+            return { ...state, links: action.payload }
         })
 
 

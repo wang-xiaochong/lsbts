@@ -11,6 +11,8 @@ import { getSuggest } from '~/models/search'
 import { getAllBanners } from '~/models/banner'
 import { Provider } from 'react-redux'
 import store from './store'
+import { getTopics } from '~/models/topic'
+import { getSiteLink } from '~/models/link'
 
 
 let router = new Router()
@@ -23,11 +25,15 @@ if (enableRender) {
         let categories = await getCategory()
         let hotKeyWords = await getSuggest('')
         let banners = await getAllBanners()
+        let topics = await getTopics()
+        let links = await getSiteLink()
 
         let appData: AppData = {
             categories: categories,
             hotKeyWords: hotKeyWords,
-            banners: banners
+            banners: banners,
+            topics,
+            links,
         }
         let str = ReactDomServer.renderToString(
             <Provider store={store}>
