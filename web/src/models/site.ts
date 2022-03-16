@@ -10,3 +10,10 @@ export interface SubscribeData {
     title: string;
     children?: SubscribeItem[];
 }
+
+
+export interface TopicData{
+    ID: number;
+    title: string;
+    children?: TopicData[];
+}

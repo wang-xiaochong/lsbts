@@ -15,8 +15,9 @@ export type userData = {
     avatar?: string,
 }
 
+
 export async function getUserCheck(kw: string): Promise<Token> {
-    let rows = await db.query(`
+    let rows = await db.query<{ token: string }>(`
     SELECT 
     token 
     FROM user_table 
@@ -52,7 +53,9 @@ export async function getUserAdd(payload: userData): Promise<Result> {
 }
 
 export async function getUserInfo(token: string): Promise<UserData | undefined> {
-    let rows = await db.query(`
+    let rows = await db.query<{
+        ID: number, avatar: string, nickname: string, points: number, currency: number,
+    }>(`
     SELECT 
     ID,avatar,nickname,points,currency
     FROM user_table 
@@ -68,7 +71,7 @@ export async function getUserInfo(token: string): Promise<UserData | undefined> 
 export async function getUserID(token: string | undefined): Promise<number> {
     if (!token) return 0;
     else {
-        let rows = await db.query(
+        let rows = await db.query<{ ID: number }>(
             'SELECT ID FROM user_table WHERE token=?', [token]
         );
         let user = rows[0];

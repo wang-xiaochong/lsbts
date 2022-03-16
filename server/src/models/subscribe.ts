@@ -26,7 +26,7 @@ export async function getSubscibe(userID: number): Promise<SubscribeData[]> {
     } else {
         let category_id = JSON.parse(data.category_id)
         for (let i = 0; i < category_id.length; i++) {
-            let rows = await db.query('SELECT ID,title FROM category_table WHERE ID=?', category_id[i])
+            let rows = await db.query<{ ID: number, title: string }>('SELECT ID,title FROM category_table WHERE ID=?', category_id[i])
             result.push(rows[0])
         }
     }
@@ -81,9 +81,9 @@ export async function setMySubscribe(userID: number, data: SubscribeData[]): Pro
         for (let i = 1; i < data.length; i++) {
             category_id.push(data[i].ID)
         }
-        let rows = await db.query('SELECT * FROM user_subscribe_table WHERE user_id=?', [userID])
+        let rows = await db.query<{ ID: number, user_id: number, category_id: Text }>('SELECT * FROM user_subscribe_table WHERE user_id=?', [userID])
         let ret: any;
-        if (rows[0].length !== 0) {
+        if (rows[0].ID) {
             ret = await db.execute(`
     UPDATE  user_subscribe_table
     SET category_id=?

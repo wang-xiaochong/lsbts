@@ -16,6 +16,8 @@ import { Dispatch } from 'redux';
 import { getAllSubscribeData } from '@/store/actions/site';
 import { UserState } from '@/store/modules/user';
 import { SiteState } from '@/store/modules/site';
+import HotTopic from '@/commponents/footer/hotTopic';
+import Footer from '@/commponents/footer/footer';
 
 
 interface Props {
@@ -28,7 +30,7 @@ interface Props {
 
 function Home(props: Props) {
   props.appData && setAppData(props.appData);
-  
+
   useEffect(() => {
     const { token } = querystring(['token']);
     if (token) {
@@ -53,11 +55,19 @@ function Home(props: Props) {
 
   return (
     <div>
-      {/* <Login /> */}
-      {/* <Header categories={props.categories} /> */}
       <Header />
       <Banner />
       <Subscribe />
+      <div>课程列表</div>
+
+      <div className='all-course page'>
+        <a href='/list'>查看全部课程 &gt;</a>
+      </div>
+      
+
+      <HotTopic />
+      <Footer />
+
       <Alert />
     </div>
   );
