@@ -35,12 +35,12 @@ export async function getSubscibe(userID: number): Promise<SubscribeData[]> {
 
 
 // 所有数据 (对话框)
-export async function getAllSubscibe(userID: number): Promise<SubscribeData[]> {
+export async function getAllSubscibe(): Promise<SubscribeData[]> {
     let result: SubscribeData[] = await redis.readCache(redis.KEY_APP_ALL_SUBSCRIBE_CACHE)
     if (!result) {
         result = [];
         // 所有选项
-        let rows = await db.query('SELECT * FROM category_table ORDER BY parent_id') as CategoryRow[]
+        let rows = await db.all('category_table','parent_id','asc') as CategoryRow[]
         rows.forEach(row => {
             if (row.parent_id == 0) {
                 result.push({

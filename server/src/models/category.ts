@@ -21,13 +21,13 @@ export async function getCategory(): Promise<CategoryData[]> {
     if (data) return data
     // 2- 万一没有
     let result: CategoryData[] = [];
-    let categories = await db.all<CategoryRow>('category_table','parent_id','asc');
+    let categories = await db.all<CategoryRow>('category_table', 'parent_id', 'asc');
     let items = await db.all<CategoryItemRow>('category_item_table', 'sort', 'asc');
     // 组装数据
     categories.forEach(data => {
         let categoryData: CategoryData = {
             ID: data.ID,
-            title:data.title,
+            title: data.title,
         }
         const { parent_id } = data;
         if (parent_id === 0) {
@@ -44,13 +44,27 @@ export async function getCategory(): Promise<CategoryData[]> {
     });
     // 添加二级items
     items.forEach(data => {
+        let categoryItem: CategoryData = {
+            ID: data.ID,
+            title: data.title,
+        }
         const { category_id } = data;
         let parent = result.find(data => data.ID === category_id)
         if (parent) {
             parent.items = parent.items || [];
-            parent.items.push(data);
+            parent.items.push(categoryItem);
         }
+        for (let i = 0; i < result.length; i++) {
+            let itemParent = result[i].children?.find(data => data.ID === category_id)
+            if (itemParent) {
+                itemParent.items = itemParent.items || [];
+                itemParent.items.push(categoryItem);
+                break;
+            }
+        }
+
     })
+    // console.log(JSON.stringify(result))
     // 写入缓存
     await redis.writeCache(redis.KEY_APP_CATEGORY_CACHE, result)
     // console.log(JSON.stringify(result))

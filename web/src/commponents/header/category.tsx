@@ -61,7 +61,6 @@ export default connect((state: RootState) => {
 function Category(props: Props) {
     // const [categories,setCategories] = useState(props.categories)
     const [categories, setCategories] = useState<CategoryData[] | undefined>( appData?.categories)
-    // console.log(categories)
     useEffect(() => {
         if (!categories) {
             getCategory().then(arr => {

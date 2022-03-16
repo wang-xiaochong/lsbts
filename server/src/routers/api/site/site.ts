@@ -34,7 +34,7 @@ router.get('/getAllBanners', async ctx => {
 
 //subscribe
 router.get('/getAllSubscibe', async ctx => {
-    let subscibes = await getAllSubscibe(0)
+    let subscibes = await getAllSubscibe()
     ctx.body = subscibes
 })
 

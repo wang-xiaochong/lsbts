@@ -15,8 +15,13 @@ interface TopicItemRow {
 }
 
 export async function getTopics(): Promise<TopicData[]> {
-    let topics = await db.all<TopicData>('topic_table');
+    let topics = await db.all<TopicRow>('topic_table');
     let items = await db.all<TopicItemRow>('topic_item_table');
+
+    
+
+
+
     return []
 }
 
