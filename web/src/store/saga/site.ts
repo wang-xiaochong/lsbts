@@ -11,4 +11,12 @@ export default function* site() {
             yield put(actions.site.setAllSubscribeData(data))
         }
     })
+
+    yield takeEvery(actions.site.getTopics, function* () {
+        let { data } = yield axios.get('/api/site/getTopics');
+        yield put(actions.site.setTopics(data));
+    })
+
+
+
 }

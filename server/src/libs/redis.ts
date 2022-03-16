@@ -6,7 +6,7 @@ import { enableCache } from '~/config/app';
 //KEYS
 export const KEY_APP_CATEGORY_CACHE = 'KEY_APP_CATEGORY_CACHE'
 export const KEY_APP_ALL_SUBSCRIBE_CACHE = 'KEY_APP_ALL_SUBSCRIBE_CACHE'
-
+export const KEY_APP_TOPICS = 'KEY_APP_TOPICS'
 
 let client = redis.createClient(redisConf)
 

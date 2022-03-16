@@ -1,24 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { RootState, Dispatch, SiteState, connect, actions } from '@/store/index'
 
 interface Props {
-
+  site?: SiteState,
+  dispatch: Dispatch,
 }
 
-export default function HotTopic(props: Props) {
+function HotTopic(props: Props) {
+  const topics = props.site?.topics;
+  if (!topics) {
+    props.dispatch(actions.site.getTopics())
+  }
+  const [cur, setCur] = useState(0);
+
+
+
   return (
     <div className="ad-bottom">
       <h4 className="cap">热门知识</h4>
       <ul className="tabs page">
-        <li className="tab-item active">IT·互联网</li>
-        <li className="tab-item">设计·创作</li>
-        <li className="tab-item">电商·营销</li>
-        <li className="tab-item">职业·考证</li>
-        <li className="tab-item">升学·考研</li>
-        <li className="tab-item">兴趣·生活</li>
+        {
+          topics?.map((item, index) => (
+            <li
+              className={`tab-item ${index === topics.length - 1 ? 'last' : ''} ${index === cur ? 'active' : ''}`}
+              key={item.ID}
+              onClick={() => setCur(index)}
+            >{item.title}</li>
+          ))
+        }
       </ul>
-      <div className="content page">
-        <a href="/search?kw=xxx">mpacc培训</a>
-      </div>
+      {
+        topics ? (
+          <div className="content page">
+            {
+              topics[cur].children?.map(item => (
+                <a href={`/search?kw=${item.title}`} key={item.ID}>{item.title}</a>
+              ))
+            }
+          </div>
+        ) : ''
+      }
+
     </div>
   );
 }
+
+export default connect((state: RootState) => { return state })(HotTopic)

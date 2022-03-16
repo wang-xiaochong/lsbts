@@ -5,6 +5,7 @@ import { getAllBanners } from '~/models/banner'
 import { getCategory } from '~/models/category'
 import { getSuggest } from '~/models/search'
 import { getAllSubscibe } from '~/models/subscribe'
+import { getTopics } from '~/models/topic'
 
 let router = new Router()
 
@@ -36,6 +37,12 @@ router.get('/getAllBanners', async ctx => {
 router.get('/getAllSubscibe', async ctx => {
     let subscibes = await getAllSubscibe()
     ctx.body = subscibes
+})
+
+// topic
+router.get('/getTopics', async ctx => {
+    let topics = await getTopics()
+    ctx.body = topics
 })
 
 export default router.routes()
