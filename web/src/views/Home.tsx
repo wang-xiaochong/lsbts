@@ -10,7 +10,7 @@ import Alert from '@/commponents/alert';
 
 import { setAppData, AppData } from 'models/app';
 import querystring from '@/libs/querystring';
-import { AppState, RootState } from '@/store/index'
+import { actions, AppState, CourseState, RootState } from '@/store/index'
 import { getUserData, saveToken, setToken } from '@/store/actions/user'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux';
@@ -26,11 +26,28 @@ interface Props {
   app?: AppState;
   user: UserState;
   site: SiteState;
+  course?: CourseState;
   dispatch: Dispatch;
 }
 
+
+
 function Home(props: Props) {
   props.appData && setAppData(props.appData);
+  const indexCourseList = props.course?.indexCourseList
+
+  let courseListMetas = [
+    { category: 1, title: 'IT互联网热门课程' },
+    { category: 4, title: '设计创作热门课程' }
+  ]
+
+  if (indexCourseList) {
+    courseListMetas.forEach(({ category }) => {
+      if (!indexCourseList[category])
+        props.dispatch(actions.course.getIndexCourseSummary(category))
+    })
+  }
+
 
   useEffect(() => {
     const { token } = querystring(['token']);
@@ -59,12 +76,17 @@ function Home(props: Props) {
       <Header />
       <Banner />
       <Subscribe />
-      <CourseList />
+      {
+        indexCourseList ? courseListMetas.map(item => (
+          <CourseList key={item.category} title={item.title} data={indexCourseList[item.category]} />
+        )) : ''
+      }
+
 
       <div className='all-course page'>
         <a href='/list'>查看全部课程 &gt;</a>
       </div>
-      
+
 
       <HotTopic />
       <Footer />

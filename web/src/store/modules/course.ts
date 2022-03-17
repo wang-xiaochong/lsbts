@@ -1,7 +1,6 @@
 
 import { createReducer } from '@reduxjs/toolkit'
 import actions from '../actions/index'
-import { appData } from 'models/app';
 import { CourseSummaryData } from '@/models/course'
 
 export interface CourseState {

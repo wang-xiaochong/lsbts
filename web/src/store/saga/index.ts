@@ -1,12 +1,13 @@
 
 import user from './user';
 import site from './site';
+import course from './course'
 import createSagaMiddleWare from 'redux-saga'
 import { all } from 'redux-saga/effects';
 
 export function* saga() {
     yield all([
-        user(),site(),
+        user(), site(), course(),
     ])
 }
 
