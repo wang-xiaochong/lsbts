@@ -3,6 +3,7 @@ import sagaMiddleWare, { saga } from './saga/index';
 import { UserState, userReducer } from './modules/user';
 import { SiteState, siteReducer } from './modules/site';
 import { appReducer } from './modules/app';
+import { courseReducer } from './modules/course';
 
 
 // state    ==> modules
@@ -22,6 +23,8 @@ const store = configureStore({
         user: userReducer,
         site: siteReducer,
         app: appReducer,
+        course: courseReducer,
+
     },
     middleware: [sagaMiddleWare],
 });

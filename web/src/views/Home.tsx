@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import Header from '@/commponents/header/header'
 import Banner from '@/commponents/index/banner'
 import Subscribe from '@/commponents/index/subscribe'
+import CourseList from '@/commponents/courseList'
 import Alert from '@/commponents/alert';
 
 
@@ -58,7 +59,7 @@ function Home(props: Props) {
       <Header />
       <Banner />
       <Subscribe />
-      <div>课程列表</div>
+      <CourseList />
 
       <div className='all-course page'>
         <a href='/list'>查看全部课程 &gt;</a>

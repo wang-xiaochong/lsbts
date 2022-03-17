@@ -1,14 +1,19 @@
 import { CategoryData } from "./category";
 import { SearchResult } from "./search";
 import { BannerData } from "./banner";
+import { CourseSummaryData } from "./course";
 import { LinkData, TopicData } from "./site";
 
 export interface AppData {
+    // site
     categories?: CategoryData[]
     hotKeyWords?: SearchResult
     banners?: BannerData[]
     topics?: TopicData[],
-    links?:LinkData[],
+    links?: LinkData[],
+
+    // course
+    courses?: CourseSummaryData[],
 }
 
 export function setAppData(data: AppData) {
