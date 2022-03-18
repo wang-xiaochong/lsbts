@@ -35,7 +35,14 @@ interface Props {
 interface State {
     categories: {
         [key: string]: number[],
-    }
+    },
+    filter: FilterOptions,
+}
+
+export interface FilterOptions {
+    type?: 'free' | 'cost',
+    options: ('video' | 'live' | 'playback' | 'auth' | 'living')[],
+    sort: 'default' | 'rank' | 'students' | 'price',
 }
 
 
@@ -44,12 +51,18 @@ function List(props: Props) {
     props.appData && setAppData(props.appData);
 
     const [data, setData] = useState<State>({
-        categories: {}
+        categories: {},
+        filter: {
+            type: undefined,
+            options: [],
+            sort: 'default'
+        }
+
     })
 
     useEffect(() => {
         console.log('search', data)
-    },[data])
+    }, [data])
 
     const categories = [
         {
@@ -82,6 +95,7 @@ function List(props: Props) {
                         { title: 'Java开发', href: '/list/1/java' },
                     ]} />
 
+                    {/* coursecategories */}
                     {
                         categories.map(item => (
                             <CourseCategory
@@ -101,10 +115,10 @@ function List(props: Props) {
                             />
                         ))
                     }
-                    {/* <CourseCategory title='分类' value={[]} onChange={(value) => { console.log(value) }} items={[]} /> */}
-                    <CourseFilter />
 
-
+                    <CourseFilter data={data.filter} onChange={options => setData({
+                        ...data, filter: options
+                    })} />
                     <CourseList title="课程列表" data={[]} />
                     <Pagination />
                 </div>
