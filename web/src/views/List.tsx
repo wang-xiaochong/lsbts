@@ -43,8 +43,11 @@ function List(props: Props) {
                         { title: 'IT互联网', href: '/list/1' },
                         { title: 'Java开发', href: '/list/1/java' },
                     ]} />
-                    
-                    <CourseCategory />
+
+                    <CourseCategory title='分类' value={[]} items={[{ ID: 2, title: 'Java' }, { ID: 3, title: 'python' }]} />
+                    <CourseCategory title='知识点' value={[]} multi items={[{ ID: 3, title: 'c++' }, { ID: 4, title: '数据库' }]} />
+                
+
                     <CourseFilter />
                     <CourseList title="课程列表" data={[]} />
                     <Pagination />

@@ -1,23 +1,29 @@
 import React from 'react';
 
 interface Props {
-
+  title: string,
+  value?: number[],
+  items: {
+    ID: number;
+    title: string;
+  }[],
+  multi?: boolean,
 }
 
 export default function Category(props: Props) {
+  const { title, items, multi, value } = props
   return (
     <div className="course-category">
-      <div className="title">全部课程</div>
+      <div className="title">{title}:</div>
       <ul className="options">
         <li className="active">全部</li>
-        <li>IT·互联网</li>
-        <li>设计·创作</li>
-        <li>电商·营销</li>
-        <li>职业·考证</li>
-        <li>升学·考研</li>
-        <li>兴趣·生活</li>
-        <li>语言·留学</li>
+        {items ? items.map(item => (
+          <li key={item.ID} className={value?.indexOf(item.ID) !== -1 ? 'active' : ''} >{item.title}</li>
+        )) : ''}
       </ul>
+      {
+        multi ? (<span className='multi'>多选</span>) : ''
+      }
     </div>
   );
 }
