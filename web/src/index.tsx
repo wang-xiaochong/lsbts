@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from '@/views/Home';
+// import Home from '@/views/Home';
+import APP from './App';
 import reportWebVitals from './reportWebVitals';
-import '@/assets/less/base.less'
-import '@/assets/less/common.less'
-import '@/assets/less/index.less'
-import '@/assets/less/subscribe.less'
-import '@/assets/less/alert.less'
+
+
 
 // import { CategoryData } from 'models/category';
 import { AppData } from 'models/app';
@@ -36,7 +34,8 @@ let appData: AppData = (window as any).appData
 render(
   // <App categories={categories} />,
   <Provider store={store}>
-    <Home appData={appData} />,
+    {/* <Home appData={appData} />, */}
+    <APP />,
   </Provider>,
   // <Home />,
   document.getElementById('root')

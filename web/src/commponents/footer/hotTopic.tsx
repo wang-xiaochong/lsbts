@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { RootState, Dispatch, SiteState, connect, actions } from '@/store/index'
 
 interface Props {
+  title?: string,
   site?: SiteState,
   dispatch: Dispatch,
 }
@@ -18,7 +19,7 @@ function HotTopic(props: Props) {
 
   return (
     <div className="ad-bottom">
-      <h4 className="cap">热门知识</h4>
+      {props.title ? (<h4 className="cap">{props.title}</h4>) : ''}
       <ul className="tabs page">
         {
           topics?.map((item, index) => (
