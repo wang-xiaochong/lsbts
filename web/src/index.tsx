@@ -4,10 +4,8 @@ import ReactDOM from 'react-dom';
 import APP from './App';
 import reportWebVitals from './reportWebVitals';
 
-
-
 // import { CategoryData } from 'models/category';
-import { AppData } from 'models/app';
+// import { AppData } from 'models/app';
 import { isDev } from '@/config/app'
 import { Provider } from 'react-redux'
 import common from '@/libs/common'
@@ -29,7 +27,7 @@ window.alert = function (str: string) {
 store.dispatch(actions.user.restoreToken());
 let render = isDev ? ReactDOM.render : ReactDOM.hydrate
 // let categories: CategoryData[] = (window as any).categories
-let appData: AppData = (window as any).appData
+// let appData: AppData = (window as any).appData
 // console.log(categories)
 render(
   // <App categories={categories} />,

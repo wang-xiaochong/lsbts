@@ -4,8 +4,6 @@ import { useEffect } from 'react'
 import Banner from '@/commponents/index/banner'
 import Subscribe from '@/commponents/index/subscribe'
 import CourseList from '@/commponents/courseList'
-import Alert from '@/commponents/alert';
-
 
 import { setAppData, AppData } from 'models/app';
 import { actions, AppState, CourseState, RootState } from '@/store/index'
@@ -16,7 +14,6 @@ import { UserState } from '@/store/modules/user';
 import { SiteState } from '@/store/modules/site';
 import HotTopic from '@/commponents/footer/hotTopic';
 import { CategoryData } from 'models/category';
-
 
 interface Props {
   appData?: AppData;
