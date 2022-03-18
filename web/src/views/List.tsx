@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import ReactDOMServer from 'react-dom/server'
 
 import CourseList from '@/commponents/courseList'
@@ -31,8 +31,46 @@ interface Props {
     course?: CourseState;
     dispatch: Dispatch;
 }
+
+interface State {
+    categories: {
+        [key: string]: number[],
+    }
+}
+
+
+
 function List(props: Props) {
     props.appData && setAppData(props.appData);
+
+    const [data, setData] = useState<State>({
+        categories: {}
+    })
+
+    useEffect(() => {
+        console.log('search', data)
+    },[data])
+
+    const categories = [
+        {
+            key: 'type',
+            title: '分类',
+            multi: false,
+            items: [
+                { ID: 2, title: 'Java' },
+                { ID: 3, title: 'python' }
+            ]
+        },
+        {
+            key: 'cate_1',
+            title: '知识点',
+            multi: true,
+            items: [
+                { ID: 3, title: 'c++' },
+                { ID: 4, title: '数据库' }
+            ]
+        }
+    ]
 
     return (
         <>
@@ -44,11 +82,29 @@ function List(props: Props) {
                         { title: 'Java开发', href: '/list/1/java' },
                     ]} />
 
-                    <CourseCategory title='分类' value={[]} items={[{ ID: 2, title: 'Java' }, { ID: 3, title: 'python' }]} />
-                    <CourseCategory title='知识点' value={[]} multi items={[{ ID: 3, title: 'c++' }, { ID: 4, title: '数据库' }]} />
-                
-
+                    {
+                        categories.map(item => (
+                            <CourseCategory
+                                key={item.key}
+                                title={item.title}
+                                items={item.items}
+                                multi={item.multi}
+                                value={data.categories[item.key]}
+                                onChange={value => {
+                                    setData({
+                                        ...data, categories: {
+                                            ...data.categories,
+                                            [item.key]: value,
+                                        }
+                                    });
+                                }}
+                            />
+                        ))
+                    }
+                    {/* <CourseCategory title='分类' value={[]} onChange={(value) => { console.log(value) }} items={[]} /> */}
                     <CourseFilter />
+
+
                     <CourseList title="课程列表" data={[]} />
                     <Pagination />
                 </div>
