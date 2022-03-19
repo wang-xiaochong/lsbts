@@ -7,7 +7,7 @@ export interface AlertProps {
     title?: string;
 
     visible?: boolean;
-    
+
     showOk?: boolean;
     onOk?: () => void | Promise<void>;
 
@@ -16,11 +16,13 @@ export interface AlertProps {
 }
 
 export interface AppState {
+    searchBarKw?: string,
     alertProps?: AlertProps;
 }
 
 
 export const initState: AppState = {
+    searchBarKw: '',
     alertProps: {
         content: '',
         visible: false,
@@ -44,6 +46,13 @@ export const appReducer = createReducer(
                     content: '',
                     visible: false,
                 }
+            }
+        })
+        //search keyword
+        .addCase(actions.app.setSearchBarKw, (state, action) => {
+            return {
+                ...state,
+                searchBarKw: action.payload,
             }
         })
 

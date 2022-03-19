@@ -1,11 +1,14 @@
 import React from 'react';
-
+import { Dispatch, connect, RootState, AppState } from '@/store/index'
 interface Props {
   kw: string;
   total: number;
+  app?: AppState
+  onClearKw:()=>void,
+  dispatch: Dispatch
 }
 
-export default function Keyword(props: Props) {
+function Keyword(props: Props) {
   const { kw, total } = props;
 
   return (
@@ -13,7 +16,7 @@ export default function Keyword(props: Props) {
       <div className="keyword">
         关键词:
         <span className="bold kw">{kw}</span>
-        <i className="icon icon-close-grey" />
+        <i className="icon icon-close-grey" onClick={props.onClearKw} />
       </div>
       <div className="info">
         共找
@@ -24,3 +27,7 @@ export default function Keyword(props: Props) {
     </div>
   );
 }
+
+export default connect((state: RootState) => {
+  return state
+})(Keyword);

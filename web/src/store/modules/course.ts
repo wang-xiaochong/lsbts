@@ -7,10 +7,13 @@ export interface CourseState {
     indexCourseList: {
         [key: string]: CourseSummaryData[],
     };
+    searchCourseList: CourseSummaryData[]
+
 }
 
 export const initState: CourseState = {
     indexCourseList: {},
+    searchCourseList: [],
 }
 
 export const courseReducer = createReducer(
@@ -28,6 +31,16 @@ export const courseReducer = createReducer(
             }
 
         })
+
+        // search result
+        .addCase(actions.course.setSearchCourseResult, (state, action) => {
+            return {
+                ...state,
+                searchCourseList: action.payload,
+            }
+        })
+
+      
 
 
 

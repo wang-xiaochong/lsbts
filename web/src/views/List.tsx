@@ -14,11 +14,12 @@ import Pagination from '@/commponents/pagination'
 
 
 import { setAppData, AppData } from 'models/app';
-import { AppState, CourseState, RootState } from '@/store/index'
+import { AppState, CourseState, RootState, actions } from '@/store/index'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux';
 import { UserState } from '@/store/modules/user';
 import { SiteState } from '@/store/modules/site';
+import { SearchParams } from 'models/course';
 
 
 
@@ -32,37 +33,31 @@ interface Props {
     dispatch: Dispatch;
 }
 
-interface State {
-    categories: {
-        [key: string]: number[],
-    },
-    filter: FilterOptions,
-}
-
-export interface FilterOptions {
-    type?: 'free' | 'cost',
-    options: ('video' | 'live' | 'playback' | 'auth' | 'living')[],
-    sort: 'default' | 'rank' | 'students' | 'price',
-}
 
 
 
 function List(props: Props) {
     props.appData && setAppData(props.appData);
-
-    const [data, setData] = useState<State>({
+    const [searchParams, setSearchParams] = useState<SearchParams>({
+        category: 0,
+        category_leval: 0,
+        page: 0,
         categories: {},
         filter: {
             type: undefined,
             options: [],
             sort: 'default'
         }
-
     })
-
+    const listCourseList = props.course?.searchCourseList;
+    const searchBarKw = props.app?.searchBarKw
     useEffect(() => {
-        console.log('search', data)
-    }, [data])
+        // console.log('search', searchParams)
+        searchParams.ketword = searchBarKw
+        props.dispatch(actions.course.getSearchCourse(searchParams))
+
+    }, [searchParams, searchBarKw])
+
 
     const categories = [
         {
@@ -89,7 +84,14 @@ function List(props: Props) {
         <>
             <div className="main-container page">
                 <div className="left">
-                    <Keyword kw="javascript" total={185} />
+                    
+                    {searchBarKw ? (
+                        <Keyword
+                            kw={searchBarKw} total={185}
+                            onClearKw={()=>{props.dispatch(actions.app.setSearchBarKw(''))}}
+                        />
+                    ) : ''}
+
                     <Footpoint items={[
                         { title: 'IT互联网', href: '/list/1' },
                         { title: 'Java开发', href: '/list/1/java' },
@@ -103,11 +105,11 @@ function List(props: Props) {
                                 title={item.title}
                                 items={item.items}
                                 multi={item.multi}
-                                value={data.categories[item.key]}
+                                value={searchParams.categories[item.key]}
                                 onChange={value => {
-                                    setData({
-                                        ...data, categories: {
-                                            ...data.categories,
+                                    setSearchParams({
+                                        ...searchParams, categories: {
+                                            ...searchParams.categories,
                                             [item.key]: value,
                                         }
                                     });
@@ -116,10 +118,10 @@ function List(props: Props) {
                         ))
                     }
 
-                    <CourseFilter data={data.filter} onChange={options => setData({
-                        ...data, filter: options
+                    <CourseFilter data={searchParams.filter} onChange={options => setSearchParams({
+                        ...searchParams, filter: options
                     })} />
-                    <CourseList title="课程列表" data={[]} />
+                    <CourseList title="课程列表" data={listCourseList} />
                     <Pagination />
                 </div>
                 <div className="right">

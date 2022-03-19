@@ -1,4 +1,4 @@
-import { FilterOptions } from '@/views/List';
+import { FilterOptions } from '@/models/course';
 import React from 'react';
 
 interface Props {
