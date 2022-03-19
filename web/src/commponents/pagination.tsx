@@ -12,7 +12,9 @@ export default function Pagination(props: Props) {
   const { cur, total, pageSize, onChange } = props;
   const totalPage = Math.ceil(total / pageSize);
 
-  const allPage = (fn: (index: number | string) => ReactChild) => {
+  if(totalPage<=1) return <></>
+
+  const allPage = (fn: (item: number | string,index:number) => ReactChild) => {
     let pages: (number | string)[] = [];
 
     const add = (i: number) => {
@@ -55,10 +57,10 @@ export default function Pagination(props: Props) {
         if (cur > 1) onChange(cur - 1);
       }}>上一页</span>
 
-      {allPage(index => (
-        <span key={index}  className={index === cur ? 'active' : ''} onClick={() => {
-          if (index !== cur && typeof index !== 'string') onChange(index);
-        }}>{index}</span>
+      {allPage((item,index) => (
+        <span key={index}  className={item === cur ? 'active' : ''} onClick={() => {
+          if (item !== cur && typeof item !== 'string') onChange(item);
+        }}>{item}</span>
       ))}
 
       <span className={cur === totalPage ? 'disabled' : ''} onClick={() => {

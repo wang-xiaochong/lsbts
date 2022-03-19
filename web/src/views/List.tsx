@@ -19,7 +19,7 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux';
 import { UserState } from '@/store/modules/user';
 import { SiteState } from '@/store/modules/site';
-import { SearchParams } from 'models/course';
+import { CourseListSearchPageSize, SearchParams } from 'models/course';
 
 
 
@@ -49,15 +49,16 @@ function List(props: Props) {
             sort: 'default'
         }
     })
-    const listCourseList = props.course?.searchCourseList;
+    const searchCourseResult = props.course?.searchCourseResult;
     const searchBarKw = props.app?.searchBarKw;
     const [page, setPage] = useState(1)
     useEffect(() => {
         // console.log('search', searchParams)
-        searchParams.ketword = searchBarKw
+        searchParams.keyword = searchBarKw
+        searchParams.page = page
         props.dispatch(actions.course.getSearchCourse(searchParams))
 
-    }, [searchParams, searchBarKw])
+    }, [searchParams, searchBarKw,page])
 
 
     const categories = [
@@ -88,7 +89,7 @@ function List(props: Props) {
 
                     {searchBarKw ? (
                         <Keyword
-                            kw={searchBarKw} total={185}
+                            kw={searchBarKw} total={searchCourseResult?.total || 0}
                             onClearKw={() => { props.dispatch(actions.app.setSearchBarKw('')) }}
                         />
                     ) : ''}
@@ -125,15 +126,17 @@ function List(props: Props) {
                     })} />
 
 
-                    <CourseList data={listCourseList} />
+                    <CourseList data={searchCourseResult?.data} />
 
 
                     <Pagination
                         cur={page}
-                        total={189}
-                        pageSize={24}
+                        total={searchCourseResult?.total || 0}
+                        pageSize={CourseListSearchPageSize}
                         onChange={value => setPage(value)}
                     />
+
+
                 </div>
 
                 <div className="right">

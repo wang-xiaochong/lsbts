@@ -2,7 +2,8 @@
 import { SearchParams } from '@/models/course'
 import Router from '@koa/router'
 import { ParesPostData } from '~/libs/req'
-import { getCourseSummaryByCategory, search } from '~/models/course'
+import { getCourseSummaryByCategory } from '~/models/course'
+import { searchCourse } from '~/models/search'
 let router = new Router()
 // course
 router.prefix('/course')
@@ -15,7 +16,7 @@ router.get('/index-course-list', async ctx => {
 
 router.post('/search', async ctx => {
     var data = (await ParesPostData(ctx)) as SearchParams
-    ctx.body = await search(data);
+    ctx.body = await searchCourse(data);
 })
 
 //

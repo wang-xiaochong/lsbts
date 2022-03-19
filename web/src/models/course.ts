@@ -11,10 +11,10 @@ export interface CourseSummaryData {
     agency_name: string,
 
 }
-
+export const CourseListSearchPageSize = 24;
 // search
 export interface SearchParams {
-    ketword?: string,
+    keyword?: string,
     category: number,
     category_leval: number,
     page: number,
@@ -28,4 +28,10 @@ export interface FilterOptions {
     type?: 'free' | 'cost',
     options: ('video' | 'live' | 'playback' | 'auth' | 'living')[],
     sort: 'default' | 'rank' | 'students' | 'price',
+}
+
+
+export interface SearchCourseResult {
+    data: CourseSummaryData[],
+    total: number,
 }
