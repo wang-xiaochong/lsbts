@@ -11,7 +11,7 @@ export default function CourseList(props: Props) {
   const { title, data } = props;
   return (
     <div className="course-list">
-      <h3 className="cap">{title}</h3>
+      {title?(<h3 className="cap">{title}</h3>):''}
       <ul className="page list">
         {data?.map(course => (
           <li className="course" key={course.ID}>

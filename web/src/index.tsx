@@ -33,7 +33,7 @@ render(
   // <App categories={categories} />,
   <Provider store={store}>
     {/* <Home appData={appData} />, */}
-    <APP />,
+    <APP />
   </Provider>,
   // <Home />,
   document.getElementById('root')

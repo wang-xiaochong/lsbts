@@ -50,7 +50,8 @@ function List(props: Props) {
         }
     })
     const listCourseList = props.course?.searchCourseList;
-    const searchBarKw = props.app?.searchBarKw
+    const searchBarKw = props.app?.searchBarKw;
+    const [page, setPage] = useState(1)
     useEffect(() => {
         // console.log('search', searchParams)
         searchParams.ketword = searchBarKw
@@ -84,11 +85,11 @@ function List(props: Props) {
         <>
             <div className="main-container page">
                 <div className="left">
-                    
+
                     {searchBarKw ? (
                         <Keyword
                             kw={searchBarKw} total={185}
-                            onClearKw={()=>{props.dispatch(actions.app.setSearchBarKw(''))}}
+                            onClearKw={() => { props.dispatch(actions.app.setSearchBarKw('')) }}
                         />
                     ) : ''}
 
@@ -118,12 +119,23 @@ function List(props: Props) {
                         ))
                     }
 
+
                     <CourseFilter data={searchParams.filter} onChange={options => setSearchParams({
                         ...searchParams, filter: options
                     })} />
-                    <CourseList title="课程列表" data={listCourseList} />
-                    <Pagination />
+
+
+                    <CourseList data={listCourseList} />
+
+
+                    <Pagination
+                        cur={page}
+                        total={189}
+                        pageSize={24}
+                        onChange={value => setPage(value)}
+                    />
                 </div>
+
                 <div className="right">
                     <AdAside />
                 </div>
