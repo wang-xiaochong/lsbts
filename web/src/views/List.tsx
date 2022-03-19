@@ -57,7 +57,7 @@ function List(props: Props) {
         searchParams.keyword = searchBarKw
         searchParams.page = page
         props.dispatch(actions.course.getSearchCourse(searchParams))
-
+        
     }, [searchParams, searchBarKw,page])
 
 

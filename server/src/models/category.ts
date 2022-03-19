@@ -21,8 +21,9 @@ export async function getCategory(): Promise<CategoryData[]> {
     if (data) return data
     // 2- 万一没有
     let result: CategoryData[] = [];
+
     let categories = await db.all<CategoryRow>('category_table', 'parent_id', 'asc');
-    let items = await db.all<CategoryItemRow>('category_item_table', 'sort', 'asc');
+    let items = await db.all<CategoryItemRow>('category_item_table', 'category_id', 'asc');
     // 组装数据
     categories.forEach(data => {
         let categoryData: CategoryData = {
@@ -42,6 +43,7 @@ export async function getCategory(): Promise<CategoryData[]> {
             }
         }
     });
+
     // 添加二级items
     items.forEach(data => {
         let categoryItem: CategoryData = {
@@ -49,22 +51,30 @@ export async function getCategory(): Promise<CategoryData[]> {
             title: data.title,
         }
         const { category_id } = data;
-        let parent = result.find(data => data.ID === category_id)
-        if (parent) {
-            parent.items = parent.items || [];
-            parent.items.push(categoryItem);
+        // 二级下面三级的添加
+        {
+            console.log(result)
+            result.forEach(data => {
+                let parent = data.children?.find(item => item.ID === category_id)
+                if (parent) {
+                    if (!parent.items) parent.items = [];
+                    parent.items.push(categoryItem)
+                }
+            })
         }
-        for (let i = 0; i < result.length; i++) {
-            let itemParent = result[i].children?.find(data => data.ID === category_id)
-            if (itemParent) {
-                itemParent.items = itemParent.items || [];
-                itemParent.items.push(categoryItem);
-                break;
+        // 一级下面三级添加
+        {
+            let parent = categories.find(data => data.ID === category_id)
+            if (parent) {
+                let leval1 = categories.find(data => data.ID === parent?.parent_id)
+                let ret = result.find(data => data.ID === leval1?.ID)
+                if (ret) ret.items = ret.items || []
+                if (ret?.items && ret?.items?.length < 3) {
+                    ret.items.push(categoryItem);
+                }
             }
         }
-
     })
-    // console.log(JSON.stringify(result))
     // 写入缓存
     await redis.writeCache(redis.KEY_APP_CATEGORY_CACHE, result)
     // console.log(JSON.stringify(result))

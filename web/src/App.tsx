@@ -22,6 +22,9 @@ import '@/assets/less/subscribe.less'
 // 列表(搜索)
 import '@/assets/less/list.less'
 
+// 路由
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 interface Props {
     user?: UserState;
     dispatch?: Dispatch;
@@ -47,11 +50,17 @@ export default function App(props: Props) {
     })
     return (
         <>
-            <Header />
-            {/* <Home /> */}
-            <List />
-            <Alert />
-            <Footer />
+            <BrowserRouter>
+                <Header />
+
+                <Routes>
+                    <Route path="/" element={<Home />}></Route>
+                    <Route path="/list" element={<List />}></Route>
+                </Routes>
+
+                <Alert />
+                <Footer />
+            </BrowserRouter>
         </>
     )
 

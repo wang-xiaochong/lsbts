@@ -1,5 +1,6 @@
 // import { CategoryData } from 'models/category';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Category from './category'
 import Searchbar from './searchbar'
 import User from './user'
@@ -31,11 +32,11 @@ export default function Header(props: Props) {
 
 const Logo = () => {
   return (
-    <a href="http://ke.qq.com/">
+    <Link to='/'>
       <h1 className="logo">
         腾讯课堂
       </h1>
-    </a>
+    </Link>
   )
 }
 
@@ -49,3 +50,4 @@ const Links = () => {
     </>
   )
 }
+

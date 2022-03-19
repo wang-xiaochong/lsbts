@@ -57,7 +57,8 @@ interface Props {
 
 export default connect((state: RootState) => {
     return state
-  })(Category)
+})(Category)
+  
 function Category(props: Props) {
     // const [categories,setCategories] = useState(props.categories)
     const [categories, setCategories] = useState<CategoryData[] | undefined>( appData?.categories)
