@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { appData } from 'models/app'
 import { connect } from "react-redux";
 import { RootState } from "@/store";
+import { Link } from "react-router-dom";
+import * as routers from '@/router'
 interface Props {
     // categories: CategoryData[]
 }
@@ -58,10 +60,10 @@ interface Props {
 export default connect((state: RootState) => {
     return state
 })(Category)
-  
+
 function Category(props: Props) {
     // const [categories,setCategories] = useState(props.categories)
-    const [categories, setCategories] = useState<CategoryData[] | undefined>( appData?.categories)
+    const [categories, setCategories] = useState<CategoryData[] | undefined>(appData?.categories)
     useEffect(() => {
         if (!categories) {
             getCategory().then(arr => {
@@ -82,11 +84,16 @@ function Category(props: Props) {
                     {categories ? (categories.map(category => (
                         <li key={category.ID}>
                             <div className="content">
-                                <div className="title">{category.title}</div>
+                                <Link to={routers.list(category.ID, 1)} className="title">{category.title}</Link>
                                 <div className="sub-title">
                                     {category.items ? (<ul>
                                         {category.items.map(item => (
-                                            <li key={item.ID}>{item.title}</li>
+                                            <li>
+                                                <Link key={item.ID}
+                                                    to={routers.list(item.ID, 3)}
+                                                >{item.title}
+                                                </Link>
+                                            </li>
                                         ))}
                                     </ul>) : ''}
                                 </div>
@@ -94,18 +101,23 @@ function Category(props: Props) {
                             <div className="sub-list">
                                 <ul className="sub-list-ul">
                                     {category.children ? (category.children.map(item => (
-                                        <li className="sub-list-li" key={item.ID}>
-                                            <div className="main">
-                                                {item.title}
-                                            </div>
-                                            <div className="list">
-                                                <ul>
-                                                    {item.items ? (item.items.map(item => (
-                                                        <li key={item.ID}>{item.title}</li>
-                                                    ))) : ''}
-                                                </ul>
-                                            </div>
-                                        </li>
+
+                                        <Link to={routers.list(item.ID, 2)}>
+                                            <li className="sub-list-li" key={item.ID}>
+                                                <div className="main">
+                                                    {item.title}
+                                                </div>
+                                                <div className="list">
+                                                    <ul>
+                                                        {item.items ? (item.items.map(item => (
+                                                            <Link to={routers.list(item.ID, 3)}>
+                                                                <li key={item.ID}>{item.title}</li>
+                                                            </Link>
+                                                        ))) : ''}
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </Link>
                                     ))) : ''}
                                 </ul>
                             </div>

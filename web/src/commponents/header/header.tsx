@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Category from './category'
 import Searchbar from './searchbar'
 import User from './user'
+import * as routers from '@/router'
 
 interface Props {
   // categories: CategoryData[]
@@ -32,7 +33,7 @@ export default function Header(props: Props) {
 
 const Logo = () => {
   return (
-    <Link to='/'>
+    <Link to={routers.home()}>
       <h1 className="logo">
         腾讯课堂
       </h1>

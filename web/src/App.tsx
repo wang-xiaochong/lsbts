@@ -24,7 +24,7 @@ import '@/assets/less/list.less'
 
 // 路由
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
+import * as routers from '@/router'
 interface Props {
     user?: UserState;
     dispatch?: Dispatch;
@@ -54,7 +54,7 @@ export default function App(props: Props) {
                 <Header />
 
                 <Routes>
-                    <Route path="/" element={<Home />}></Route>
+                    <Route path={routers.home()} element={<Home />}></Route>
                     <Route path="/list" element={<List />}></Route>
                 </Routes>
 

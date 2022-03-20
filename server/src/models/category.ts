@@ -53,7 +53,7 @@ export async function getCategory(): Promise<CategoryData[]> {
         const { category_id } = data;
         // 二级下面三级的添加
         {
-            console.log(result)
+            // console.log(result)
             result.forEach(data => {
                 let parent = data.children?.find(item => item.ID === category_id)
                 if (parent) {
