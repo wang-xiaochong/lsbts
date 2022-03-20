@@ -4,6 +4,11 @@ import actions from '../actions/index'
 import store from '../store'
 
 export default function* site() {
+    // category
+    yield takeEvery(actions.site.getAllCategory, function* () {
+        let { data } = yield axios.get('/api/site/getCategories');
+        yield put(actions.site.setAllCategory(data));
+    })
     // subscribe
     yield takeEvery(actions.site.getAllSubscribeData, function* () {
         const { site } = store.getState()

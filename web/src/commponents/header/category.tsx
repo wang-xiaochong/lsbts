@@ -1,12 +1,13 @@
-import { CategoryData, getCategory } from "models/category";
+import { CategoryData } from "models/category";
 import React, { useState, useEffect } from "react";
 import { appData } from 'models/app'
 import { connect } from "react-redux";
-import { RootState } from "@/store";
+import { RootState, Dispatch, actions, SiteState } from "@/store";
 import { Link } from "react-router-dom";
 import * as routers from '@/router'
 interface Props {
-    // categories: CategoryData[]
+    site?: SiteState,
+    dispatch: Dispatch,
 }
 
 //   const categories = [
@@ -63,14 +64,19 @@ export default connect((state: RootState) => {
 
 function Category(props: Props) {
     // const [categories,setCategories] = useState(props.categories)
-    const [categories, setCategories] = useState<CategoryData[] | undefined>(appData?.categories)
+    const [categories, setCategories] = useState<CategoryData[] | undefined>(appData?.categories || props.site?.CategoryData)
     useEffect(() => {
         if (!categories) {
-            getCategory().then(arr => {
-                setCategories(arr);     //??????????
-            })
+            props.dispatch(actions.site.getAllCategory())
+            setCategories(props.site?.CategoryData)
+            // getCategory().then(arr => {
+            //     setCategories(arr);     //??????????
+            // })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [categories])
+
+
 
     return (
         <div className="category">
@@ -131,3 +137,4 @@ function Category(props: Props) {
         </div>
     )
 }
+

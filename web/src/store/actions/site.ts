@@ -1,5 +1,10 @@
 import { createAction } from '@reduxjs/toolkit'
+import { CategoryData } from 'models/category'
 import { SubscribeData, TopicData, LinkData } from 'models/site'
+
+// category
+export const setAllCategory = createAction<CategoryData[]>('setAllCategory')
+export const getAllCategory = createAction<void>('getAllCategory')
 
 // subscribe
 export const setAllSubscribeData = createAction<SubscribeData[]>('setAllSubscribeData')

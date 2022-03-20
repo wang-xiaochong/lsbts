@@ -73,7 +73,7 @@ function List(props: Props) {
     // }, [window.location.search])
 
     useEffect(() => {
-        console.log(category, leval)
+        // console.log(category, leval)
         setSearchParams({
             ...searchParams,
             category: category ? Number(category) : 0,
@@ -105,6 +105,9 @@ function List(props: Props) {
         props.dispatch(actions.course.getSearchCourse(searchParams))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams])
+
+    console.log(category, leval)
+    console.log(props.site.CategoryData)
 
 
     const categories = [

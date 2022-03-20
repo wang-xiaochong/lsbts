@@ -1,4 +1,3 @@
-import axios from "@/libs/axios";
 
 export interface CategoryData {
     ID: number;
@@ -7,7 +6,7 @@ export interface CategoryData {
     children?: CategoryData[];
 }
 
-export async function getCategory(): Promise<CategoryData[]> {
-    let { data } = await axios('/api/site/getCategories')
-    return data
-}
+// export async function getCategory(): Promise<CategoryData[]> {
+//     let { data } = await axios('/api/site/getCategories')
+//     return data
+// }
