@@ -20,6 +20,9 @@ import { Dispatch } from 'redux';
 import { UserState } from '@/store/modules/user';
 import { SiteState } from '@/store/modules/site';
 import { CourseListSearchPageSize, SearchParams } from 'models/course';
+import query from '@/libs/querystring';
+
+import { useLocation } from 'react-router-dom'
 
 
 
@@ -38,10 +41,13 @@ interface Props {
 
 function List(props: Props) {
     props.appData && setAppData(props.appData);
+    var { category, leval } = query(['category', 'leval'])
+
     const [searchParams, setSearchParams] = useState<SearchParams>({
-        category: 0,
-        category_leval: 0,
-        page: 0,
+        category: category ? Number(category) : 0,
+        category_leval: leval ? Number(leval) : 0,
+        keyword: '',
+        page: 1,
         categories: {},
         filter: {
             type: undefined,
@@ -49,16 +55,56 @@ function List(props: Props) {
             sort: 'default'
         }
     })
+
     const searchCourseResult = props.course?.searchCourseResult;
     const searchBarKw = props.app?.searchBarKw;
     const [page, setPage] = useState(1)
+    useLocation();
+    //应该是监听路由，参数变后也会重新渲染。内部应该是声明了state，只有state改变时组件才会重新渲染，而URL是属于props属性，props改变并不会引起组件重新渲染。
+
+    // useEffect(() => {
+    //     var { category, leval } = query(['category', 'leval'])
+    //     setSearchParams({
+    //         ...searchParams,
+    //         category: category ? Number(category) : 0,
+    //         category_leval: leval ? Number(leval) : 0,
+    //     })
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [window.location.search])
+
     useEffect(() => {
-        // console.log('search', searchParams)
-        searchParams.keyword = searchBarKw
-        searchParams.page = page
+        console.log(category, leval)
+        setSearchParams({
+            ...searchParams,
+            category: category ? Number(category) : 0,
+            category_leval: leval ? Number(leval) : 0,
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [category, leval])
+
+
+    useEffect(() => {
+        setSearchParams({
+            ...searchParams,
+            keyword: searchBarKw,
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchBarKw])
+
+    useEffect(() => {
+        setSearchParams({
+            ...searchParams,
+            page: page,
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page])
+
+    // do search
+    useEffect(() => {
+        console.log('seqarch', searchParams)
         props.dispatch(actions.course.getSearchCourse(searchParams))
-        
-    }, [searchParams, searchBarKw,page])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchParams])
 
 
     const categories = [

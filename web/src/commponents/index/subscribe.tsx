@@ -15,7 +15,7 @@ function Subscribe(props: Props) {
     if (!mySubscribe?.find(item => item.ID === cur)) {
       props.dispatch(actions.user.setMyCurSubscribe(0))
     }
-  }, [mySubscribe, cur]);
+  }, [mySubscribe, cur,props]);
 
 
   if (!mySubscribe) {

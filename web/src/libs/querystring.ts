@@ -1,5 +1,3 @@
-
-
 export default function query(keys: string[]) {
     if (typeof window != 'undefined' && window.location.search) {
         let res: {

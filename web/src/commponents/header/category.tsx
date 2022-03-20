@@ -84,12 +84,15 @@ function Category(props: Props) {
                     {categories ? (categories.map(category => (
                         <li key={category.ID}>
                             <div className="content">
-                                <Link to={routers.list(category.ID, 1)} className="title">{category.title}</Link>
+                                <Link
+                                    to={routers.list(category.ID, 1)}
+                                    className="title">{category.title}
+                                </Link>
                                 <div className="sub-title">
                                     {category.items ? (<ul>
                                         {category.items.map(item => (
-                                            <li>
-                                                <Link key={item.ID}
+                                            <li key={item.ID}>
+                                                <Link
                                                     to={routers.list(item.ID, 3)}
                                                 >{item.title}
                                                 </Link>
@@ -101,23 +104,23 @@ function Category(props: Props) {
                             <div className="sub-list">
                                 <ul className="sub-list-ul">
                                     {category.children ? (category.children.map(item => (
-
-                                        <Link to={routers.list(item.ID, 2)}>
-                                            <li className="sub-list-li" key={item.ID}>
+                                        <li className="sub-list-li" key={item.ID}>
+                                            <Link key={item.ID} to={routers.list(item.ID, 2)}>
                                                 <div className="main">
                                                     {item.title}
                                                 </div>
-                                                <div className="list">
-                                                    <ul>
-                                                        {item.items ? (item.items.map(item => (
-                                                            <Link to={routers.list(item.ID, 3)}>
-                                                                <li key={item.ID}>{item.title}</li>
-                                                            </Link>
-                                                        ))) : ''}
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        </Link>
+                                            </Link>
+                                            <div className="list">
+                                                <ul>
+                                                    {item.items ? (item.items.map(item => (
+                                                        <Link key={item.ID} to={routers.list(item.ID, 3)}>
+                                                            <li >{item.title}</li>
+                                                        </Link>
+                                                    ))) : ''}
+                                                </ul>
+                                            </div>
+                                        </li>
+
                                     ))) : ''}
                                 </ul>
                             </div>
