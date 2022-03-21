@@ -1,6 +1,6 @@
 import { CategoryData } from "models/category";
 import React, { useState, useEffect } from "react";
-import { appData } from 'models/app'
+// import { appData } from 'models/app'
 import { connect } from "react-redux";
 import { RootState, Dispatch, actions, SiteState } from "@/store";
 import { Link } from "react-router-dom";
@@ -63,20 +63,13 @@ export default connect((state: RootState) => {
 })(Category)
 
 function Category(props: Props) {
-    // const [categories,setCategories] = useState(props.categories)
-    const [categories, setCategories] = useState<CategoryData[] | undefined>(appData?.categories || props.site?.CategoryData)
+    const [categories, setCategories] = useState<CategoryData[] | undefined>(props.site?.CategoryData)
+    if (!categories) {
+        props.dispatch(actions.site.getAllCategory())
+    }
     useEffect(() => {
-        if (!categories) {
-            props.dispatch(actions.site.getAllCategory())
-            setCategories(props.site?.CategoryData)
-            // getCategory().then(arr => {
-            //     setCategories(arr);     //??????????
-            // })
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [categories])
-
-
+        setCategories(props.site?.CategoryData)
+    }, [props.site?.CategoryData])
 
     return (
         <div className="category">
@@ -118,7 +111,7 @@ function Category(props: Props) {
                                             </Link>
                                             <div className="list">
                                                 <ul>
-                                                    {item.items ? (item.items.map(item => (
+                                                    {item.children ? (item.children.map(item => (
                                                         <Link key={item.ID} to={routers.list(item.ID, 3)}>
                                                             <li >{item.title}</li>
                                                         </Link>

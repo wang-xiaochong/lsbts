@@ -5,12 +5,10 @@ import CourseList from '@/commponents/courseList'
 import HotTopic from '@/commponents/footer/hotTopic';
 
 import Keyword from '@/commponents/list/keyword';
-import Footpoint from '@/commponents/list/footpoint';
 import AdAside from '@/commponents/list/adAside';
-import CourseCategory from '@/commponents/list/category'
+import CourseCategory, { getCategory } from '@/commponents/list/category'
 import CourseFilter from '@/commponents/list/filter'
 import Pagination from '@/commponents/pagination'
-
 
 
 import { setAppData, AppData } from 'models/app';
@@ -20,12 +18,9 @@ import { Dispatch } from 'redux';
 import { UserState } from '@/store/modules/user';
 import { SiteState } from '@/store/modules/site';
 import { CourseListSearchPageSize, SearchParams } from 'models/course';
-import query from '@/libs/querystring';
 
 import { useLocation } from 'react-router-dom'
-
-
-
+import { SiteFootPoint } from '@/commponents/list/footpoint';
 
 interface Props {
     appData?: AppData;
@@ -36,16 +31,13 @@ interface Props {
     dispatch: Dispatch;
 }
 
-
-
-
 function List(props: Props) {
     props.appData && setAppData(props.appData);
-    var { category, leval } = query(['category', 'leval'])
+    const { category, category_leval } = getCategory()
 
     const [searchParams, setSearchParams] = useState<SearchParams>({
         category: category ? Number(category) : 0,
-        category_leval: leval ? Number(leval) : 0,
+        category_leval,
         keyword: '',
         page: 1,
         categories: {},
@@ -56,9 +48,33 @@ function List(props: Props) {
         }
     })
 
+
     const searchCourseResult = props.course?.searchCourseResult;
     const searchBarKw = props.app?.searchBarKw;
     const [page, setPage] = useState(1)
+
+
+    const categories = [
+        {
+            key: 'type',
+            title: '分类',
+            multi: false,
+            items: [
+                { ID: 2, title: 'Java' },
+                { ID: 3, title: 'python' }
+            ]
+        },
+        {
+            key: 'cate_1',
+            title: '知识点',
+            multi: true,
+            items: [
+                { ID: 3, title: 'c++' },
+                { ID: 4, title: '数据库' }
+            ]
+        }
+    ]
+
     useLocation();
     //应该是监听路由，参数变后也会重新渲染。内部应该是声明了state，只有state改变时组件才会重新渲染，而URL是属于props属性，props改变并不会引起组件重新渲染。
 
@@ -76,12 +92,11 @@ function List(props: Props) {
         // console.log(category, leval)
         setSearchParams({
             ...searchParams,
-            category: category ? Number(category) : 0,
-            category_leval: leval ? Number(leval) : 0,
+            category: category,
+            category_leval: category_leval,
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [category, leval])
-
+    }, [category, category_leval])
 
     useEffect(() => {
         setSearchParams({
@@ -106,30 +121,6 @@ function List(props: Props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams])
 
-    console.log(category, leval)
-    console.log(props.site.CategoryData)
-
-
-    const categories = [
-        {
-            key: 'type',
-            title: '分类',
-            multi: false,
-            items: [
-                { ID: 2, title: 'Java' },
-                { ID: 3, title: 'python' }
-            ]
-        },
-        {
-            key: 'cate_1',
-            title: '知识点',
-            multi: true,
-            items: [
-                { ID: 3, title: 'c++' },
-                { ID: 4, title: '数据库' }
-            ]
-        }
-    ]
 
     return (
         <>
@@ -143,10 +134,8 @@ function List(props: Props) {
                         />
                     ) : ''}
 
-                    <Footpoint items={[
-                        { title: 'IT互联网', href: '/list/1' },
-                        { title: 'Java开发', href: '/list/1/java' },
-                    ]} />
+                    <SiteFootPoint />
+
 
                     {/* coursecategories */}
                     {
@@ -198,6 +187,7 @@ function List(props: Props) {
 
     );
 }
+
 
 export default connect((state: RootState) => {
     return state

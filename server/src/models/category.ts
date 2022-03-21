@@ -57,8 +57,8 @@ export async function getCategory(): Promise<CategoryData[]> {
             result.forEach(data => {
                 let parent = data.children?.find(item => item.ID === category_id)
                 if (parent) {
-                    if (!parent.items) parent.items = [];
-                    parent.items.push(categoryItem)
+                    if (!parent.children) parent.children = [];
+                    parent.children.push(categoryItem)
                 }
             })
         }

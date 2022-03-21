@@ -1,3 +1,4 @@
+import query from '@/libs/querystring';
 import React from 'react';
 
 interface Props {
@@ -43,4 +44,14 @@ export default function Category(props: Props) {
       }
     </div>
   );
+}
+
+
+
+
+export function getCategory(): { category: number; category_leval: number } {
+  const queryResult = query(['category', 'leval'])
+  const category = queryResult.category ? Number(queryResult.category) : 0;
+  const category_leval = queryResult.leval ? Number(queryResult.leval) : 0;
+  return { category, category_leval }
 }
