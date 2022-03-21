@@ -15,7 +15,7 @@ interface Props {
   }[]
 }
 
-export default function Footpoint(props: Props) {
+function Footpoint(props: Props) {
   const { items } = props;
 
   return (
@@ -78,33 +78,32 @@ interface footPointProps {
   site?: SiteState,
 }
 
-export const SiteFootPoint = connect(state => state)(
+function SiteFootPoint(props: footPointProps) {
+  let footPoint: FootpointData[] | undefined;
+  const categoryData = props.site?.CategoryData;
+  const { category, category_leval } = getCategory()
+  if (categoryData && category && category_leval) {
+    footPoint = getFootpoint(categoryData, category, category_leval)
+  }
 
-  function (props: footPointProps) {
-    let footPoint: FootpointData[] | undefined;
-    const categoryData = props.site?.CategoryData;
-    const { category, category_leval } = getCategory()
-    if (categoryData && category && category_leval) {
-      footPoint = getFootpoint(categoryData, category, category_leval)
-    }
+  let footPointItems: {
+    title: string,
+    href: string,
+  }[] = [{ title: '全部课程', href: routers.list() }]
 
-    let footPointItems: {
-      title: string,
-      href: string,
-    }[] = [{ title: '全部课程', href: routers.list() }]
-
-    if (footPoint) {
-      for (let i = 0; i < footPoint.length; i++) {
-        let item = footPoint[i];
-        let leval = i + 1;
-        if (leval === 1 || leval === 2 || leval === 3) {
-          footPointItems.push({
-            title: item.title,
-            href: routers.list(item.ID, leval)
-          })
-        }
+  if (footPoint) {
+    for (let i = 0; i < footPoint.length; i++) {
+      let item = footPoint[i];
+      let leval = i + 1;
+      if (leval === 1 || leval === 2 || leval === 3) {
+        footPointItems.push({
+          title: item.title,
+          href: routers.list(item.ID, leval)
+        })
       }
     }
-    return <Footpoint items={footPointItems} />
   }
-);
+  return <Footpoint items={footPointItems} />
+}
+
+export default connect(state => state)(SiteFootPoint)

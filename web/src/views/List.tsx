@@ -3,24 +3,22 @@ import React, { useEffect, useState } from 'react';
 
 import CourseList from '@/commponents/courseList'
 import HotTopic from '@/commponents/footer/hotTopic';
-
+import SiteFootPoint from '@/commponents/list/footpoint';
 import Keyword from '@/commponents/list/keyword';
 import AdAside from '@/commponents/list/adAside';
-import CourseCategory, { getCategory } from '@/commponents/list/category'
 import CourseFilter from '@/commponents/list/filter'
 import Pagination from '@/commponents/pagination'
 
 
+import CourseCategory, { getCategory } from '@/commponents/list/category'
 import { setAppData, AppData } from 'models/app';
-import { AppState, CourseState, RootState, actions } from '@/store/index'
-import { connect } from 'react-redux'
-import { Dispatch } from 'redux';
+import { AppState, CourseState, RootState, actions, connect, Dispatch } from '@/store/index'
 import { UserState } from '@/store/modules/user';
 import { SiteState } from '@/store/modules/site';
-import { CourseListSearchPageSize, SearchParams } from 'models/course';
+import { CourseListSearchPageSize, FilterOptions, SearchParams } from 'models/course';
 
 import { useLocation } from 'react-router-dom'
-import { SiteFootPoint } from '@/commponents/list/footpoint';
+
 
 interface Props {
     appData?: AppData;
@@ -33,28 +31,29 @@ interface Props {
 
 function List(props: Props) {
     props.appData && setAppData(props.appData);
-    const { category, category_leval } = getCategory()
-
-    const [searchParams, setSearchParams] = useState<SearchParams>({
-        category: category ? Number(category) : 0,
-        category_leval,
-        keyword: '',
-        page: 1,
-        categories: {},
-        filter: {
-            type: undefined,
-            options: [],
-            sort: 'default'
-        }
-    })
-
-
     const searchCourseResult = props.course?.searchCourseResult;
-    const searchBarKw = props.app?.searchBarKw;
-    const [page, setPage] = useState(1)
+    const { category, category_leval } = getCategory();
+    const keyword = props.app?.searchBarKw;
+
+    const [page, setPage] = useState(1);
+    const [filter, setFilter] = useState<FilterOptions>({
+        type: undefined,
+        options: [],
+        sort: 'default'
+    })
+    const [categories, setCategories] = useState<SearchParams["categories"]>({})
+    useEffect(() => {
+        let searchParams: SearchParams = {
+            category, category_leval, keyword,
+            page, filter, categories,
+        }
+        console.log('seqarch', searchParams)
+        props.dispatch(actions.course.getSearchCourse(searchParams))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [category, category_leval, keyword, page, filter, categories])
 
 
-    const categories = [
+    const categoryData = [
         {
             key: 'type',
             title: '分类',
@@ -78,94 +77,38 @@ function List(props: Props) {
     useLocation();
     //应该是监听路由，参数变后也会重新渲染。内部应该是声明了state，只有state改变时组件才会重新渲染，而URL是属于props属性，props改变并不会引起组件重新渲染。
 
-    // useEffect(() => {
-    //     var { category, leval } = query(['category', 'leval'])
-    //     setSearchParams({
-    //         ...searchParams,
-    //         category: category ? Number(category) : 0,
-    //         category_leval: leval ? Number(leval) : 0,
-    //     })
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [window.location.search])
-
-    useEffect(() => {
-        // console.log(category, leval)
-        setSearchParams({
-            ...searchParams,
-            category: category,
-            category_leval: category_leval,
-        })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [category, category_leval])
-
-    useEffect(() => {
-        setSearchParams({
-            ...searchParams,
-            keyword: searchBarKw,
-        })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchBarKw])
-
-    useEffect(() => {
-        setSearchParams({
-            ...searchParams,
-            page: page,
-        })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page])
-
-    // do search
-    useEffect(() => {
-        console.log('seqarch', searchParams)
-        props.dispatch(actions.course.getSearchCourse(searchParams))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchParams])
-
 
     return (
         <>
             <div className="main-container page">
                 <div className="left">
 
-                    {searchBarKw ? (
+                    {keyword ? (
                         <Keyword
-                            kw={searchBarKw} total={searchCourseResult?.total || 0}
+                            kw={keyword} total={searchCourseResult?.total || 0}
                             onClearKw={() => { props.dispatch(actions.app.setSearchBarKw('')) }}
                         />
                     ) : ''}
 
                     <SiteFootPoint />
 
-
                     {/* coursecategories */}
                     {
-                        categories.map(item => (
+                        categoryData.map(item => (
                             <CourseCategory
                                 key={item.key}
                                 title={item.title}
                                 items={item.items}
                                 multi={item.multi}
-                                value={searchParams.categories[item.key]}
-                                onChange={value => {
-                                    setSearchParams({
-                                        ...searchParams, categories: {
-                                            ...searchParams.categories,
-                                            [item.key]: value,
-                                        }
-                                    });
-                                }}
+                                value={categories[item.key]}
+                                onChange={value => { setCategories({ ...categories, [item.key]: value }) }}
                             />
                         ))
                     }
 
-
-                    <CourseFilter data={searchParams.filter} onChange={options => setSearchParams({
-                        ...searchParams, filter: options
-                    })} />
-
+                    <CourseFilter data={filter} onChange={options => setFilter(options)} />
 
                     <CourseList data={searchCourseResult?.data} />
-
 
                     <Pagination
                         cur={page}
