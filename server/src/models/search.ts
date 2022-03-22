@@ -1,7 +1,8 @@
 import { SearchResult } from 'models/search'
 import db from '~/libs/database'
 import { maxHotKeyWords } from '~/config/app'
-import { CourseListSearchPageSize, CourseSummaryData, SearchParams } from '@/models/course';
+import { CourseListSearchPageSize, CourseSummaryData, SearchCategoryData, SearchParams } from '@/models/course';
+import { assert } from '~/libs/common';
 
 // 全站最热门
 // export async function getHot(): Promise<SearchResult> {
@@ -28,11 +29,12 @@ export async function getSuggest(kw: string): Promise<SearchResult> {
 
 // 搜索课程
 export async function searchCourse(params: SearchParams): Promise<{ data: CourseSummaryData[], total: number }> {
-    const { category, category_leval, keyword, page } = params
+    const { category, category_level, keyword, page } = params
     let cords: string[] = [];
 
     // category 和 category_leval
-    if (category) cords.push(`category_id_${category_leval}=${category}`);
+    if (category && category_level && category.toString() != '0' && category_level.toString() != '0')
+        cords.push(`category_id_${category_level}=${category}`);
 
     // keyword
     if (keyword) {
@@ -93,5 +95,45 @@ export async function searchCourse(params: SearchParams): Promise<{ data: Course
         total: count,
     }
 
+}
+
+
+
+
+interface CategoryTagsRow {
+    ID: number;
+    category_id: number;
+    category_level: number;
+    title: string;
+    options: string;
+    allow_multi: number;
+    sort: number;
+}
+
+export async function getSearchCategoryOptions(
+    category: number, category_level: number
+): Promise<SearchCategoryData[]> {
+    assert(typeof category != 'number', 400, 'request arguments invaild 1');
+    assert(typeof category_level != 'number', 400, 'request arguments invaild 2');
+    assert(category_level != 1 && category_level != 2 && category_level != 3, 400, 'request arguments invaild 3');
+    let rows = await db.query<CategoryTagsRow>(`
+      SELECT * FROM
+        category_tags_table
+      WHERE
+        category_id=? AND category_level=?
+      ORDER BY
+        sort ASC
+    `, [
+        category, category_level
+    ]);
+
+    return rows.map(item => {
+        return {
+            key: item.ID,
+            title: item.title,
+            options: item.options.split(','),
+            allow_multi: item.allow_multi == 1,
+        };
+    });
 }
 

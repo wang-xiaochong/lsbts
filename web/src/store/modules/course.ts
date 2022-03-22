@@ -1,18 +1,22 @@
 
 import { createReducer } from '@reduxjs/toolkit'
 import actions from '../actions/index'
-import { CourseSummaryData, SearchCourseResult } from '@/models/course'
+import { CourseSummaryData, SearchCategoryData, SearchCourseResult } from '@/models/course'
 
 export interface CourseState {
     indexCourseList: {
         [key: string]: CourseSummaryData[],
     };
-    searchCourseResult: SearchCourseResult
+    searchCourseResult: SearchCourseResult,
+    //category
+    searchCategoryData: SearchCategoryData[];
+
 }
 
 export const initState: CourseState = {
     indexCourseList: {},
-    searchCourseResult: { total: 0, data: [] }
+    searchCourseResult: { total: 0, data: [] },
+    searchCategoryData: [],
 }
 
 export const courseReducer = createReducer(
@@ -37,6 +41,11 @@ export const courseReducer = createReducer(
                 ...state,
                 searchCourseResult: action.payload,
             }
+        })
+
+        //category
+        .addCase(actions.course.setSearchCategoryData, (state, { payload }) => {
+            return { ...state, searchCategoryData: payload };
         })
 
 

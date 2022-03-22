@@ -47,8 +47,8 @@ interface FootpointData {
 function getFootpoint(
   categories: CategoryData[],
   category: number,
-  leval: number): FootpointData[] | undefined {
-  if (leval === 1) {
+  level: number): FootpointData[] | undefined {
+  if (level === 1) {
     let data = categories.find(item => item.ID === category);
     if (data) {
       return [{
@@ -62,7 +62,7 @@ function getFootpoint(
     for (let i = 0; i < categories.length; i++) {
       let children = categories[i].children;
       if (children) {
-        let res = getFootpoint(children, category, leval - 1);
+        let res = getFootpoint(children, category, level - 1);
         if (res) {
           return [
             { ID: categories[i].ID, title: categories[i].title },
@@ -81,9 +81,9 @@ interface footPointProps {
 function SiteFootPoint(props: footPointProps) {
   let footPoint: FootpointData[] | undefined;
   const categoryData = props.site?.CategoryData;
-  const { category, category_leval } = getCategory()
-  if (categoryData && category && category_leval) {
-    footPoint = getFootpoint(categoryData, category, category_leval)
+  const { category, category_level } = getCategory()
+  if (categoryData && category && category_level) {
+    footPoint = getFootpoint(categoryData, category, category_level)
   }
 
   let footPointItems: {
@@ -94,11 +94,11 @@ function SiteFootPoint(props: footPointProps) {
   if (footPoint) {
     for (let i = 0; i < footPoint.length; i++) {
       let item = footPoint[i];
-      let leval = i + 1;
-      if (leval === 1 || leval === 2 || leval === 3) {
+      let level = i + 1;
+      if (level === 1 || level === 2 || level === 3) {
         footPointItems.push({
           title: item.title,
-          href: routers.list(item.ID, leval)
+          href: routers.list(item.ID, level)
         })
       }
     }

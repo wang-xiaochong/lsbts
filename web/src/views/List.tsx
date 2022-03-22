@@ -32,7 +32,7 @@ interface Props {
 function List(props: Props) {
     props.appData && setAppData(props.appData);
     const searchCourseResult = props.course?.searchCourseResult;
-    const { category, category_leval } = getCategory();
+    const { category, category_level } = getCategory();
     const keyword = props.app?.searchBarKw;
 
     const [page, setPage] = useState(1);
@@ -41,38 +41,27 @@ function List(props: Props) {
         options: [],
         sort: 'default'
     })
-    const [categories, setCategories] = useState<SearchParams["categories"]>({})
+    // const [categories, setCategories] = useState<SearchParams["categories"]>({})
+    const [categories, setCategories] = useState<{[key:string]:string[]}>({})
+
+
     useEffect(() => {
         let searchParams: SearchParams = {
-            category, category_leval, keyword,
+            category, category_level, keyword,
             page, filter, categories,
         }
         console.log('seqarch', searchParams)
         props.dispatch(actions.course.getSearchCourse(searchParams))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [category, category_leval, keyword, page, filter, categories])
+    }, [category, category_level, keyword, page, filter, categories])
+   
+    let categoryDatas = props.course?.searchCategoryData
+    // const [categoryDatas, setCategoryDatas] = useState<SearchCategoryData[]>([])
 
+    useEffect(() => {
+        props.dispatch(actions.course.getSearchCategoryData({category,category_level}))
+    },[category,category_level])
 
-    const categoryData = [
-        {
-            key: 'type',
-            title: '分类',
-            multi: false,
-            items: [
-                { ID: 2, title: 'Java' },
-                { ID: 3, title: 'python' }
-            ]
-        },
-        {
-            key: 'cate_1',
-            title: '知识点',
-            multi: true,
-            items: [
-                { ID: 3, title: 'c++' },
-                { ID: 4, title: '数据库' }
-            ]
-        }
-    ]
 
     useLocation();
     //应该是监听路由，参数变后也会重新渲染。内部应该是声明了state，只有state改变时组件才会重新渲染，而URL是属于props属性，props改变并不会引起组件重新渲染。
@@ -94,12 +83,12 @@ function List(props: Props) {
 
                     {/* coursecategories */}
                     {
-                        categoryData.map(item => (
+                        categoryDatas?.map(item => (
                             <CourseCategory
                                 key={item.key}
                                 title={item.title}
-                                items={item.items}
-                                multi={item.multi}
+                                items={item.options}
+                                multi={item.allow_multi}
                                 value={categories[item.key]}
                                 onChange={value => { setCategories({ ...categories, [item.key]: value }) }}
                             />

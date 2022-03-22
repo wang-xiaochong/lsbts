@@ -16,10 +16,10 @@ export const CourseListSearchPageSize = 24;
 export interface SearchParams {
     keyword?: string,
     category: number,
-    category_leval: number,
+    category_level: number,
     page: number,
     categories: {
-        [key: string]: number[],
+        [key: string]: string[],
     },
     filter: FilterOptions,
 }
@@ -35,3 +35,11 @@ export interface SearchCourseResult {
     data: CourseSummaryData[],
     total: number,
 }
+
+//类目选项
+export interface SearchCategoryData {
+    key: number;
+    title: string;
+    options: string[];
+    allow_multi: boolean;
+  }

@@ -16,5 +16,15 @@ export default function* course() {
         yield put(actions.course.setSearchCourseResult(data))
     })
 
+    //category
+    yield takeEvery(actions.course.getSearchCategoryData, function* ({ payload: { category, category_level } }) {
+        let { data } = yield axios.get('/api/course/get-category-options', {
+            params: { category, category_level }
+        });
+        console.log(data);
+
+        yield put(actions.course.setSearchCategoryData(data));
+    })
+
 
 }
