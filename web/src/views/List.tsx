@@ -34,6 +34,7 @@ function List(props: Props) {
     const searchCourseResult = props.course?.searchCourseResult;
     const { category, category_level } = getCategory();
     const keyword = props.app?.searchBarKw;
+    const rightAdList = props.course?.rightAdList;
 
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState<FilterOptions>({
@@ -42,7 +43,7 @@ function List(props: Props) {
         sort: 'default'
     })
     // const [categories, setCategories] = useState<SearchParams["categories"]>({})
-    const [categories, setCategories] = useState<{[key:string]:string[]}>({})
+    const [categories, setCategories] = useState<{ [key: string]: string[] }>({})
 
 
     useEffect(() => {
@@ -54,17 +55,19 @@ function List(props: Props) {
         props.dispatch(actions.course.getSearchCourse(searchParams))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category, category_level, keyword, page, filter, categories])
-   
+
     let categoryDatas = props.course?.searchCategoryData
     // const [categoryDatas, setCategoryDatas] = useState<SearchCategoryData[]>([])
-    console.log(categories)
     useEffect(() => {
-        props.dispatch(actions.course.getSearchCategoryData({category,category_level}))
-    },[category,category_level])
-
+        props.dispatch(actions.course.getSearchCategoryData({ category, category_level }))
+    }, [category, category_level])
 
     useLocation();
     //应该是监听路由，参数变后也会重新渲染。内部应该是声明了state，只有state改变时组件才会重新渲染，而URL是属于props属性，props改变并不会引起组件重新渲染。
+
+    if (!rightAdList) {
+        props.dispatch(actions.course.getAdList('right'))
+    }
 
 
     return (
@@ -110,7 +113,7 @@ function List(props: Props) {
                 </div>
 
                 <div className="right">
-                    <AdAside />
+                    <AdAside items={rightAdList || []} />
                 </div>
             </div>
 

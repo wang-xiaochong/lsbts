@@ -1,7 +1,7 @@
 
 import { createReducer } from '@reduxjs/toolkit'
 import actions from '../actions/index'
-import { CourseSummaryData, SearchCategoryData, SearchCourseResult } from '@/models/course'
+import { AdCourseData, CourseSummaryData, SearchCategoryData, SearchCourseResult } from '@/models/course'
 
 export interface CourseState {
     indexCourseList: {
@@ -11,12 +11,19 @@ export interface CourseState {
     //category
     searchCategoryData: SearchCategoryData[];
 
+    //ad
+    rightAdList?: AdCourseData[];
+    bottomAdList?: AdCourseData[];
+
+
 }
 
 export const initState: CourseState = {
     indexCourseList: {},
     searchCourseResult: { total: 0, data: [] },
     searchCategoryData: [],
+    rightAdList: undefined,
+    bottomAdList: undefined,
 }
 
 export const courseReducer = createReducer(
@@ -46,6 +53,14 @@ export const courseReducer = createReducer(
         //category
         .addCase(actions.course.setSearchCategoryData, (state, { payload }) => {
             return { ...state, searchCategoryData: payload };
+        })
+
+        //ad
+        .addCase(actions.course.setAdList, (state, { payload: { type, data } }) => {
+            if (type === 'right')
+                return { ...state, rightAdList: data }
+            if (type === 'bottom')
+                return { ...state, bottomAdList: data }
         })
 
 

@@ -42,4 +42,14 @@ export interface SearchCategoryData {
     title: string;
     options: string[];
     allow_multi: boolean;
-  }
+}
+
+// ad
+export interface AdCourseData {
+    ID: number,
+    title: string,
+    cover: string;
+    price: number;
+    agency_id: number;
+    agency_name: string;
+}

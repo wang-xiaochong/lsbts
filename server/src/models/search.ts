@@ -1,7 +1,7 @@
 import { SearchResult } from 'models/search'
 import db from '~/libs/database'
 import { maxHotKeyWords } from '~/config/app'
-import { CourseListSearchPageSize, CourseSummaryData, SearchCategoryData, SearchParams } from '@/models/course';
+import { AdCourseData, CourseListSearchPageSize, CourseSummaryData, SearchCategoryData, SearchParams } from '@/models/course';
 import { assert } from '~/libs/common';
 import { KEY_APP_SEARCH_PRE, readCache, writeCache } from '~/libs/redis';
 
@@ -181,5 +181,24 @@ export async function getSearchCategoryOptions(
             allow_multi: item.allow_multi == 1,
         };
     });
+}
+
+
+// ad
+export async function getAdCourse(type: 'right' | 'bottom'): Promise<AdCourseData[]> {
+    let data = await db.query<AdCourseData>(`
+    SELECT
+        course.ID,course.title,course.cover,course.price,
+        course.agency_id,agency.name AS agency_name
+    FROM
+        ad_table AS ad
+        LEFT JOIN course_table AS course
+            ON ad.course_id=course.ID
+        LEFT JOIN agency_table AS agency
+            ON course.agency_id=agency.ID
+    WHERE
+        ad.type=?
+    `, [type])
+    return data;
 }
 
