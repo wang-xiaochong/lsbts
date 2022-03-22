@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import * as routers from '@/router'
 import { connect, SiteState } from '@/store';
-import { getCategory } from './category';
+import { getCategory } from './list/category';
 
 
 

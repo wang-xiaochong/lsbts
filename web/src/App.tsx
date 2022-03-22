@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 
 import Home from './views/Home'
 import List from './views/List'
+import Course from './views/Course'
+import NotFound from "./views/NotFound";
+
 import Alert from "./commponents/alert";
 import querystring from "./libs/querystring";
 import { getUserData, saveToken, setToken } from "./store/actions/user";
@@ -9,6 +12,7 @@ import { Dispatch } from "redux";
 import { UserState } from "./store";
 import Footer from "./commponents/footer/footer";
 import Header from "./commponents/header/header";
+
 
 // 公用样式
 import '@/assets/less/base.less'
@@ -21,6 +25,7 @@ import '@/assets/less/subscribe.less'
 
 // 列表(搜索)
 import '@/assets/less/list.less'
+import '@/assets/less/course.less'
 
 // 路由
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
@@ -55,7 +60,9 @@ export default function App(props: Props) {
 
                 <Routes>
                     <Route path={routers.home()} element={<Home />}></Route>
-                    <Route path="/list" element={<List />}></Route>
+                    <Route path={routers.list()} element={<List />}></Route>
+                    <Route path='/course/:id' element={<Course />} ></Route>
+                    <Route path="*" element={<NotFound />}></Route>
                 </Routes>
 
                 <Alert />

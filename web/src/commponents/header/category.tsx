@@ -10,6 +10,8 @@ interface Props {
     dispatch: Dispatch,
 }
 
+
+
 //   const categories = [
 //         // category
 //             // ID number

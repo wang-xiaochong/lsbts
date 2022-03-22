@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import CourseList from '@/commponents/courseList'
 import HotTopic from '@/commponents/footer/hotTopic';
-import SiteFootPoint from '@/commponents/list/footpoint';
+import SiteFootPoint from '@/commponents/footpoint';
 import Keyword from '@/commponents/list/keyword';
 import AdAside from '@/commponents/list/adAside';
 import CourseFilter from '@/commponents/list/filter'
@@ -60,6 +60,7 @@ function List(props: Props) {
     // const [categoryDatas, setCategoryDatas] = useState<SearchCategoryData[]>([])
     useEffect(() => {
         props.dispatch(actions.course.getSearchCategoryData({ category, category_level }))
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category, category_level])
 
     useLocation();

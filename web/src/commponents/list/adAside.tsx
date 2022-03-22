@@ -1,5 +1,6 @@
 import { AdCourseData } from 'models/course';
 import React from 'react';
+import * as routers from '../../router'
 
 interface Props {
   items: AdCourseData[],
@@ -14,9 +15,9 @@ export default function AdAside(props: Props) {
         {items.map(item => (
           <li key={item.ID} className="item">
             <div className="cover">
-              <img src={item.cover} alt="" />
+              <a href={routers.course(item.ID)}><img src={item.cover} alt="" /></a>
             </div>
-            <div className="title">{item.title}</div>
+            <div className="title"><a href={routers.course(item.ID)}>{item.title}</a></div>
             <div className="info">
               <div className="price">{item.price === 0 ? '免费' : item.price}</div>
               <div className="author">
