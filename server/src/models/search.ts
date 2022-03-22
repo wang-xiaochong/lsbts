@@ -3,6 +3,7 @@ import db from '~/libs/database'
 import { maxHotKeyWords } from '~/config/app'
 import { CourseListSearchPageSize, CourseSummaryData, SearchCategoryData, SearchParams } from '@/models/course';
 import { assert } from '~/libs/common';
+import { KEY_APP_SEARCH_PRE, readCache, writeCache } from '~/libs/redis';
 
 // 全站最热门
 // export async function getHot(): Promise<SearchResult> {
@@ -29,7 +30,14 @@ export async function getSuggest(kw: string): Promise<SearchResult> {
 
 // 搜索课程
 export async function searchCourse(params: SearchParams): Promise<{ data: CourseSummaryData[], total: number }> {
-    const { category, category_level, keyword, page } = params
+
+    // cache
+    const key = KEY_APP_SEARCH_PRE + JSON.stringify(params);
+    let result = await readCache(key)
+    if (result) return result;
+
+    // database
+    const { category, category_level, keyword, page, categories } = params
     let cords: string[] = [];
 
     // category 和 category_leval
@@ -50,6 +58,7 @@ export async function searchCourse(params: SearchParams): Promise<{ data: Course
     }
     // console.log(cords.join(' AND '))
 
+
     // type
     const { filter } = params
     const { type, sort } = filter;
@@ -69,10 +78,11 @@ export async function searchCourse(params: SearchParams): Promise<{ data: Course
         order = ` ORDER BY ${sort} DESC`
     }
 
+
     // let sqlsting = `SELECT * FROM course_table ${where} ${order}`
     let sqlsting = `
     SELECT 
-         course.ID, course.title,course.cover,course.price,course.agency_id,
+         course.ID, course.title,course.cover,course.price,course.agency_id,tags,
          agency.name AS agency_name,
          0 AS recent_order_count,
          0 AS section_count
@@ -81,20 +91,56 @@ export async function searchCourse(params: SearchParams): Promise<{ data: Course
          agency_table AS agency ON course.agency_id=agency.ID
          ${where} 
          ${order}
-         LIMIT ?,?
          `
-    // console.log(sqlsting)
-    let data = await db.query<CourseSummaryData>(sqlsting, [(page - 1) * CourseListSearchPageSize, CourseListSearchPageSize])
 
-    let sqlstingCount = `SELECT COUNT(*) AS count FROM course_table ${where} ${order}`;
-    let [{ count }] = await db.query<{ count: number }>(sqlstingCount)
+    // console.log(sqlsting)
+
+    // let data = await db.query<CourseSummaryData & { tags: string }>(sqlsting, [(page - 1) * CourseListSearchPageSize, CourseListSearchPageSize])
+    let data = await db.query<CourseSummaryData & { tags: string }>(sqlsting)
+
+
+    // categories
+    data = data.filter(item => {
+        let json = JSON.parse(item.tags) as { [key: string]: string };
+        let tags: { [key: string]: string[] } = {}
+        for (let key in json) {
+            tags[key] = json[key].split(',');
+        }
+        return tagsMatchSearch(categories, tags)
+    })
+
+    let total = data.length;
+    let start = (page - 1) * CourseListSearchPageSize;
+    let count = CourseListSearchPageSize;
+
+
+
+    // let sqlstingCount = `SELECT COUNT(*) AS count FROM course_table ${where} ${order}`;
+    // let [{ count }] = await db.query<{ count: number }>(sqlstingCount)
 
     // console.log(rows)
-    return {
-        data: data,
-        total: count,
+    let result2 = {
+        data: data.slice(start, count),
+        total,
     }
+    // cache
+    await writeCache(key, result2);
+    return result2
+}
 
+
+interface CourseTags {
+    [key: string]: string[];
+}
+function tagsMatchSearch(search: CourseTags, course: CourseTags): boolean {
+    for (let key in search) {
+        if (!course[key]) return false;
+        for (let i = 0; i < search[key].length; i++) {
+            let s = search[key][i]
+            if (course[key].indexOf(s) === -1) return false
+        }
+    }
+    return true
 }
 
 

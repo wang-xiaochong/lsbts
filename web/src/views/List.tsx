@@ -50,14 +50,14 @@ function List(props: Props) {
             category, category_level, keyword,
             page, filter, categories,
         }
-        console.log('seqarch', searchParams)
+        // console.log('seqarch', searchParams)
         props.dispatch(actions.course.getSearchCourse(searchParams))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category, category_level, keyword, page, filter, categories])
    
     let categoryDatas = props.course?.searchCategoryData
     // const [categoryDatas, setCategoryDatas] = useState<SearchCategoryData[]>([])
-
+    console.log(categories)
     useEffect(() => {
         props.dispatch(actions.course.getSearchCategoryData({category,category_level}))
     },[category,category_level])

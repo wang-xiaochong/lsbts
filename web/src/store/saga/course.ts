@@ -21,8 +21,6 @@ export default function* course() {
         let { data } = yield axios.get('/api/course/get-category-options', {
             params: { category, category_level }
         });
-        console.log(data);
-
         yield put(actions.course.setSearchCategoryData(data));
     })
 
