@@ -10,12 +10,10 @@ export default function tabs(props: Props) {
 
     const { items, cur, onchange } = props;
 
-
-
     return (
         <div className="tabs">
             {items.map((item, index) => (
-                <div
+                <div key={index}
                     className={`tab ${index === cur ? 'active' : ''}`}
                     onClick={() => onchange(index)}
                 >{item}</div>

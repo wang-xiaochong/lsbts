@@ -62,3 +62,52 @@ export interface TeacherData {
     summary: string;
     avatar: string;
 }
+
+// chapter section
+export interface CourseChapterData {
+    ID: number;
+    title: string;
+    sections: CourseSectionData[];
+}
+export interface CourseSectionData {
+    ID: number;
+    title: string;
+    type: 'live' | 'video' | 'read' | 'download';
+    item_id: number;
+    item: VideoData | LiveData | ReadData | DownloadData;
+}
+export interface VideoData {
+    ID: number;
+    videoID: string;
+    duration: number;
+}
+export interface LiveData {
+    ID: number;
+    liveID: string;
+    start_time: number;
+    end_time: number;
+}
+
+export interface ReadData {
+    ID: number;
+}
+
+export interface DownloadData {
+    ID: number;
+    fileID: string;
+    size: number;
+}
+
+// comment
+export interface CourseCommentData {
+    ID: number;
+    rank: number;
+    time: number;
+    course_time: number;
+    content: string;
+    avatar: string;
+    nickname: string;
+}
+
+
+

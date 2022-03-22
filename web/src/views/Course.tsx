@@ -72,9 +72,12 @@ export default function Course(props: Props) {
                                         summary=''
                                         description=''
                                     />,
-                                    
-                                    <CourseChapter />,
-                                    <CourseComment />,
+
+                                    <CourseChapter
+                                        chapters={[]}
+                                    />,
+
+                                    <CourseComment comments={[]} />,
                                 ][cur]
                             }
 

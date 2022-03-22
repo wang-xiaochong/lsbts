@@ -1,9 +1,15 @@
+
+import { CourseCommentData } from "models/course";
 import React from "react";
 
 interface Props {
+    comments: CourseCommentData[]
 
 }
-export default function courseCommont(props:Props) {
+export default function courseCommont(props: Props) {
+    const { comments } = props
+
+
     return (
         <div className="course-item course-comment">
             <div className="comment-filter">
@@ -25,79 +31,56 @@ export default function courseCommont(props:Props) {
                 </label>
             </div>
             <ul className="comment-list">
-                <li>
-                    <div className="user">
-                        <div className="avatar">
-                            <img src="/image/tmp_avatar.jpg" alt="" />
+                {comments.map(comment => (
+                    <li key={comment.ID}>
+                        <div className="user">
+                            <div className="avatar">
+                                <img src={comment.avatar} alt="" />
+                            </div>
+                            <div className="nickname">{comment.nickname}</div>
                         </div>
-                        <div className="nickname">M****</div>
-                    </div>
-                    <div className="comment">
-                        <div className="rank">
-                            <i className="icon icon-star-yellow" />
-                            <i className="icon icon-star-yellow" />
-                            <i className="icon icon-star-yellow" />
-                            <i className="icon icon-star-yellow" />
-                            <i className="icon icon-star-grey" />
+                        <div className="comment">
+                            <Rank rank={comment.rank} />
+                            <div className="content">
+                                {comment.content}
+                            </div>
+                            <div className="info">
+                                <span>已上课{(() => {
+                                    let m = Math.floor(comment.course_time / 60);
+                                    let h = Math.fround(m / 60);
+                                    m %= 60;
+
+                                    return `${h}小时${m}分钟`;
+                                })()}时评价</span>
+                                <span className="time">{(() => {
+                                    let date = new Date(comment.time * 1000)
+                                    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+                                })()}</span>
+                            </div>
                         </div>
-                        <div className="content">
-                            前面五节课讲得不错,第六节课时长100多分钟还期待了下,结果有七八十分钟都在做广告,这就体验很差了
-                        </div>
-                        <div className="info">
-                            <span>已上课2小时32分钟时评价</span>
-                            <span className="time">2020-09-03</span>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div className="user">
-                        <div className="avatar">
-                            <img src="/image/tmp_avatar.jpg" alt="" />
-                        </div>
-                        <div className="nickname">M****</div>
-                    </div>
-                    <div className="comment">
-                        <div className="rank">
-                            <i className="icon icon-star-yellow" />
-                            <i className="icon icon-star-yellow" />
-                            <i className="icon icon-star-yellow" />
-                            <i className="icon icon-star-yellow" />
-                            <i className="icon icon-star-grey" />
-                        </div>
-                        <div className="content">
-                            前面五节课讲得不错,第六节课时长100多分钟还期待了下,结果有七八十分钟都在做广告,这就体验很差了
-                        </div>
-                        <div className="info">
-                            <span>已上课2小时32分钟时评价</span>
-                            <span className="time">2020-09-03</span>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div className="user">
-                        <div className="avatar">
-                            <img src="/image/tmp_avatar.jpg" alt="" />
-                        </div>
-                        <div className="nickname">M****</div>
-                    </div>
-                    <div className="comment">
-                        <div className="rank">
-                            <i className="icon icon-star-yellow" />
-                            <i className="icon icon-star-yellow" />
-                            <i className="icon icon-star-yellow" />
-                            <i className="icon icon-star-yellow" />
-                            <i className="icon icon-star-grey" />
-                        </div>
-                        <div className="content">
-                            前面五节课讲得不错,第六节课时长100多分钟还期待了下,结果有七八十分钟都在做广告,这就体验很差了
-                        </div>
-                        <div className="info">
-                            <span>已上课2小时32分钟时评价</span>
-                            <span className="time">2020-09-03</span>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+
+                ))}
             </ul>
+        </div>
+    )
+}
+
+
+
+
+interface RankProps {
+    rank: number;
+}
+function Rank(props: RankProps) {
+    const { rank } = props;
+    let arr = [];
+    for (let i = 1; i <= 5; i++) {
+        arr.push(<i className={`icon ${i <= rank ? 'icon-star-yellow' : 'icon-star-grey'}`} />)
+    }
+    return (
+        <div className="rank">
+            {arr}
         </div>
     )
 }
