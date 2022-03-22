@@ -11,3 +11,7 @@ export function list(category?: number, level?: 1 | 2 | 3) {
 export function course(courseID: number) {
     return `/course/${courseID}`;
 }
+
+export function video(videoID: number) {
+    return `/video/${videoID}`;
+}
