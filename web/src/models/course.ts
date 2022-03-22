@@ -53,3 +53,12 @@ export interface AdCourseData {
     agency_id: number;
     agency_name: string;
 }
+
+// teacher
+export interface TeacherData {
+    ID: number;
+    name: string;
+    title: string;
+    summary: string;
+    avatar: string;
+}

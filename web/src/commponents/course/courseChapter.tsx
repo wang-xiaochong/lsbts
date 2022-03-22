@@ -5,9 +5,9 @@ import React from "react";
 interface Props {
 
 }
-export default function courseChapter(props:Props) {
+export default function courseChapter(props: Props) {
     return (
-        <div className="course-item course-chapter" style={{ display: 'none' }}>
+        <div className="course-item course-chapter" >
             <ul className="chapter-list">
                 <li>
                     <div className="chapter-title">

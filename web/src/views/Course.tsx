@@ -5,7 +5,7 @@ import CourseDescription from '@/commponents/course/courseDescription';
 import CourseInfo from '@/commponents/course/courseInfo';
 import CourseVideo from '@/commponents/course/courseVideo';
 import Tabs from '@/commponents/course/tabs';
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom'
 
 interface Props {
@@ -17,6 +17,7 @@ export default function Course(props: Props) {
 
     const params = useParams<{ id: string }>();
     let id = Number(params.id)
+    const [cur, setCur] = useState(0);
 
     return (
         <div className="main-container">
@@ -32,7 +33,16 @@ export default function Course(props: Props) {
                     />
 
 
-                    <CourseInfo />
+                    <CourseInfo
+                        course_id={id}
+                        title='Java高级'
+                        price={98}
+                        total_students={500}
+                        recently_students={200}
+                        rank={0.98}
+                        isRegisted={false}
+
+                    />
 
 
                 </div>
@@ -40,7 +50,13 @@ export default function Course(props: Props) {
             <div className="course-content">
                 <div className="page">
                     <div className="course-detail">
-                        <Tabs />
+
+                        <Tabs
+                            items={['课程概述', '目录', '评论(2)']}
+                            cur={cur}
+                            onchange={index => setCur(index)}
+                        />
+
                         <div className="course-assets">
                             <span className="left">课程配套资料领取</span>
                             <span className="right">
@@ -49,9 +65,19 @@ export default function Course(props: Props) {
                             </span>
                         </div>
                         <div className="course-items">
-                            <CourseDescription />
-                            <CourseChapter />
-                            <CourseComment />
+                            {
+                                [
+                                    <CourseDescription
+                                        teachers={[]}
+                                        summary=''
+                                        description=''
+                                    />,
+                                    
+                                    <CourseChapter />,
+                                    <CourseComment />,
+                                ][cur]
+                            }
+
                         </div>
                     </div>
                     <AgencyDetail />

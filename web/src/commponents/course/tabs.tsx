@@ -1,14 +1,26 @@
-import React from "react";
+import React, { ReactChild } from "react";
 
 interface Props {
+    items: (string | ReactChild)[];
+    cur: number;
+    onchange: (value: number) => void
 
 }
-export default function tabs(props:Props) {
+export default function tabs(props: Props) {
+
+    const { items, cur, onchange } = props;
+
+
+
     return (
         <div className="tabs">
-            <div className="tab active">课程概述</div>
-            <div className="tab">目录</div>
-            <div className="tab">评论(2)</div>
+            {items.map((item, index) => (
+                <div
+                    className={`tab ${index === cur ? 'active' : ''}`}
+                    onClick={() => onchange(index)}
+                >{item}</div>
+            ))}
+
         </div>
     )
 }
