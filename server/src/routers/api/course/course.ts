@@ -2,7 +2,7 @@
 import { SearchParams } from '@/models/course'
 import Router from '@koa/router'
 import { ParesPostData } from '~/libs/req'
-import { getCourseSummaryByCategory } from '~/models/course'
+import { getCourseDetail, getCourseSummaryByCategory } from '~/models/course'
 import { getAdCourse, getSearchCategoryOptions, searchCourse } from '~/models/search'
 let router = new Router()
 // course
@@ -37,6 +37,14 @@ router.get('/ad', async ctx => {
     ctx.body = { type, data }
 
 })
+
+router.get('/detail/:courseID', async ctx => {
+    const courseID = Number(ctx.params.courseID)
+    let data = await getCourseDetail(courseID)
+    ctx.body = data
+})
+
+
 
 
 

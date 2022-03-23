@@ -12,3 +12,4 @@ app.use(routers)
 app.use(koaStatic(staticRoot))
 
 getCourseDetail(1)
+

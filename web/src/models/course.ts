@@ -121,7 +121,7 @@ export interface CourseDetail {
         total_students: number;
         recently_students: number;
         rank: number;
-        isRegisted: number;
+        isRegisted: boolean;
 
         summary: string;
         description: string;
