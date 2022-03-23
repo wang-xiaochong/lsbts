@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit'
 
-import { AdCourseData, CourseDetail, CourseSummaryData, SearchCategoryData, SearchCourseResult, SearchParams } from '@/models/course'
+import { AdCourseData, CourseDetail, CourseSummaryData, SearchCategoryData, SearchCourseResult, SearchParams, VideoSectionData } from '@/models/course'
 
 // index course
 export const setIndexCourseSummary = createAction<{ category: number, data: CourseSummaryData[] }>('setIndexCourseSummary')
@@ -24,3 +24,7 @@ export const getAdList = createAction<'right' | 'bottom'>('getAdList')
 // course detail
 export const setCourseDetail = createAction<CourseDetail>('setCourseDetail');
 export const getCourseDetail = createAction<number>('getCourseDetail')
+
+//video section
+export const setVideoSectionData = createAction<VideoSectionData>('setVideoSectionData');
+export const getVideoSectionData = createAction<number>('getVideoSectionData');

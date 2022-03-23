@@ -12,6 +12,10 @@ export function course(courseID: number) {
     return `/course/${courseID}`;
 }
 
-export function video(videoID: number) {
-    return `/video/${videoID}`;
+export function video(sectionID: number) {
+    return `/video/${sectionID}`;
+}
+
+export function push(url: string) {
+    window.open(url)
 }

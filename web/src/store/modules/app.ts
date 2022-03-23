@@ -13,11 +13,17 @@ export interface AlertProps {
 
     showCancel?: boolean;
     onCancel?: () => void | Promise<void>;
+
+
 }
 
 export interface AppState {
     searchBarKw?: string,
     alertProps?: AlertProps;
+    // header footer
+    globalHeaderVisible?: boolean;
+    globalFooterVisible?: boolean;
+
 }
 
 
@@ -26,7 +32,10 @@ export const initState: AppState = {
     alertProps: {
         content: '',
         visible: false,
-    }
+    },
+    globalHeaderVisible: true,
+    globalFooterVisible: true,
+
 }
 
 export const appReducer = createReducer(
@@ -53,6 +62,17 @@ export const appReducer = createReducer(
             return {
                 ...state,
                 searchBarKw: action.payload,
+            }
+        })
+        // hearder footer
+        .addCase(actions.app.setHeaderVisible, (state, { payload }) => {
+            return {
+                ...state, globalHeaderVisible: payload
+            }
+        })
+        .addCase(actions.app.setFooterVisible, (state, { payload }) => {
+            return {
+                ...state, globalFooterVisible: payload
             }
         })
 

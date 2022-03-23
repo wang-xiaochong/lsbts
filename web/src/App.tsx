@@ -4,14 +4,18 @@ import Home from './views/Home'
 import List from './views/List'
 import Course from './views/Course'
 import NotFound from "./views/NotFound";
+import Video from "./views/Video";
+
+
 
 import Alert from "./commponents/alert";
 import querystring from "./libs/querystring";
 import { getUserData, saveToken, setToken } from "./store/actions/user";
-import { Dispatch } from "redux";
-import { UserState } from "./store";
+import { AppState, RootState, UserState } from "./store";
 import Footer from "./commponents/footer/footer";
 import Header from "./commponents/header/header";
+
+import { connect, Dispatch, actions } from '@/store'
 
 
 // 公用样式
@@ -34,44 +38,50 @@ import '@/assets/less/video.less'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import * as routers from '@/router'
 interface Props {
+    app?: AppState;
     user?: UserState;
     dispatch?: Dispatch;
 }
 
-export default function App(props: Props) {
-    useEffect(() => {
-        const { token } = querystring(['token']);
-        if (token) {
-            if (props.dispatch) {
-                props.dispatch(saveToken({ token }))
-                props.dispatch(setToken({ token }))
-                window.location.href = '/';
-            }
-        }
-    });
-    useEffect(() => {
-        const { user } = props
-        if (user?.token) {
-            if (props.dispatch)
-                props.dispatch(getUserData())
-        }
-    })
+function App(props: Props) {
+    const header = props.app?.globalHeaderVisible === undefined ? true : props.app?.globalHeaderVisible;
+    const footer = props.app?.globalFooterVisible === undefined ? true : props.app?.globalFooterVisible;;
+    // useEffect(() => {
+    //     const { token } = querystring(['token']);
+    //     if (token) {
+    //         if (props.dispatch) {
+    //             props.dispatch(saveToken({ token }))
+    //             props.dispatch(setToken({ token }))
+    //             window.location.href = '/';
+    //         }
+    //     }
+    // });
+    // useEffect(() => {
+    //     const { user } = props
+    //     if (user?.token) {
+    //         if (props.dispatch)
+    //             props.dispatch(getUserData())
+    //     }
+    // })
     return (
         <>
             <BrowserRouter>
-                <Header />
+                {header ? (<Header /> ): ''}
 
                 <Routes>
                     <Route path={routers.home()} element={<Home />}></Route>
                     <Route path={routers.list()} element={<List />}></Route>
                     <Route path='/course/:id' element={<Course />} ></Route>
+                    <Route path='/video/:sectionID' element={<Video />} ></Route>
                     <Route path="*" element={<NotFound />}></Route>
                 </Routes>
 
                 <Alert />
-                <Footer />
+                {footer ? (<Footer />) : ''}
             </BrowserRouter>
         </>
     )
 
 }
+
+export default connect((state: RootState) => state)(App)

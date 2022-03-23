@@ -1,6 +1,8 @@
 import { duration2string, ts2string } from "@/libs/common";
-import { CourseChapterData, LiveData, VideoData } from "models/course";
+import { CourseChapterData, CourseSectionData, LiveData, VideoData } from "models/course";
 import React from "react";
+
+import * as routers from '../../router'
 
 
 
@@ -11,6 +13,12 @@ interface Props {
 }
 export default function courseChapter(props: Props) {
     const { chapters } = props;
+    const sectionClick = (section: CourseSectionData) => {
+        switch (section.type) {
+            case 'video': routers.push(routers.video(section.ID)); break;
+            default: alert('暂不支持')
+        }
+    }
 
     return (
         <div className="course-item course-chapter" >
@@ -24,8 +32,11 @@ export default function courseChapter(props: Props) {
                             <span className="title">{chapter.title}</span>
                         </div>
                         <div className="tasks">
-                            {chapter.sections.map((section, index) => (
-                                <div className="task" key={index}>
+                            {chapter.sections.map(section => (
+                                <div className="task"
+                                    key={section.ID}
+                                    onClick={ev => sectionClick(section)}
+                                >
                                     <span className="task-title">【{
                                         {
                                             'live': '直播',

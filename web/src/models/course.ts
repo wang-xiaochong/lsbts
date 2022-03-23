@@ -156,4 +156,11 @@ export interface CourseDetail {
 }
 
 
+// 视频section信息
+export interface VideoSectionData {
+    section_title: string;
+    videoID: string;
+    duration: number;
+}
+
 

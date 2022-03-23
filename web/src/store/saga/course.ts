@@ -37,6 +37,13 @@ export default function* course() {
         yield put(actions.course.setCourseDetail(data))
     })
 
+    // video section
+    yield takeEvery(actions.course.getVideoSectionData, function* ({ payload: sectionID }) {
+        let { data } = yield axios.get(`/api/course/video-section/${sectionID}`);
+        yield put(actions.course.setVideoSectionData(data))
+    })
+
+
 
 
 }

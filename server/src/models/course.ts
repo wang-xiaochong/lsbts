@@ -1,7 +1,7 @@
 
 import db from '~/libs/database'
 import { readCache, writeCache, KEY_COURSE_DETAIL_PRE } from '~/libs/redis'
-import { CourseChapterData, CourseDetail, CourseSummaryData, SearchParams, TeacherData } from '@/models/course'
+import { CourseChapterData, CourseDetail, CourseSummaryData, SearchParams, TeacherData, VideoSectionData } from '@/models/course'
 import { MAX_COURSE_LIST_COUNT } from '~/config/app'
 import { getChapters } from './course/chapter'
 
@@ -25,8 +25,13 @@ export async function getCourseSummaryByCategory(category_id: number, category_l
 }
 
 
-
+// course detail
 export async function getCourseDetail(courseID: number): Promise<CourseDetail> {
+     const key = KEY_COURSE_DETAIL_PRE + courseID;
+     let result = await readCache(key)
+     if (result) return result;
+
+
      // 课程数据————course_table
      const courseRow = await db.one<any>(`SELECT * FROM course_table WHERE ID=?`, [courseID]);
 
@@ -99,8 +104,28 @@ export async function getCourseDetail(courseID: number): Promise<CourseDetail> {
      //      ID, rank, time, course_time, content, avatar, nickname
      // })
 
-     const ret = { course, teachers, category, agency, chapters, comments }
+     // cache
+     result = { course, teachers, category, agency, chapters, comments }
+     await writeCache(key, result)
      // console.log(JSON.stringify(ret))
-     return ret
+     return result
+
+}
+
+
+// video section
+export async function getVideoSection(sectionID: number): Promise<VideoSectionData> {
+     return await db.one<any>(`
+          SELECT
+               section.title AS section_title,
+               video.ID AS videoID,
+               video.duration AS duration
+          FROM
+               course_section_table AS section LEFT JOIN
+               course_video_table AS video ON section.item_id=video.ID
+          WHERE
+               section.ID=?
+     `, [sectionID]
+     )
 
 }
