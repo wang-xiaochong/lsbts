@@ -25,7 +25,10 @@ import '@/assets/less/subscribe.less'
 
 // 列表(搜索)
 import '@/assets/less/list.less'
+// 课程
 import '@/assets/less/course.less'
+// 视频
+import '@/assets/less/video.less'
 
 // 路由
 import { BrowserRouter, Routes, Route } from 'react-router-dom'

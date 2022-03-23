@@ -93,7 +93,7 @@ function CommentFilter(props: CommentFilterProps) {
     // 好评
     arr.push(`好评(${comments.filter(item => item.rank >= 4).length})`)
     arr.push(`中评(${comments.filter(item => item.rank >= 2 && item.rank <= 3).length})`)
-    arr.push(`差评(${comments.filter(item => item.rank == 1).length})`)
+    arr.push(`差评(${comments.filter(item => item.rank === 1).length})`)
 
     return (
         <div className="comment-filter">

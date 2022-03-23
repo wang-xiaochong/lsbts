@@ -19,6 +19,7 @@ interface Props {
 export default function CourseVideo(props: Props) {
     const { cover, items } = props
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [cur, setCur] = useState<number>(0);
 
     return (
