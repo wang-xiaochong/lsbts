@@ -10,7 +10,7 @@ interface Props {
 export default function CourseCommont(props: Props) {
     let { comments } = props
     const [filter, setFilter] = useState(0);
-    comments.filter(comment => {
+    comments = comments.filter(comment => {
         switch (filter) {
             case 0: return true;
             case 1: return comment.rank >= 4;
@@ -22,7 +22,7 @@ export default function CourseCommont(props: Props) {
 
     return (
         <div className="course-item course-comment">
-            <CommentFilter comments={comments} onChange={index => setFilter(index)} />
+            <CommentFilter comments={props.comments} onChange={setFilter} />
             <ul className="comment-list">
                 {comments.map(comment => (
                     <li key={comment.ID}>
@@ -40,7 +40,7 @@ export default function CourseCommont(props: Props) {
                             <div className="info">
                                 <span>已上课{(() => {
                                     let m = Math.floor(comment.course_time / 60);
-                                    let h = Math.fround(m / 60);
+                                    let h = Math.round(m / 60);
                                     m %= 60;
 
                                     return `${h}小时${m}分钟`;
@@ -68,7 +68,7 @@ function Rank(props: RankProps) {
     const { rank } = props;
     let arr = [];
     for (let i = 1; i <= 5; i++) {
-        arr.push(<i className={`icon ${i <= rank ? 'icon-star-yellow' : 'icon-star-grey'}`} />)
+        arr.push(<i key={i} className={`icon ${i <= rank ? 'icon-star-yellow' : 'icon-star-grey'}`} />)
     }
     return (
         <div className="rank">
@@ -98,7 +98,7 @@ function CommentFilter(props: CommentFilterProps) {
     return (
         <div className="comment-filter">
             {arr.map((str, index) => (
-                <label>
+                <label key={index}>
                     <input
                         type="radio"
                         checked={cur === index}

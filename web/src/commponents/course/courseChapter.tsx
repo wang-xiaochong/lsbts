@@ -24,8 +24,8 @@ export default function courseChapter(props: Props) {
                             <span className="title">{chapter.title}</span>
                         </div>
                         <div className="tasks">
-                            {chapter.sections.map(section => (
-                                <div className="task">
+                            {chapter.sections.map((section, index) => (
+                                <div className="task" key={index}>
                                     <span className="task-title">【{
                                         {
                                             'live': '直播',

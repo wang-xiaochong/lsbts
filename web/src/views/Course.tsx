@@ -70,7 +70,7 @@ function Course(props: Props) {
 
     chapters.forEach(chapter => {
         chapter.sections.forEach(({ ID, title, type, item }) => {
-            
+
             if (type === 'live') {
                 courseVideoItems.push({
                     type: 'live',
@@ -113,23 +113,26 @@ function Course(props: Props) {
 
                     <CourseInfo
                         course_id={id}
-                        title='Java高级'
-                        price={98}
-                        total_students={500}
-                        recently_students={200}
-                        rank={0.98}
-                        isRegisted={false}
+                        title={course.title}
+                        price={course.price}
+                        total_students={course.total_students}
+                        recently_students={course.recently_students}
+                        rank={course.rank}
+                        isRegisted={course.isRegisted}
 
                     />
 
                 </div>
             </div>
+
+
+
             <div className="course-content">
                 <div className="page">
                     <div className="course-detail">
 
                         <Tabs
-                            items={['课程概述', '目录', '评论(2)']}
+                            items={['课程概述', '目录', `评论(${comments.length})`]}
                             cur={cur}
                             onchange={index => setCur(index)}
                         />
@@ -145,34 +148,35 @@ function Course(props: Props) {
                             {
                                 [
                                     <CourseDescription
-                                        teachers={[]}
-                                        summary=''
-                                        description=''
+                                        teachers={teachers}
+                                        summary={course.summary}
+                                        description={course.description}
                                     />,
 
                                     <CourseChapter
-                                        chapters={[]}
+                                        chapters={chapters}
                                     />,
 
-                                    <CourseComment comments={[]} />,
+                                    <CourseComment comments={comments} />,
                                 ][cur]
                             }
-
                         </div>
                     </div>
                     <AgencyDetail
-                        avatar='/image/tmp_avatar.jpg'
-                        agency_name='xx学院'
-                        agency_rank={0.98}
-                        total_course={98}
-                        total_students={4156469}
-                        summary='简介'
+                        avatar={agency.avatar}
+                        agency_name={agency.agency_name}
+                        agency_rank={agency.agency_rank}
+                        total_course={agency.total_course}
+                        total_students={agency.total_students}
+                        summary={agency.summary}
                     />
 
 
 
                 </div>
             </div>
+
+
         </div>
     );
 }
