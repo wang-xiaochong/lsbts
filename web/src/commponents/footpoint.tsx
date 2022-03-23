@@ -9,13 +9,13 @@ import { getCategory } from './list/category';
 
 
 interface Props {
-  items?: {
+  items: {
     title: string,
     href: string,
   }[]
 }
 
-function Footpoint(props: Props) {
+export  function Footpoint(props: Props) {
   const { items } = props;
 
   return (
@@ -73,6 +73,8 @@ function getFootpoint(
     }
   }
 }
+
+
 
 interface footPointProps {
   site?: SiteState,

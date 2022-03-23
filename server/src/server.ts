@@ -4,10 +4,11 @@ import routers from '~/routers/routers'
 import koaStatic from 'koa-static'
 import { staticRoot } from '~/config/app'
 import { enableCors } from '~/config/app'
+import { getCourseDetail } from './models/course'
 
 if (enableCors) corsInit(app);
 
 app.use(routers)
 app.use(koaStatic(staticRoot))
 
-
+getCourseDetail(1)

@@ -110,4 +110,50 @@ export interface CourseCommentData {
 }
 
 
+//course detail 
+export interface CourseDetail {
+    // 课程数据————course_table
+    course: {
+        ID: number;
+        cover: string;
+        title: string;
+        price: number;
+        total_students: number;
+        recently_students: number;
+        rank: number;
+        isRegisted: number;
+
+        summary: string;
+        description: string;
+
+    }
+
+    // 讲师信息
+    teachers: TeacherData[];
+
+    // 类目数据————category_table  category_item_table
+    category: {
+        ID: number;
+        title: string;
+    }[];
+
+
+    // 机构信息————agency_table
+    agency: {
+        avatar: string;
+        agency_name: string;
+        agency_rank: number;
+        total_course: number;
+        total_students: number;
+        summary: string;
+    }
+
+    // 章节————course_chapter course_section course_live course_video
+    chapters: CourseChapterData[];
+
+    // 评论————course_comment_table
+    comments: CourseCommentData[];
+}
+
+
 

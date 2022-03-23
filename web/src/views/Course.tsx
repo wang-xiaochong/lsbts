@@ -1,3 +1,6 @@
+
+
+import {Footpoint} from '@/commponents/footpoint'
 import AgencyDetail from '@/commponents/course/agencyDetail';
 import CourseChapter from '@/commponents/course/courseChapter';
 import CourseComment from '@/commponents/course/courseComment';
@@ -7,6 +10,7 @@ import CourseVideo from '@/commponents/course/courseVideo';
 import Tabs from '@/commponents/course/tabs';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom'
+
 
 interface Props {
 
@@ -23,9 +27,7 @@ export default function Course(props: Props) {
         <div className="main-container">
             <div className="course-header">
                 <div className="page">
-                    <div className="placeholder">
-                        公用footpoint组件-省略
-                    </div>
+                    <Footpoint items={[]}/>
                     <CourseVideo
                         cover={'/image/tmp_course_1.jpg'}
                         course_id={id}
