@@ -24,11 +24,17 @@ export default function* course() {
         yield put(actions.course.setSearchCategoryData(data));
     })
     //ad
-    yield takeEvery(actions.course.getAdList, function* ({payload}) {
+    yield takeEvery(actions.course.getAdList, function* ({ payload }) {
         let { data } = yield axios.get('/api/course/ad', {
-            params: { type:payload }
+            params: { type: payload }
         });
         yield put(actions.course.setAdList(data));
+    })
+
+    // course detail
+    yield takeEvery(actions.course.getCourseDetail, function* ({ payload: courseID }) {
+        let { data } = yield axios.get(`/api/course/detail/${courseID}`);
+        yield put(actions.course.setCourseDetail(data))
     })
 
 

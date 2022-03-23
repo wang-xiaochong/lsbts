@@ -1,4 +1,5 @@
 
+import { ts2string } from "@/libs/common";
 import { CourseCommentData } from "models/course";
 import React, { useState } from "react";
 
@@ -45,8 +46,7 @@ export default function CourseCommont(props: Props) {
                                     return `${h}小时${m}分钟`;
                                 })()}时评价</span>
                                 <span className="time">{(() => {
-                                    let date = new Date(comment.time * 1000)
-                                    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+                                    return ts2string(comment.time * 1000, 'yyyy-MM-dd');
                                 })()}</span>
                             </div>
                         </div>

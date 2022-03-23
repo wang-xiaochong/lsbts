@@ -1,6 +1,6 @@
 
 
-import {Footpoint} from '@/commponents/footpoint'
+import { Footpoint } from '@/commponents/footpoint'
 import AgencyDetail from '@/commponents/course/agencyDetail';
 import CourseChapter from '@/commponents/course/courseChapter';
 import CourseComment from '@/commponents/course/courseComment';
@@ -10,28 +10,104 @@ import CourseVideo from '@/commponents/course/courseVideo';
 import Tabs from '@/commponents/course/tabs';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom'
+import { CourseState, connect, RootState, Dispatch, actions } from '@/store';
+import * as routers from '../router'
+import { LiveData, VideoData } from 'models/course';
 
 
 interface Props {
-
+    course?: CourseState
+    dispatch: Dispatch
 }
 
-export default function Course(props: Props) {
-
-
+function Course(props: Props) {
     const params = useParams<{ id: string }>();
-    let id = Number(params.id)
     const [cur, setCur] = useState(0);
+
+    let id = Number(params.id)
+    const courseDetail = props.course?.courseDetail
+    if (!courseDetail) {
+        props.dispatch(actions.course.getCourseDetail(id))
+    }
+
+    if (!courseDetail) {
+        return (
+            <div className="main-container">
+                loading...
+            </div>
+        )
+    }
+
+
+    const { course, teachers, category, agency, chapters, comments } = courseDetail
+
+    // footpoint
+    const footPointItems: {
+        title: string,
+        href: string,
+    }[] = [
+            { title: '全部课程', href: routers.list() },
+
+            ...category.map(({ ID, title }, index) => {
+                let level: 1 | 2 | 3 = 1;
+                let l = index + 1;
+                if (l === 1 || l === 2 || l === 3) { level = l }
+                return {
+                    title,
+                    href: routers.list(ID, level)
+                }
+            }),
+
+            { title: course.title, href: routers.course(id) }
+        ]
+
+    // Course Video
+    const courseVideoItems: {
+        type: 'live' | 'video';
+        title: string;
+        time: number;
+    }[] = []
+
+    chapters.forEach(chapter => {
+        chapter.sections.forEach(({ ID, title, type, item }) => {
+            
+            if (type === 'live') {
+                courseVideoItems.push({
+                    type: 'live',
+                    title,
+                    time: (item as LiveData).start_time,
+                })
+            } else if (type === 'video') {
+                courseVideoItems.push({
+                    type: 'video',
+                    title,
+                    time: (item as VideoData).duration,
+                })
+            }
+
+        })
+    })
+
+    courseVideoItems.sort((item1, item2) => {
+        let t1 = item1.type === 'live' ? 0 : 1;
+        let t2 = item2.type === 'live' ? 0 : 1;
+        return t1 - t2;
+    })
+
+
+
 
     return (
         <div className="main-container">
             <div className="course-header">
                 <div className="page">
-                    <Footpoint items={[]}/>
+
+                    <Footpoint items={footPointItems} />
+
                     <CourseVideo
-                        cover={'/image/tmp_course_1.jpg'}
+                        cover={course.cover}
                         course_id={id}
-                        items={[]}
+                        items={courseVideoItems}
                     />
 
 
@@ -45,7 +121,6 @@ export default function Course(props: Props) {
                         isRegisted={false}
 
                     />
-
 
                 </div>
             </div>
@@ -101,3 +176,5 @@ export default function Course(props: Props) {
         </div>
     );
 }
+
+export default connect((state: RootState) => state)(Course)

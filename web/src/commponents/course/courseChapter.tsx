@@ -1,3 +1,4 @@
+import { duration2string, ts2string } from "@/libs/common";
 import { CourseChapterData, LiveData, VideoData } from "models/course";
 import React from "react";
 
@@ -35,21 +36,9 @@ export default function courseChapter(props: Props) {
                                     }】{section.title}</span>
                                     {
                                         section.type === 'live' ? (
-                                            <span className="task-duration">({
-                                                (() => {
-                                                    let { start_time } = (section.item as LiveData)
-                                                    let date = new Date(start_time * 1000);
-                                                    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-                                                })()
-                                            })</span>
+                                            <span className="task-duration">({ts2string((section.item as LiveData).start_time * 1000, 'yyyy-MM-dd')})</span>
                                         ) : (section.type === 'video' ? (
-                                            <span className="task-duration">({
-                                                (() => {
-                                                    let s = (section.item as VideoData).duration;
-                                                    if (s < 60) return s + '秒';
-                                                    else return Math.floor(s / 60) + '分钟';
-                                                })()
-                                            })</span>
+                                            <span className="task-duration">({duration2string((section.item as VideoData).duration)})</span>
                                         ) : '')
                                     }
                                 </div>

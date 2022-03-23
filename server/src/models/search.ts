@@ -75,9 +75,12 @@ export async function searchCourse(params: SearchParams): Promise<{ data: Course
     //filter.sort
     let order: string = '';
     if (sort !== 'default' && sort !== 'students') {
-        order = ` ORDER BY ${sort} DESC`
+        if (sort === 'rank') {
+            order = ` ORDER BY course.${sort} DESC`
+        } else {
+             order = ` ORDER BY ${sort} DESC`
+        }
     }
-
 
     // let sqlsting = `SELECT * FROM course_table ${where} ${order}`
     let sqlsting = `
