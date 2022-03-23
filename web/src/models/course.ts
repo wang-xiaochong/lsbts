@@ -73,7 +73,7 @@ export interface CourseSectionData {
     ID: number;
     title: string;
     type: 'live' | 'video' | 'read' | 'download';
-    item_id: number;
+    // item_id: number;
     item: VideoData | LiveData | ReadData | DownloadData;
 }
 export interface VideoData {
