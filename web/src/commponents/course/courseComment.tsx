@@ -1,35 +1,27 @@
 
 import { CourseCommentData } from "models/course";
-import React from "react";
+import React, { useState } from "react";
 
 interface Props {
     comments: CourseCommentData[]
 
 }
-export default function courseCommont(props: Props) {
-    const { comments } = props
+export default function CourseCommont(props: Props) {
+    let { comments } = props
+    const [filter, setFilter] = useState(0);
+    comments.filter(comment => {
+        switch (filter) {
+            case 0: return true;
+            case 1: return comment.rank >= 4;
+            case 2: return comment.rank >= 2 && comment.rank <= 3;
+            default: return comment.rank === 1;
+        }
 
+    })
 
     return (
         <div className="course-item course-comment">
-            <div className="comment-filter">
-                <label>
-                    <input type="radio" defaultChecked />
-                    全部评价(2)
-                </label>
-                <label>
-                    <input type="radio" />
-                    好评(1)
-                </label>
-                <label>
-                    <input type="radio" />
-                    中评(1)
-                </label>
-                <label>
-                    <input type="radio" />
-                    差评(0)
-                </label>
-            </div>
+            <CommentFilter comments={comments} onChange={index => setFilter(index)} />
             <ul className="comment-list">
                 {comments.map(comment => (
                     <li key={comment.ID}>
@@ -81,6 +73,45 @@ function Rank(props: RankProps) {
     return (
         <div className="rank">
             {arr}
+        </div>
+    )
+}
+
+interface CommentFilterProps {
+    comments: CourseCommentData[];
+    onChange: (index: number) => void;
+}
+function CommentFilter(props: CommentFilterProps) {
+    const { comments, onChange } = props
+    const [cur, setCur] = useState(0);
+
+
+    let arr = [];
+    // 全部
+    arr.push(`全部评价(${comments.length})`)
+
+    // 好评
+    arr.push(`好评(${comments.filter(item => item.rank >= 4).length})`)
+    arr.push(`中评(${comments.filter(item => item.rank >= 2 && item.rank <= 3).length})`)
+    arr.push(`差评(${comments.filter(item => item.rank == 1).length})`)
+
+    return (
+        <div className="comment-filter">
+            {arr.map((str, index) => (
+                <label>
+                    <input
+                        type="radio"
+                        checked={cur === index}
+                        onChange={ev => {
+                            if (ev.target.checked) {
+                                setCur(index);
+                                onChange(index)
+                            }
+                        }}
+                    />
+                    {str}
+                </label>
+            ))}
         </div>
     )
 }

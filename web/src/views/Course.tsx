@@ -83,7 +83,14 @@ export default function Course(props: Props) {
 
                         </div>
                     </div>
-                    <AgencyDetail />
+                    <AgencyDetail
+                        avatar='/image/tmp_avatar.jpg'
+                        agency_name='xx学院'
+                        agency_rank={0.98}
+                        total_course={98}
+                        total_students={4156469}
+                        summary='简介'
+                    />
 
 
 
