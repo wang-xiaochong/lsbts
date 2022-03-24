@@ -15,7 +15,7 @@ app.use(async (ctx, next) => {
             ctx.body = '未找到数据';
         }
     } catch (e: any) {
-        if (e.code) {
+        if (typeof e.code === 'number') {
             ctx.status = e.code;
             ctx.body = e.msg;
         } else {

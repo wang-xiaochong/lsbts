@@ -68,6 +68,7 @@ function Course(props: Props) {
 
     // Course Video
     const courseVideoItems: {
+        ID: number;
         type: 'live' | 'video';
         title: string;
         time: number;
@@ -78,12 +79,14 @@ function Course(props: Props) {
 
             if (type === 'live') {
                 courseVideoItems.push({
+                    ID,
                     type: 'live',
                     title,
                     time: (item as LiveData).start_time,
                 })
             } else if (type === 'video') {
                 courseVideoItems.push({
+                    ID,
                     type: 'video',
                     title,
                     time: (item as VideoData).duration,
@@ -101,7 +104,7 @@ function Course(props: Props) {
 
 
 
-  
+
     return (
         <div className="main-container">
             <div className="course-header">

@@ -134,7 +134,8 @@ export async function isUserRegisted(courseID: number, userID: number): Promise<
 export async function createVideoLink(sectionID: number, userID: number): Promise<VideoSectionData> {
 
      // 1. 校验权限
-     const sectionRow = await db.one<any>(`SELECT * FROM course_section_table WHERE ID=?`, [sectionID])
+     const sectionRow = await db.one<any>(`SELECT * FROM course_section_table WHERE type=? AND ID=?`, ['video',sectionID])
+     assert(!sectionRow, 404, '请先观看录播视频');
      assert(! await isUserRegisted(sectionRow.course_id, userID), 403, '需要报名课程后查看')
 
      // 2. 获取视频信息

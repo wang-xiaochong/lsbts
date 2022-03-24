@@ -2,6 +2,7 @@
 
 import { duration2string, ts2string } from "@/libs/common";
 import React, { useState } from "react";
+import { connect, actions, Dispatch, RootState, CourseState } from '@/store/index'
 
 import * as routers from '../../router'
 
@@ -9,37 +10,57 @@ interface Props {
     course_id: number;
     cover: string;
     items: {
+        ID: number;
         type: 'live' | 'video';
         title: string;
         time: number;
     }[];
-
+    course: CourseState
+    dispatch: Dispatch;
 
 }
-export default function CourseVideo(props: Props) {
+function CourseVideo(props: Props) {
     const { cover, items } = props
-
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [cur, setCur] = useState<number>(0);
-
+    const videoSectionData = props.course.videoSectionData;
+    const playSection = (sectionID: number) => {
+        props.dispatch(actions.course.getVideoSectionData(sectionID))
+    }
     return (
         <div className="course-video">
             <div className="video">
-                <div className="cover">
-                    <img src={cover} alt="" />
-                </div>
-                <div className="play-cover">
-                    <div className="shadow" />
-                    <a href={routers.video(0)} className="play-btn">
-                        <i className="icon icon-play-w" />
-                    </a>
-                </div>
-            </div>
+                {videoSectionData ? (
+                    <video src={videoSectionData.videoLink} controls ></video>
+                ) : (
+                    <>
+                        <div className="cover">
+                            <img src={cover} alt="" />
+                        </div>
+
+                        <div className="play-cover">
+                            <div className="shadow" />
+                            <span className="play-btn" onClick={ev => items[0] && playSection(items[0].ID)}>
+                                <i className="icon icon-play-w" />
+                            </span>
+                        </div>
+                    </>
+                )}</div>
+
             <div className="video-list-container">
                 <dl className="video-list">
                     <dt>课程列表</dt>
                     {items.map((item, index) => (
-                        <dd key={index} className={index === cur ? 'active' : ''}>
+                        <dd
+
+                            key={index}
+                            className={index === cur ? 'active' : ''}
+                            onClick={ev => {
+                                setCur(index);
+                                playSection(items[index].ID)
+                            }
+                            }
+                        >
                             <div className="type">
                                 {{ 'live': '直播', 'video': '录播' }[item.type]}
                             </div>
@@ -59,3 +80,5 @@ export default function CourseVideo(props: Props) {
         </div>
     )
 }
+
+export default connect((state: RootState) => state)(CourseVideo)

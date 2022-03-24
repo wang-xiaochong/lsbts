@@ -16,11 +16,12 @@ axios.interceptors.response.use(res => {
     return res
 }, err => {
     if (err.response) {
+
         alert(err.response.data)
+        return err.response.data
     } else {
         alert('网络错误，请稍后重试')
     }
-    
 })
 
 export default axios;
