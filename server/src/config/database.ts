@@ -1,8 +1,8 @@
 export const db = {
-    host: 'localhost',
+    host: '82.156.109.119',
     port: 3306,
     user: 'xiaoshuai',
-    password: 'xs000809',
+    password: 'DTxjyNCWjz5t8RDn',
     database: 'lsbts'
 }
 
