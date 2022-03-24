@@ -31,6 +31,14 @@ export default function* course() {
         yield put(actions.course.setAdList(data));
     })
 
+    // course registed
+    yield takeEvery(actions.course.getCourseRegisted, function* ({ payload: courseID }) {
+        let { data } = yield axios.get(`/api/course/is-registed/${courseID}`);
+        yield put(actions.course.setCourseRegisted(data))
+    })
+
+
+
     // course detail
     yield takeEvery(actions.course.getCourseDetail, function* ({ payload: courseID }) {
         let { data } = yield axios.get(`/api/course/detail/${courseID}`);

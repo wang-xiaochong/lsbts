@@ -1,9 +1,14 @@
 
 import db from '~/libs/database'
 import { readCache, writeCache, KEY_COURSE_DETAIL_PRE } from '~/libs/redis'
-import { CourseChapterData, CourseDetail, CourseSummaryData, SearchParams, TeacherData, VideoSectionData } from '@/models/course'
+import { CourseDetail, CourseSummaryData, SearchParams, TeacherData, VideoSectionData } from '@/models/course'
 import { MAX_COURSE_LIST_COUNT } from '~/config/app'
 import { getChapters } from './course/chapter'
+import { assert, md5 } from '~/libs/common'
+
+import path from 'path'
+import urlLib from 'url'
+import { key } from '~/config/video'
 
 export async function getCourseSummaryByCategory(category_id: number, category_leval: 1 | 2 | 3): Promise<CourseSummaryData[]> {
      let rows = await db.query<CourseSummaryData>(`
@@ -28,7 +33,7 @@ export async function getCourseSummaryByCategory(category_id: number, category_l
 // course detail
 export async function getCourseDetail(courseID: number): Promise<CourseDetail> {
      const key = KEY_COURSE_DETAIL_PRE + courseID;
-     let result = await readCache(key)
+     let result: CourseDetail = await readCache(key)
      if (result) return result;
 
 
@@ -43,7 +48,7 @@ export async function getCourseDetail(courseID: number): Promise<CourseDetail> {
           total_students: 0,
           recently_students: 0,
           rank: courseRow.rank,
-          isRegisted: false,
+          // isRegisted: false,
           summary: courseRow.summary,
           description: courseRow.description,
 
@@ -112,22 +117,37 @@ export async function getCourseDetail(courseID: number): Promise<CourseDetail> {
 
 }
 
+// 课程报名
+export async function isUserRegisted(courseID: number, userID: number): Promise<boolean> {
+
+     let { count } = await db.one<{ count: number }>(`
+     SELECT COUNT(*) AS count FROM pay_table WHERE course_id=? AND user_id=?
+     `, [courseID, userID])
+
+     return count > 0;
+}
+
 
 // video section
-export async function getVideoSection(sectionID: number): Promise<VideoSectionData> {
-     let ret = await db.one<any>(`
-          SELECT
-               section.title AS section_title,
-               video.ID AS videoID,
-               video.duration AS duration
-          FROM
-               course_section_table AS section LEFT JOIN
-               course_video_table AS video ON section.item_id=video.ID
-          WHERE
-               section.ID=?
-     `, [sectionID]
-     )
-     // console.log(ret)
-     return ret
 
+// video link
+export async function createVideoLink(sectionID: number, userID: number): Promise<VideoSectionData> {
+
+     // 1. 校验权限
+     const sectionRow = await db.one<any>(`SELECT * FROM course_section_table WHERE ID=?`, [sectionID])
+     assert(! await isUserRegisted(sectionRow.course_id, userID), 403, '需要报名课程后查看')
+
+     // 2. 获取视频信息
+     const videoRow = await db.one<any>(`SELECT * FROM course_video_table WHERE ID=?`, [sectionRow.item_id])
+     assert(!videoRow, 404, '视频不存在或已被删除')
+     // 3. 拼装link
+     const { videoID, duration } = videoRow
+
+     const t = (Math.floor((Date.now() / 1000) + duration * 2)).toString(16);
+     const dir = path.parse(urlLib.parse(videoID).path || '').dir + '/'
+     const sign = md5(key + dir + t);
+     return {
+          section_title: sectionRow.title,
+          videoLink:`${videoID}?t=${t}&sign=${sign}`
+     }
 }

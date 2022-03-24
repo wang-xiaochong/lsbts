@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { connect, Dispatch, actions, UserState, CourseState, AppState, RootState } from '../store';
 
@@ -16,16 +16,82 @@ interface Props {
 function Video(props: Props) {
     const userData = props.user?.userData;
     const videoSectionData = props.course?.videoSectionData;
-    const {sectionID} = useParams<{ sectionID: string }>();
+
+    const [headerVisible, setHeaderVisible] = useState(true)
+    const { sectionID } = useParams<{ sectionID: string }>();
     if (props.app?.globalHeaderVisible !== false) props.dispatch(actions.app.setHeaderVisible(false))
     if (props.app?.globalFooterVisible !== false) props.dispatch(actions.app.setFooterVisible(false))
     if (!videoSectionData) props.dispatch(actions.course.getVideoSectionData(Number(sectionID)))
+
+    // video
+    const divRef = useRef<HTMLDivElement>(null)
+    const videoRef = useRef<HTMLVideoElement>(null)
+
+    function onResize() {
+        let div = divRef.current;
+        let video = videoRef.current;
+
+        let W = document.documentElement.clientWidth;
+        let H = document.documentElement.clientHeight;
+
+        if (div && video) {
+            div.style.width = W + 'px';
+            div.style.height = H + 'px';
+
+            let ratio = video.videoWidth / video.videoHeight;
+
+            if (ratio > W / H) {
+                video.style.width = W + 'px'
+                video.style.height = 'auto'
+                let h = W * video.videoHeight / video.videoWidth;
+                video.style.left = '0'
+                video.style.top = (H - h) / 2 + 'px'
+            } else {
+                video.style.width = 'auto'
+                video.style.height = H + 'px'
+                let w = H * video.videoWidth / video.videoHeight;
+                video.style.top = '0'
+                video.style.left = (W - w) / 2 + 'px'
+            }
+        }
+    }
+
+    useEffect(() => {
+        document.body.style.overflow = 'hidden'
+        onResize();
+        return () => {
+            window.addEventListener('resize', onResize, false)
+            document.body.style.overflow = 'visible'
+        }
+    })
+
+    useEffect(() => {
+        let video = videoRef.current;
+        if (video) {
+            video.addEventListener('play', onPlay, false)
+            video.addEventListener('pause', onStop, false)
+            video.addEventListener('canplay',onResize,false)
+        }
+        function onPlay() {
+            setHeaderVisible(false)
+        }
+        function onStop() {
+            setHeaderVisible(true)
+        }
+        return () => {
+            if (video) {
+                video.removeEventListener('play', onPlay, false)
+                video.removeEventListener('pause', onStop, false)
+                video.removeEventListener('canplay',onResize,false)
+            }
+        }
+    })
 
     return (
         <>
             <a href={routers.home()}>返回首页</a>
             <div className="video-player">
-                <div className="header">
+                {headerVisible ? (<div className="header">
                     <div className="title">{videoSectionData?.section_title}</div>
                     <div className="operation">
                         <span>评价</span>
@@ -39,9 +105,10 @@ function Video(props: Props) {
                             </span>
                         ) : ''}
                     </div>
-                </div>
-                <div className="video">
-                    <video controls />
+                </div>) : ''}
+
+                <div className="video" ref={divRef}>
+                    <video ref={videoRef} controls src={videoSectionData?.videoLink} />
                 </div>
             </div>
         </>

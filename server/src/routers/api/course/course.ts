@@ -2,8 +2,9 @@
 import { SearchParams } from '@/models/course'
 import Router from '@koa/router'
 import { ParesPostData } from '~/libs/req'
-import { getCourseDetail, getCourseSummaryByCategory, getVideoSection } from '~/models/course'
+import { createVideoLink, getCourseDetail, getCourseSummaryByCategory, isUserRegisted } from '~/models/course'
 import { getAdCourse, getSearchCategoryOptions, searchCourse } from '~/models/search'
+import { getUserID } from '~/models/user'
 let router = new Router()
 // course
 router.prefix('/course')
@@ -38,6 +39,14 @@ router.get('/ad', async ctx => {
 
 })
 
+router.get('/is-registed/:courseID', async ctx => {
+    const userID = await getUserID(ctx.get('token'));
+    const courseID = Number(ctx.params.courseID);
+    ctx.body = await isUserRegisted(courseID, userID)
+})
+
+
+
 router.get('/detail/:courseID', async ctx => {
     const courseID = Number(ctx.params.courseID)
     let data = await getCourseDetail(courseID)
@@ -46,7 +55,8 @@ router.get('/detail/:courseID', async ctx => {
 
 router.get('/video-section/:sectionID', async ctx => {
     const sectionID = Number(ctx.params.sectionID);
-    ctx.body = await getVideoSection(sectionID)
+    const userID = await getUserID(ctx.get('token'));
+    ctx.body = await createVideoLink(sectionID, userID)
 })
 
 

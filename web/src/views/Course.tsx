@@ -8,7 +8,7 @@ import CourseDescription from '@/commponents/course/courseDescription';
 import CourseInfo from '@/commponents/course/courseInfo';
 import CourseVideo from '@/commponents/course/courseVideo';
 import Tabs from '@/commponents/course/tabs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { CourseState, connect, RootState, Dispatch, actions } from '@/store';
 import * as routers from '../router'
@@ -26,6 +26,12 @@ function Course(props: Props) {
 
     let id = Number(params.id)
     const courseDetail = props.course?.courseDetail
+
+    const isRegisted = props.course?.isRegisted;
+    useEffect(() => {
+        props.dispatch(actions.course.getCourseRegisted(id))
+    }, [id])
+
     if (!courseDetail) {
         props.dispatch(actions.course.getCourseDetail(id))
     }
@@ -37,7 +43,6 @@ function Course(props: Props) {
             </div>
         )
     }
-
 
     const { course, teachers, category, agency, chapters, comments } = courseDetail
 
@@ -96,7 +101,7 @@ function Course(props: Props) {
 
 
 
-
+  
     return (
         <div className="main-container">
             <div className="course-header">
@@ -118,7 +123,7 @@ function Course(props: Props) {
                         total_students={course.total_students}
                         recently_students={course.recently_students}
                         rank={course.rank}
-                        isRegisted={course.isRegisted}
+                        isRegisted={isRegisted || false}
 
                     />
 

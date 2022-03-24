@@ -21,6 +21,10 @@ export const getSearchCategoryData = createAction<{
 export const setAdList = createAction<{ type: 'right' | 'bottom', data: AdCourseData[] }>('setAdList')
 export const getAdList = createAction<'right' | 'bottom'>('getAdList')
 
+// course registed
+export const setCourseRegisted = createAction<boolean>('setCourseRegisted')
+export const getCourseRegisted = createAction<number>('getCourseRegisted')
+
 // course detail
 export const setCourseDetail = createAction<CourseDetail>('setCourseDetail');
 export const getCourseDetail = createAction<number>('getCourseDetail')

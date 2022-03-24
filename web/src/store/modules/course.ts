@@ -18,6 +18,7 @@ export interface CourseState {
 
     // video
     videoSectionData?: VideoSectionData;
+    isRegisted?: boolean;
 
 
 }
@@ -26,6 +27,7 @@ export const initState: CourseState = {
     indexCourseList: {},
     searchCourseResult: { total: 0, data: [] },
     searchCategoryData: [],
+    isRegisted: false,
     rightAdList: undefined,
     bottomAdList: undefined,
     courseDetail: undefined,
@@ -67,6 +69,9 @@ export const courseReducer = createReducer(
                 return { ...state, rightAdList: data }
             if (type === 'bottom')
                 return { ...state, bottomAdList: data }
+        })
+        .addCase(actions.course.setCourseRegisted, (state, { payload }) => {
+            return { ...state, isRegisted: payload }
         })
 
         // course detail
