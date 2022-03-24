@@ -32,3 +32,6 @@ export const getCourseDetail = createAction<number>('getCourseDetail')
 //video section
 export const setVideoSectionData = createAction<VideoSectionData>('setVideoSectionData');
 export const getVideoSectionData = createAction<number>('getVideoSectionData');
+
+//course register
+export const registerCourse = createAction<number>('registerCourse')

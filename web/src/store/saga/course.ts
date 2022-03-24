@@ -51,6 +51,12 @@ export default function* course() {
         yield put(actions.course.setVideoSectionData(data))
     })
 
+    // register course
+    yield takeEvery(actions.course.registerCourse, function* ({ payload: courseID }) {
+        yield axios.get(`/api/course/regist/${courseID}`);
+        yield put(actions.course.getCourseRegisted(courseID))
+    })
+
 
 
 

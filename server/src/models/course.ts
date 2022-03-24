@@ -78,8 +78,8 @@ export async function getCourseDetail(courseID: number): Promise<CourseDetail> {
      // 机构信息————agency_table
      const agencyRow = await db.one<any>(`SELECT * FROM agency_table WHERE ID=?`, [courseRow.agency_id])
      // console.log(agency)
-     const { count: total_course } = await db.one<any>(`SELECT COUNT(*) AS count FROM course_table WHERE agency_id=?`, [agencyRow.ID])
-     const { count: total_students } = await db.one<any>(`SELECT COUNT(*) AS count FROM pay_table WHERE agency_id=?`, [agencyRow.ID])
+     const { count: total_course } = await db.count('course_table', 'agency_id=?', [agencyRow.ID])
+     const { count: total_students } = await db.count('pay_table', 'agency_id=?', [agencyRow.ID])
      const agency = {
           avatar: agencyRow.logo,
           agency_name: agencyRow.name,
@@ -117,13 +117,11 @@ export async function getCourseDetail(courseID: number): Promise<CourseDetail> {
 
 }
 
-// 课程报名
+// 课程是否报名
 export async function isUserRegisted(courseID: number, userID: number): Promise<boolean> {
-
      let { count } = await db.one<{ count: number }>(`
      SELECT COUNT(*) AS count FROM pay_table WHERE course_id=? AND user_id=?
      `, [courseID, userID])
-
      return count > 0;
 }
 
@@ -134,7 +132,7 @@ export async function isUserRegisted(courseID: number, userID: number): Promise<
 export async function createVideoLink(sectionID: number, userID: number): Promise<VideoSectionData> {
 
      // 1. 校验权限
-     const sectionRow = await db.one<any>(`SELECT * FROM course_section_table WHERE type=? AND ID=?`, ['video',sectionID])
+     const sectionRow = await db.one<any>(`SELECT * FROM course_section_table WHERE type=? AND ID=?`, ['video', sectionID])
      assert(!sectionRow, 404, '请先观看录播视频');
      assert(! await isUserRegisted(sectionRow.course_id, userID), 403, '需要报名课程后查看')
 
@@ -151,4 +149,40 @@ export async function createVideoLink(sectionID: number, userID: number): Promis
           section_title: sectionRow.title,
           videoLink: `${videoID}?t=${t}&sign=${sign}`
      }
+}
+
+//course register
+export async function registerCourse(courseID: number, userID: number) {
+     //校验
+     let courseRow = await db.one<any>(`SELECT * FROM course_table WHERE ID=?`, [courseID]);
+     assert(!courseRow, 400, '报名的课程不存在，请刷新重试');
+     assert(
+          !(await db.count('user_table', 'ID=?', [userID])),
+          400, '用户数据有误，请重新登录'
+     );
+
+     let { count: payCount } = await db.count('pay_table', "course_id=? AND user_id=? AND status='success'", [courseID, userID]);
+     assert(payCount !== 0, 400, '已报名过，请勿重复报名');
+
+     //插入——支付状态 todo
+     await db.query(`
+       INSERT INTO pay_table
+       (order_id, serial_number, time, status, agency_id, course_id, user_id, amount)
+       VALUES('0', '0', ?, 'success', ?, ?, ?, ?)
+       `, [
+          //time
+          Math.floor(Date.now() / 1000),
+
+          //agency_id
+          courseRow.agency_id,
+
+          //course_id
+          courseID,
+
+          //user_id
+          userID,
+
+          //amount
+          courseRow.price
+     ]);
 }

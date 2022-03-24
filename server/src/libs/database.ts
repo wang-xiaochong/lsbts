@@ -42,6 +42,16 @@ class DataBase {
         let rows = await this.query<T>(sql, args);
         return rows[0]
     }
+
+    async count(table: string, where?: string, args?: any[]): Promise<{ count: number }> {
+        if (!args) args = []
+
+        if (where) {
+            return await this.one<{ count: number }>(`SELECT COUNT(*) AS count FROM ?? WHERE ${where} `, [table, ...args])
+        } else {
+            return await this.one<{ count: number }>(`SELECT COUNT(*) AS count FROM ??`, [table])
+        }
+    }
 }
 
 const pool = Mysql.createPool(db);

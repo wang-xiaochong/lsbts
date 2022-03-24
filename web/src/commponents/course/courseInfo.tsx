@@ -1,5 +1,5 @@
 import React from "react";
-
+import { connect, actions, RootState, Dispatch } from '@/store/index'
 
 interface Props {
     course_id: number;
@@ -9,13 +9,15 @@ interface Props {
     recently_students: number;
     rank: number;
     isRegisted: boolean;
-
+    dispatch: Dispatch;
 
 }
-export default function courseInfo(props: Props) {
+function CourseInfo(props: Props) {
 
     const { course_id, title, price, total_students, recently_students, rank, isRegisted } = props
-
+    const registerCourse = () => {
+        props.dispatch(actions.course.registerCourse(course_id))
+    }
 
 
 
@@ -46,9 +48,11 @@ export default function courseInfo(props: Props) {
                 {isRegisted ? (
                     <button className="btn-disable">已报名</button>
                 ) : (
-                    <button className="btn-active">报名</button>
+                    <button className="btn-active" onClick={registerCourse}>报名</button>
                 )}
             </div>
         </div>
     )
 }
+
+export default connect((state: RootState) => state)(CourseInfo)

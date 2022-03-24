@@ -26,7 +26,9 @@ app.use(async (ctx, next) => {
     }
 })
 
+
 app.use(routers)
 app.use(koaStatic(staticRoot))
+
 
 
