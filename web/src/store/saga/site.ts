@@ -9,6 +9,25 @@ export default function* site() {
         let { data } = yield axios.get('/api/site/getCategories');
         yield put(actions.site.setAllCategory(data));
     })
+
+    //search
+    yield takeEvery(actions.site.getHotKeywords, function* () {
+        let { data } = yield axios('/api/site/getHotKeyWords');
+
+        yield put(actions.site.setHotKeywords(data));
+    });
+
+    yield takeEvery(actions.site.getSuggest, function* (action) {
+        const kw = action.payload;
+
+        if (!kw) {
+            yield put(actions.site.setSuggest(undefined));
+        } else {
+            let { data } = yield axios(`/api/site/getSuggest/${action.payload}`);
+            yield put(actions.site.setSuggest(data));
+        }
+    });
+
     // subscribe
     yield takeEvery(actions.site.getAllSubscribeData, function* () {
         const { site } = store.getState()

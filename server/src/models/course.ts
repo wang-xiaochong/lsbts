@@ -115,7 +115,7 @@ export async function getCourseDetail(courseID: number): Promise<CourseDetail> {
 
 // video section
 export async function getVideoSection(sectionID: number): Promise<VideoSectionData> {
-     return await db.one<any>(`
+     let ret = await db.one<any>(`
           SELECT
                section.title AS section_title,
                video.ID AS videoID,
@@ -127,5 +127,7 @@ export async function getVideoSection(sectionID: number): Promise<VideoSectionDa
                section.ID=?
      `, [sectionID]
      )
+     // console.log(ret)
+     return ret
 
 }

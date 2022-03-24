@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import Home from './views/Home'
 import List from './views/List'
@@ -9,13 +9,13 @@ import Video from "./views/Video";
 
 
 import Alert from "./commponents/alert";
-import querystring from "./libs/querystring";
-import { getUserData, saveToken, setToken } from "./store/actions/user";
+// import querystring from "./libs/querystring";
+// import { getUserData, saveToken, setToken } from "./store/actions/user";
 import { AppState, RootState, UserState } from "./store";
 import Footer from "./commponents/footer/footer";
 import Header from "./commponents/header/header";
 
-import { connect, Dispatch, actions } from '@/store'
+import { connect, Dispatch } from '@/store'
 
 
 // 公用样式
@@ -63,10 +63,12 @@ function App(props: Props) {
     //             props.dispatch(getUserData())
     //     }
     // })
+
+
     return (
         <>
             <BrowserRouter>
-                {header ? (<Header /> ): ''}
+                {header ? (<Header />) : ''}
 
                 <Routes>
                     <Route path={routers.home()} element={<Home />}></Route>

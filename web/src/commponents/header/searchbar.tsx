@@ -1,44 +1,37 @@
 import React, { useState, useEffect } from "react";
 
-import { appData } from "models/app";
-import { getHotKeyWords, SearchResult, getSuggest } from "models/search";
-import { connect, RootState, Dispatch, actions, AppState } from "@/store/index";
+import { connect, RootState, Dispatch, actions, AppState, SiteState } from "@/store/index";
 
 interface Props {
-    app: AppState
+    site: SiteState;
+    app?: AppState
     dispatch: Dispatch
 }
 function Searchbar(props: Props) {
-
-    const [hotKeyWords, setHotKeyWords] = useState<SearchResult | undefined>(appData?.hotKeyWords)
     const [showList, setShowList] = useState(false)
-    const [suggest, setSuggest] = useState<SearchResult | undefined>()
+    const hotKeywords = props?.site?.hotKeywords;
+    const suggest = props?.site?.suggest;
     const [kw, setKw] = useState('')
-    const searchBarKw = props.app.searchBarKw
-    useEffect(() => {
-        if (!hotKeyWords) {
-            getHotKeyWords().then(arr => {
-                setHotKeyWords(arr);    //?????
-            })
-        }
-    }, [hotKeyWords])
+    const searchBarKw = props.app?.searchBarKw
+    if (!hotKeywords) props.dispatch(actions.site.getHotKeywords());
+
     // console.log(hotKeyWords)
     useEffect(() => {
-        if (!kw) { setSuggest(undefined) }
-        else {
-            getSuggest(kw).then(data => {
-                setSuggest(data) //?????
-            })
-        }
-    }, [kw])
+        props.dispatch(actions.site.getSuggest(kw));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [kw]);
+
     useEffect(() => {
         setKw(searchBarKw || '')
     }, [searchBarKw])
 
-    const keyWords = suggest || hotKeyWords
+
+    //
+    const keyWords = suggest || hotKeywords;
+
     const updateKw = () => {
-        props.dispatch(actions.app.setSearchBarKw(kw))
-    }
+        props.dispatch(actions.app.setSearchBarKw(kw));
+    };
 
     return (
         <div className="searchbar">
