@@ -47,12 +47,12 @@ router.get('/getUserInfo', async ctx => {
 })
 
 router.get('/mysubscribe', async ctx => {
-    // let ID = await getUserID(ctx.get('token'))
-    ctx.body = await getSubscibe(1);
+    let ID = await getUserID(ctx.get('token'))
+    ctx.body = await getSubscibe(ID);
 
 })
 
-router.post('/mysubscribe', async ctx => {
+router.post('/setMysubscribe', async ctx => {
     let ID = await getUserID(ctx.get('token'))
     var data = (await ParesPostData(ctx)) as SubscribeData[]
     await setMySubscribe(ID, data);
