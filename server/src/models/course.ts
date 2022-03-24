@@ -148,6 +148,6 @@ export async function createVideoLink(sectionID: number, userID: number): Promis
      const sign = md5(key + dir + t);
      return {
           section_title: sectionRow.title,
-          videoLink:`${videoID}?t=${t}&sign=${sign}`
+          videoLink: `${videoID}?t=${t}&sign=${sign}`
      }
 }

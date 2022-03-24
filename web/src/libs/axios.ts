@@ -1,6 +1,4 @@
 import Axios from 'axios'
-// import { actions } from '@/store/index';
-// import common from '@/libs/common';
 
 
 let token = '';
@@ -17,10 +15,12 @@ const axios = Axios.create({
 axios.interceptors.response.use(res => {
     return res
 }, err => {
-    // if (common.dispatch) {
-    //     common.dispatch(actions.app.showAlert({ content: err.response.data }))
-    // }
-    alert(err.response.data)
+    if (err.response) {
+        alert(err.response.data)
+    } else {
+        alert('网络错误，请稍后重试')
+    }
+    
 })
 
 export default axios;
