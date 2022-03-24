@@ -30,12 +30,12 @@ export default function* user() {
     yield takeEvery(actions.user.getMySubscribe, function* () {
         const { user } = store.getState()
         if (!user.mySubscribe) {
-            let { data } = yield axios.get(`/api/user/setMysubscribe`)
+            let { data } = yield axios.get(`/api/user/mysubscribe`)
             yield put(actions.user.setMySubscribe(data))
         }
     })
     yield takeEvery(actions.user.submitMySubscribe, function* ({ payload }) {
-        yield axios.post(`/api/user/mysubscribe`, JSON.stringify(payload))
+        yield axios.post(`/api/user/setMysubscribe`, JSON.stringify(payload))
         yield put(actions.user.setMySubscribe(payload))
     })
 }
