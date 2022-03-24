@@ -47,8 +47,8 @@ router.get('/getUserInfo', async ctx => {
 })
 
 router.get('/mysubscribe', async ctx => {
-    let ID = await getUserID(ctx.get('token'))
-    ctx.body = await getSubscibe(ID);
+    // let ID = await getUserID(ctx.get('token'))
+    ctx.body = await getSubscibe(1);
 
 })
 
