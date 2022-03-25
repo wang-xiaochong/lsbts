@@ -30,6 +30,7 @@ function Course(props: Props) {
     const isRegisted = props.course?.isRegisted;
     useEffect(() => {
         props.dispatch(actions.course.getCourseRegisted(id))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
 
     if (!courseDetail) {

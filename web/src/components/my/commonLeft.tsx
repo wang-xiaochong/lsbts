@@ -10,7 +10,7 @@ export default function CommonLeft(props: Props) {
       <div className="ad-container">
         <img src="/image/tmp_ad_course_left.png" alt="" />
       </div>
-      <a href="#" className="download">
+      <a href="/" className="download">
         <span className="l-icon">
           <i className="icon icon-download" />
         </span>
@@ -19,7 +19,7 @@ export default function CommonLeft(props: Props) {
           <span className="desc">流畅上课不卡顿</span>
         </span>
       </a>
-      <a href="#" className="download">
+      <a href="/" className="download">
         <span className="l-icon">
           <i className="icon icon-download" />
         </span>

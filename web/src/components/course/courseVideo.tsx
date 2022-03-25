@@ -4,8 +4,6 @@ import { duration2string, ts2string } from "@/libs/common";
 import React, { useState } from "react";
 import { connect, actions, Dispatch, RootState, CourseState } from '@/store/index'
 
-import * as routers from '../../router'
-
 interface Props {
     course_id: number;
     cover: string;
