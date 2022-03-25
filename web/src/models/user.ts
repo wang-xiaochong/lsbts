@@ -8,6 +8,27 @@ export interface UserData {
     currency: number;
 }
 
+
+export interface UserCourseProgressData {
+    points: number;
+    todayCourseSec: number;
+    todayCourseRank: number;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export async function getUserInfo(): Promise<UserData> {
     // let token = (window.location.search).split('=')[1]
     // let { data } = await axios.get(`/api/user/getUserInfo?token=${token}`)

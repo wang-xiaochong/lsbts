@@ -6,15 +6,16 @@ import UserInfo from '@/components/my/userInfo'
 import CourseTabs from '@/components/my/courseTabs'
 import CourseSummary from '@/components/my/courseSummary'
 import Chapters from '@/components/my/chapters'
-
+import { connect, actions, UserState, Dispatch, RootState } from '@/store/index'
 
 
 
 interface Props {
-
+  user: UserState,
+  dispatch: Dispatch,
 }
 
-export default function My(props: Props) {
+function My(props: Props) {
 
   const [courseTabsCur, setCourseTabsCur] = useState(0)
   const chapters: {
@@ -39,6 +40,11 @@ export default function My(props: Props) {
       }
     ]
 
+  const myProgressInfo = props.user.myProgressInfo;
+  if (!myProgressInfo) {
+    props.dispatch(actions.user.getMyProgressInfo())
+  }
+  console.log(myProgressInfo)
   return (
     < div className="main-container" >
       <div className="main-content">
@@ -48,11 +54,16 @@ export default function My(props: Props) {
         </div>
         <div className="right">
           <h3 className="c-title">课程表</h3>
-          <UserInfo
-            points={0}
-            todayStudySecs={3670}
-            pointRank={0.38}
-          />
+
+          {myProgressInfo ? (
+            <UserInfo
+              points={myProgressInfo.points}
+              todayStudySecs={myProgressInfo.todayCourseSec}
+              pointRank={myProgressInfo.todayCourseRank}
+            />
+          ) : ''}
+
+
           <CourseTabs
             items={[
               {
@@ -93,3 +104,5 @@ export default function My(props: Props) {
     </div >
   );
 };
+
+export default connect((state: RootState) => state)(My)

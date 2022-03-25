@@ -1,6 +1,6 @@
 
 import db from '~/libs/database'
-import { UserData } from 'models/user'
+import { UserCourseProgressData, UserData } from 'models/user'
 
 // 用户相关
 type Result = boolean
@@ -79,3 +79,24 @@ export async function getUserID(token: string | undefined): Promise<number> {
 }
 
 
+export async function getUserCourseProgressData(userID: number): Promise<UserCourseProgressData> {
+
+    let date = new Date()
+    let today = Number(date.getFullYear() + (date.getMonth() + 1).toString().padStart(2, '0') + date.getDate().toString().padStart(2, '0'))
+
+    // points
+    const { points } = await db.one<{ points: number }>(`SELECT points FROM user_table WHERE ID=?`, [userID])
+    // 
+    const data = await db.one<{ studyTime: number }>(`SELECT studyTime FROM user_points_table WHERE user_id=? AND date=?`, [userID, today])
+    let studyTime = 0
+    if (data) studyTime = data.studyTime;
+    const { count } = await db.one<{ count: number }>(`SELECT COUNT(*) AS count  FROM user_points_table WHERE studyTime>?`, [studyTime])
+    const { count: totalStudents } = await db.count('user_table')
+    const todayCourseRank = Math.round((totalStudents - count) / totalStudents * 1000) / 1000;
+    const ret = {
+        points,
+        todayCourseRank,
+        todayCourseSec: studyTime,
+    }
+    return ret
+}

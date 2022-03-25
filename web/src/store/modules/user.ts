@@ -1,4 +1,4 @@
-import { UserData } from "models/user";
+import { UserCourseProgressData, UserData } from "models/user";
 import { createReducer } from '@reduxjs/toolkit'
 import { CategoryData } from "models/category";
 import actions from '../actions/index'
@@ -7,6 +7,7 @@ export interface UserState {
     userData?: UserData;
     mySubscribe?: CategoryData[],
     myCurSubscribe?: number,
+    myProgressInfo?: UserCourseProgressData,
 }
 
 
@@ -36,5 +37,9 @@ export const userReducer = createReducer(
         })
         .addCase(actions.user.setMyCurSubscribe, (state, action) => {
             return { ...state, myCurSubscribe: action.payload }
+        })
+        // progressInfo
+        .addCase(actions.user.setMyProgressInfo, (state, { payload }) => {
+            return { ...state, myProgressInfo: payload }
         })
 );

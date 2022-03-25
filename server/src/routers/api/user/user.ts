@@ -3,7 +3,7 @@ import { SubscribeData } from '@/models/site'
 import Router from '@koa/router'
 import { ParesPostData } from '~/libs/req'
 import { getSubscibe, setMySubscribe } from '~/models/subscribe'
-import { getUserCheck, getUserAdd, userData, getUserInfo, getUserID } from '~/models/user'
+import { getUserCheck, getUserAdd, userData, getUserInfo, getUserID, getUserCourseProgressData } from '~/models/user'
 
 let router = new Router()
 
@@ -59,6 +59,13 @@ router.post('/setMysubscribe', async ctx => {
     ctx.body = 'OK'
 
 })
+
+router.get('/my-progress-info', async ctx => {
+    let ID = await getUserID(ctx.get('token'));
+    ctx.body = await getUserCourseProgressData(ID);
+})
+
+
 
 
 

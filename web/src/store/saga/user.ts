@@ -1,5 +1,5 @@
 import axios from '@/libs/axios';
-import { put, takeEvery } from 'redux-saga/effects'
+import { put, take, takeEvery } from 'redux-saga/effects'
 import actions from '../actions/index'
 import store from '../store'
 
@@ -37,5 +37,11 @@ export default function* user() {
     yield takeEvery(actions.user.submitMySubscribe, function* ({ payload }) {
         yield axios.post(`/api/user/setMysubscribe`, JSON.stringify(payload))
         yield put(actions.user.setMySubscribe(payload))
+    })
+
+    //progressInfo
+    yield takeEvery(actions.user.getMyProgressInfo, function* () {
+        let { data } = yield axios.get(`/api/user/my-progress-info`);
+        yield put(actions.user.setMyProgressInfo(data))
     })
 }
