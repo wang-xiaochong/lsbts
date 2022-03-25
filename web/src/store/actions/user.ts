@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit'
-import { UserCourseProgressData, UserData } from 'models/user';
+import { UserCourseProgressData, UserCourseTabData, UserData } from 'models/user';
 import { SubscribeData } from 'models/site';
 
 
@@ -22,3 +22,7 @@ export const setMyCurSubscribe = createAction<number>('setMyCurSubscribe')
 //progress
 export const setMyProgressInfo = createAction<UserCourseProgressData>('setMyProgressInfo')
 export const getMyProgressInfo = createAction<void>('getMyProgressInfo')
+
+//courseList
+export const setMyCourseList = createAction<UserCourseTabData[]>('setMyCourseList')
+export const getMyCourseList = createAction<void>('getMyCourseList')

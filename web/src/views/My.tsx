@@ -44,7 +44,11 @@ function My(props: Props) {
   if (!myProgressInfo) {
     props.dispatch(actions.user.getMyProgressInfo())
   }
-  console.log(myProgressInfo)
+  const myCourseList = props.user.myCourseList;
+  if (!myCourseList) {
+    props.dispatch(actions.user.getMyCourseList())
+  }
+
   return (
     < div className="main-container" >
       <div className="main-content">
@@ -64,33 +68,30 @@ function My(props: Props) {
           ) : ''}
 
 
-          <CourseTabs
-            items={[
-              {
-                title: '计算机原生',
-                expires: 123455,
-                progress: 0.37,
-              },
-              {
-                title: '设计',
-                expires: 123455,
-                progress: 0.2,
-              }
-            ]}
-            cur={courseTabsCur}
-            onChange={index => setCourseTabsCur(index)}
-          />
+          {myCourseList ? (
+            <CourseTabs
+              items={myCourseList}
+              cur={courseTabsCur}
+              onChange={index => setCourseTabsCur(index)}
+            />
+          ) : ''}
+
+
           <div className="chapter-container">
             <CourseSummary
               ClassName='java1班'
               progress={0.1}
             />
+
+
             <div className="current">
               <div className="section-title">当前任务</div>
               <Chapters
                 chapters={chapters}
               />
             </div>
+
+
             <div className="chapter-list">
               <div className="section-title">
                 全部任务
@@ -98,6 +99,8 @@ function My(props: Props) {
               </div>
               <Chapters chapters={chapters} />
             </div>
+
+            
           </div>
         </div>
       </div>

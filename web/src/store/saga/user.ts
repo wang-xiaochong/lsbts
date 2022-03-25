@@ -44,4 +44,9 @@ export default function* user() {
         let { data } = yield axios.get(`/api/user/my-progress-info`);
         yield put(actions.user.setMyProgressInfo(data))
     })
+    //courseList
+    yield takeEvery(actions.user.getMyCourseList, function* () {
+        let { data } = yield axios.get('/api/user//my-course-list');
+        yield put(actions.user.setMyCourseList(data))
+    })
 }

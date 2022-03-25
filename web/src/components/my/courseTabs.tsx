@@ -1,12 +1,9 @@
 import { ts2string } from '@/libs/common';
+import { UserCourseTabData } from 'models/user';
 import React from 'react';
 
 interface Props {
-  items: {
-    title: string;
-    expires: number;
-    progress: number;
-  }[];
+  items: UserCourseTabData[];
   cur: number;
   onChange: (index: number) => void;
 }
@@ -17,7 +14,7 @@ export default function CourseTabs(props: Props) {
     <div className="course-tabs">
       {items?.map((item, index) => (
         <div
-          key={index}
+          key={item.ID}
           className={`tab ${cur === index ? 'active' : ''}`}
           onClick={ev => onChange(index)}
         >

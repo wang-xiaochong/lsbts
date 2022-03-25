@@ -16,6 +16,13 @@ export interface UserCourseProgressData {
 
 }
 
+export interface UserCourseTabData {
+    ID: number;
+    title: string;
+    expires: number;
+    progress: number;
+}
+
 
 
 

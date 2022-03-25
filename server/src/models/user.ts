@@ -1,6 +1,6 @@
 
 import db from '~/libs/database'
-import { UserCourseProgressData, UserData } from 'models/user'
+import { UserCourseProgressData, UserCourseTabData, UserData } from 'models/user'
 
 // 用户相关
 type Result = boolean
@@ -78,7 +78,7 @@ export async function getUserID(token: string | undefined): Promise<number> {
     }
 }
 
-
+// progressInfo
 export async function getUserCourseProgressData(userID: number): Promise<UserCourseProgressData> {
 
     let date = new Date()
@@ -90,7 +90,8 @@ export async function getUserCourseProgressData(userID: number): Promise<UserCou
     const data = await db.one<{ studyTime: number }>(`SELECT studyTime FROM user_points_table WHERE user_id=? AND date=?`, [userID, today])
     let studyTime = 0
     if (data) studyTime = data.studyTime;
-    const { count } = await db.one<{ count: number }>(`SELECT COUNT(*) AS count  FROM user_points_table WHERE studyTime>?`, [studyTime])
+    //比他今日学分高的人数
+    const { count } = await db.one<{ count: number }>(`SELECT COUNT(*) AS count  FROM user_points_table WHERE studyTime>? AND date=?`, [studyTime, today])
     const { count: totalStudents } = await db.count('user_table')
     const todayCourseRank = Math.round((totalStudents - count) / totalStudents * 1000) / 1000;
     const ret = {
@@ -99,4 +100,21 @@ export async function getUserCourseProgressData(userID: number): Promise<UserCou
         todayCourseSec: studyTime,
     }
     return ret
+}
+
+// courseTabData
+export async function getUserPaiedCourse(userID: number): Promise<UserCourseTabData[]> {
+    return await db.query<any>(`
+    SELECT
+        course.ID,course.title,course.expires,
+        0 AS progress
+    FROM
+        pay_table AS pay LEFT JOIN
+        course_table AS course ON pay.course_id=course.ID
+    WHERE
+        pay.status='success' AND pay.user_id=?
+    `, [userID])
+
+
+
 }
