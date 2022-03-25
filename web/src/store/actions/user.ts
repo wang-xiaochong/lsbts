@@ -1,6 +1,7 @@
 import { createAction } from '@reduxjs/toolkit'
 import { UserCourseProgressData, UserCourseTabData, UserData } from 'models/user';
 import { SubscribeData } from 'models/site';
+import { CourseChapterData } from 'models/course';
 
 
 //token
@@ -26,3 +27,8 @@ export const getMyProgressInfo = createAction<void>('getMyProgressInfo')
 //courseList
 export const setMyCourseList = createAction<UserCourseTabData[]>('setMyCourseList')
 export const getMyCourseList = createAction<void>('getMyCourseList')
+
+
+// user chapter progress
+export const setMyChapters = createAction<CourseChapterData[]>('setMyChapters')
+export const getMyChapters = createAction<number>('getMyChapters')

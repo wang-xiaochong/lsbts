@@ -1,19 +1,10 @@
 import { duration2string, ts2string } from '@/libs/common';
+import { CourseChapterData, LiveData, VideoData } from 'models/course';
 import React from 'react';
+import Progress from '../progress';
 
 interface Props {
-  chapters: {
-    ID: number;
-    title: string;
-    progress: number;
-    sections: {
-      ID: number;
-      title: string;
-      time?: number;
-      progress?: number;
-      type: 'live' | 'video' | 'read' | 'download'
-    }[]
-  }[]
+  chapters: CourseChapterData[];
 
 }
 
@@ -30,21 +21,21 @@ export default function Chapters(props: Props) {
           <div className="tasks">
             {chapter.sections.map(section => (
               <div key={section.ID} className="task">
-                <div className="progress">{section.progress}</div>
+                <div className="progress">{section.type === 'video' ? <Progress value={section.progress} /> : ''}</div>
                 <div className="content">
                   <div className="title">{section.title}</div>
-                  {section.time ? (
-                    <div className="duration">{(() => {
-                      switch (section.type) {
-                        case 'live':
-                          return ts2string(section.time * 1000, 'yyyy-MM-dd')
-                        case 'video':
-                          return duration2string(section.time)
-                        default:
-                          return ''
-                      }
-                    })()}</div>
-                  ) : ''}
+
+                  <div className="duration">{(() => {
+                    switch (section.type) {
+                      case 'live':
+                        return ts2string((section.item as LiveData).start_time * 1000, 'yyyy-MM-dd')
+                      case 'video':
+                        return duration2string((section.item as VideoData).duration)
+                      default:
+                        return ''
+                    }
+                  })()}</div>
+
                 </div>
                 {(() => {
                   switch (section.type) {

@@ -2,6 +2,7 @@
 import { SubscribeData } from '@/models/site'
 import Router from '@koa/router'
 import { ParesPostData } from '~/libs/req'
+import { getChapters } from '~/models/course/chapter'
 import { getSubscibe, setMySubscribe } from '~/models/subscribe'
 import { getUserCheck, getUserAdd, userData, getUserInfo, getUserID, getUserCourseProgressData, getUserPaiedCourse } from '~/models/user'
 
@@ -67,6 +68,12 @@ router.get('/my-progress-info', async ctx => {
 router.get('/my-course-list', async ctx => {
     let ID = await getUserID(ctx.get('token'));
     ctx.body = await getUserPaiedCourse(ID);
+})
+
+router.get('/chapters/:courseID', async ctx => {
+    let ID = await getUserID(ctx.get('token'));
+    let courseID = Number(ctx.params.courseID)
+    ctx.body = await getChapters(courseID, ID)
 })
 
 

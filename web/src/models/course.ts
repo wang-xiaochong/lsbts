@@ -67,11 +67,13 @@ export interface TeacherData {
 export interface CourseChapterData {
     ID: number;
     title: string;
+    progress: number;
     sections: CourseSectionData[];
 }
 export interface CourseSectionData {
     ID: number;
     title: string;
+    progress: number;
     type: 'live' | 'video' | 'read' | 'download';
     // item_id: number;
     item: VideoData | LiveData | ReadData | DownloadData;

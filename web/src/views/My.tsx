@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import NavMenu from '@/components/my/navmenu'
 import CommonLeft from '@/components/my/commonLeft'
@@ -9,7 +9,6 @@ import Chapters from '@/components/my/chapters'
 import { connect, actions, UserState, Dispatch, RootState } from '@/store/index'
 
 
-
 interface Props {
   user: UserState,
   dispatch: Dispatch,
@@ -18,27 +17,6 @@ interface Props {
 function My(props: Props) {
 
   const [courseTabsCur, setCourseTabsCur] = useState(0)
-  const chapters: {
-    ID: number;
-    title: string;
-    progress: number;
-    sections: {
-      ID: number;
-      title: string;
-      time?: number;
-      progress?: number;
-      type: 'live' | 'video' | 'read' | 'download'
-    }[]
-  }[] = [
-      {
-        ID: 1, title: '认识java', progress: 0.53, sections: [
-          { ID: 5, title: '1节', time: 789798798, progress: 0.3, type: 'live' },
-          { ID: 6, title: '2节', time: 789798798, progress: 0.1, type: 'video' },
-          { ID: 7, title: '3节', type: 'read' },
-          { ID: 8, title: '5节', type: 'download' }
-        ]
-      }
-    ]
 
   const myProgressInfo = props.user.myProgressInfo;
   if (!myProgressInfo) {
@@ -48,6 +26,17 @@ function My(props: Props) {
   if (!myCourseList) {
     props.dispatch(actions.user.getMyCourseList())
   }
+  const myChapters = props.user.myChapters;
+  useEffect(() => {
+    if (myCourseList) {
+      let course = myCourseList[courseTabsCur];
+      props.dispatch(actions.user.getMyChapters(course.ID))
+
+
+    }
+//eslint-disable-next-line  react-hooks/exhaustive-deps
+  }, [myCourseList, courseTabsCur])
+
 
   return (
     < div className="main-container" >
@@ -86,9 +75,7 @@ function My(props: Props) {
 
             <div className="current">
               <div className="section-title">当前任务</div>
-              <Chapters
-                chapters={chapters}
-              />
+              {myChapters?(<Chapters chapters={myChapters} />):''}
             </div>
 
 
@@ -97,10 +84,11 @@ function My(props: Props) {
                 全部任务
                 <span className="sm">(共6节)</span>
               </div>
-              <Chapters chapters={chapters} />
+              {myChapters?(<Chapters chapters={myChapters} />):''}
+              
             </div>
 
-            
+
           </div>
         </div>
       </div>

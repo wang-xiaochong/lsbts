@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Home from './views/Home'
 import List from './views/List'
@@ -18,6 +18,9 @@ import Footer from "./components/footer/footer";
 import Header from "./components/header/header";
 
 import { connect, Dispatch } from '@/store'
+import * as routers from '@/router'
+import querystring from "./libs/querystring";
+import { getUserData, saveToken, setToken } from "./store/actions/user";
 
 
 // 公用样式
@@ -39,34 +42,31 @@ import '@/assets/less/video.less'
 
 // 路由
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import * as routers from '@/router'
+
 
 interface Props {
     app?: AppState;
     user?: UserState;
-    dispatch?: Dispatch;
+    dispatch: Dispatch;
 }
 
 function App(props: Props) {
     const header = props.app?.globalHeaderVisible === undefined ? true : props.app?.globalHeaderVisible;
     const footer = props.app?.globalFooterVisible === undefined ? true : props.app?.globalFooterVisible;;
-    // useEffect(() => {
-    //     const { token } = querystring(['token']);
-    //     if (token) {
-    //         if (props.dispatch) {
-    //             props.dispatch(saveToken({ token }))
-    //             props.dispatch(setToken({ token }))
-    //             window.location.href = '/';
-    //         }
-    //     }
-    // });
-    // useEffect(() => {
-    //     const { user } = props
-    //     if (user?.token) {
-    //         if (props.dispatch)
-    //             props.dispatch(getUserData())
-    //     }
-    // })
+    useEffect(() => {
+        const { token } = querystring(['token']);
+        if (token) {
+            if (props.dispatch) {
+                props.dispatch(saveToken({ token }))
+                props.dispatch(setToken({ token }))
+                window.location.href = '/';
+            }
+        }
+    });
+    useEffect(() => {
+        const { user } = props
+        if (user?.token) props.dispatch(getUserData())
+    })
 
 
     return (

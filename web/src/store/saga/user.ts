@@ -1,5 +1,5 @@
 import axios from '@/libs/axios';
-import { put, take, takeEvery } from 'redux-saga/effects'
+import { put, takeEvery } from 'redux-saga/effects'
 import actions from '../actions/index'
 import store from '../store'
 
@@ -48,5 +48,10 @@ export default function* user() {
     yield takeEvery(actions.user.getMyCourseList, function* () {
         let { data } = yield axios.get('/api/user//my-course-list');
         yield put(actions.user.setMyCourseList(data))
+    })
+    //chapters
+    yield takeEvery(actions.user.getMyChapters, function* ({ payload: courseID }) {
+        let { data } = yield axios.get(`/api/user/chapters/${courseID}`)
+        yield put(actions.user.setMyChapters(data))
     })
 }

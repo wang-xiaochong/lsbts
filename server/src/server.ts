@@ -5,6 +5,7 @@ import koaStatic from 'koa-static'
 import { staticRoot } from '~/config/app'
 import { enableCors } from '~/config/app'
 import { error } from './libs/log'
+
 if (enableCors) corsInit(app);
 
 app.use(async (ctx, next) => {
