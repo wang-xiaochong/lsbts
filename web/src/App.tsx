@@ -5,15 +5,17 @@ import List from './views/List'
 import Course from './views/Course'
 import NotFound from "./views/NotFound";
 import Video from "./views/Video";
+import MyOrder from "./views/MyOrder";
+import My from "./views/My";
 
 
 
-import Alert from "./commponents/alert";
+import Alert from "./components/alert";
 // import querystring from "./libs/querystring";
 // import { getUserData, saveToken, setToken } from "./store/actions/user";
 import { AppState, RootState, UserState } from "./store";
-import Footer from "./commponents/footer/footer";
-import Header from "./commponents/header/header";
+import Footer from "./components/footer/footer";
+import Header from "./components/header/header";
 
 import { connect, Dispatch } from '@/store'
 
@@ -22,6 +24,7 @@ import { connect, Dispatch } from '@/store'
 import '@/assets/less/base.less'
 import '@/assets/less/common.less'
 import '@/assets/less/alert.less'
+import '@/assets/less/my.less'
 
 // 首页
 import '@/assets/less/index.less'
@@ -37,6 +40,7 @@ import '@/assets/less/video.less'
 // 路由
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import * as routers from '@/router'
+
 interface Props {
     app?: AppState;
     user?: UserState;
@@ -75,6 +79,8 @@ function App(props: Props) {
                     <Route path={routers.list()} element={<List />}></Route>
                     <Route path='/course/:id' element={<Course />} ></Route>
                     <Route path='/video/:sectionID' element={<Video />} ></Route>
+                    <Route path={routers.my()} element={<My />}></Route>
+                    <Route path={routers.myOrder()} element={<MyOrder />}></Route>
                     <Route path="*" element={<NotFound />}></Route>
                 </Routes>
 

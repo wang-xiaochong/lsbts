@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 // import ReactDOMServer from 'react-dom/server'
 
-import CourseList from '@/commponents/courseList'
-import HotTopic from '@/commponents/footer/hotTopic';
-import SiteFootPoint from '@/commponents/footpoint';
-import Keyword from '@/commponents/list/keyword';
-import AdAside from '@/commponents/list/adAside';
-import CourseFilter from '@/commponents/list/filter'
-import Pagination from '@/commponents/pagination'
+import CourseList from '@/components/courseList'
+import HotTopic from '@/components/footer/hotTopic';
+import SiteFootPoint from '@/components/footpoint';
+import Keyword from '@/components/list/keyword';
+import AdAside from '@/components/list/adAside';
+import CourseFilter from '@/components/list/filter'
+import Pagination from '@/components/pagination'
 
 
-import CourseCategory, { getCategory } from '@/commponents/list/category'
+import CourseCategory, { getCategory } from '@/components/list/category'
 import { setAppData, AppData } from 'models/app';
 import { AppState, CourseState, RootState, actions, connect, Dispatch } from '@/store/index'
 import { UserState } from '@/store/modules/user';
@@ -60,7 +60,7 @@ function List(props: Props) {
     // const [categoryDatas, setCategoryDatas] = useState<SearchCategoryData[]>([])
     useEffect(() => {
         props.dispatch(actions.course.getSearchCategoryData({ category, category_level }))
-         // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category, category_level])
 
     useLocation();

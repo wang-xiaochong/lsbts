@@ -1,13 +1,13 @@
 
 
-import { Footpoint } from '@/commponents/footpoint'
-import AgencyDetail from '@/commponents/course/agencyDetail';
-import CourseChapter from '@/commponents/course/courseChapter';
-import CourseComment from '@/commponents/course/courseComment';
-import CourseDescription from '@/commponents/course/courseDescription';
-import CourseInfo from '@/commponents/course/courseInfo';
-import CourseVideo from '@/commponents/course/courseVideo';
-import Tabs from '@/commponents/course/tabs';
+import { Footpoint } from '@/components/footpoint'
+import AgencyDetail from '@/components/course/agencyDetail';
+import CourseChapter from '@/components/course/courseChapter';
+import CourseComment from '@/components/course/courseComment';
+import CourseDescription from '@/components/course/courseDescription';
+import CourseInfo from '@/components/course/courseInfo';
+import CourseVideo from '@/components/course/courseVideo';
+import Tabs from '@/components/course/tabs';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { CourseState, connect, RootState, Dispatch, actions } from '@/store';

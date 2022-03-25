@@ -1,9 +1,9 @@
 import React from 'react';
 import { useEffect } from 'react'
 // import ReactDOMServer from 'react-dom/server'
-import Banner from '@/commponents/index/banner'
-import Subscribe from '@/commponents/index/subscribe'
-import CourseList from '@/commponents/courseList'
+import Banner from '@/components/index/banner'
+import Subscribe from '@/components/index/subscribe'
+import CourseList from '@/components/courseList'
 
 import { setAppData, AppData } from 'models/app';
 import { actions, AppState, CourseState, RootState } from '@/store/index'
@@ -12,7 +12,7 @@ import { Dispatch } from 'redux';
 import { getAllSubscribeData } from '@/store/actions/site';
 import { UserState } from '@/store/modules/user';
 import { SiteState } from '@/store/modules/site';
-import HotTopic from '@/commponents/footer/hotTopic';
+import HotTopic from '@/components/footer/hotTopic';
 import { CategoryData } from 'models/category';
 
 interface Props {

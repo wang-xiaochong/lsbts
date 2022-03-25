@@ -16,6 +16,17 @@ export function video(sectionID: number) {
     return `/video/${sectionID}`;
 }
 
+export function my() {
+    return `/my`;
+}
+
+export function myOrder() {
+    return `my/order`;
+}
+
+
+
+
 export function push(url: string) {
     window.open(url)
 }
