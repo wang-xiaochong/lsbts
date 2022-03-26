@@ -35,3 +35,6 @@ export const getVideoSectionData = createAction<number>('getVideoSectionData');
 
 //course register
 export const registerCourse = createAction<number>('registerCourse')
+
+//course add progress
+export const addMyProgress = createAction<number>('addProgress')

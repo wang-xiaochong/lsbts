@@ -57,6 +57,12 @@ export default function* course() {
         yield put(actions.course.getCourseRegisted(courseID))
     })
 
+    // add progress
+    yield takeEvery(actions.course.addMyProgress, function* ({ payload: sectionID }) {
+        yield axios.get(`/api/course/add-progress/${sectionID}`)
+   })
+
+
 
 
 

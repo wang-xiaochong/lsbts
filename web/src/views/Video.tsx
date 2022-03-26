@@ -18,10 +18,11 @@ function Video(props: Props) {
     const videoSectionData = props.course?.videoSectionData;
 
     const [headerVisible, setHeaderVisible] = useState(true)
-    const { sectionID } = useParams<{ sectionID: string }>();
+    const params = useParams<{ sectionID: string }>();
+    const sectionID = Number(params.sectionID)
     if (props.app?.globalHeaderVisible !== false) props.dispatch(actions.app.setHeaderVisible(false))
     if (props.app?.globalFooterVisible !== false) props.dispatch(actions.app.setFooterVisible(false))
-    if (!videoSectionData) props.dispatch(actions.course.getVideoSectionData(Number(sectionID)))
+    if (!videoSectionData) props.dispatch(actions.course.getVideoSectionData(sectionID))
 
     // video
     const divRef = useRef<HTMLDivElement>(null)
@@ -70,7 +71,7 @@ function Video(props: Props) {
         if (video) {
             video.addEventListener('play', onPlay, false)
             video.addEventListener('pause', onStop, false)
-            video.addEventListener('canplay',onResize,false)
+            video.addEventListener('canplay', onResize, false)
         }
         function onPlay() {
             setHeaderVisible(false)
@@ -82,14 +83,19 @@ function Video(props: Props) {
             if (video) {
                 video.removeEventListener('play', onPlay, false)
                 video.removeEventListener('pause', onStop, false)
-                video.removeEventListener('canplay',onResize,false)
+                video.removeEventListener('canplay', onResize, false)
             }
         }
     })
 
+    const addProgress = () => {
+        props.dispatch(actions.course.addMyProgress(sectionID))
+    }
+
     return (
         <>
             <a href={routers.home()}>返回首页</a>
+            <button onClick={addProgress}>增加</button>
             <div className="video-player">
                 {headerVisible ? (<div className="header">
                     <div className="title">{videoSectionData?.section_title}</div>

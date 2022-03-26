@@ -87,17 +87,22 @@ export async function getUserCourseProgressData(userID: number): Promise<UserCou
     // points
     const { points } = await db.one<{ points: number }>(`SELECT points FROM user_table WHERE ID=?`, [userID])
     // 
-    const data = await db.one<{ studyTime: number }>(`SELECT studyTime FROM user_points_table WHERE user_id=? AND date=?`, [userID, today])
-    let studyTime = 0
-    if (data) studyTime = data.studyTime;
+    const data = await db.one<{ studyTime: number, points: number }>(`SELECT studyTime,points FROM user_points_table WHERE user_id=? AND date=?`, [userID, today])
+    let todayCourseSec = 0;
+    let todayPoints = 0;
+    if (data) {
+        todayCourseSec = data.studyTime
+        todayPoints = data.points
+    }
     //比他今日学分高的人数
-    const { count } = await db.one<{ count: number }>(`SELECT COUNT(*) AS count  FROM user_points_table WHERE studyTime>? AND date=?`, [studyTime, today])
+    const { count } = await db.one<{ count: number }>(`SELECT COUNT(*) AS count  FROM user_points_table WHERE studyTime>? AND date=?`, [todayCourseSec, today])
     const { count: totalStudents } = await db.count('user_table')
     const todayCourseRank = Math.round((totalStudents - count) / totalStudents * 1000) / 1000;
     const ret = {
         points,
         todayCourseRank,
-        todayCourseSec: studyTime,
+        todayPoints,
+        todayCourseSec,
     }
     return ret
 }

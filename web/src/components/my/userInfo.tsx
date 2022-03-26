@@ -1,16 +1,17 @@
+
 import React from 'react';
 
 interface Props {
   points: number;
   todayStudySecs: number;
   pointRank: number;
+  todayPoints: number;
 }
 
 export default function UserInfo(props: Props) {
-  const { points, todayStudySecs, pointRank } = props
+  const { points, todayStudySecs, pointRank,todayPoints } = props
 
   let studyMins = Math.round(todayStudySecs / 60);
-  let awardPoints = Math.min(30, Math.round(studyMins / 5))
   return (
     <div className="user-info">
       <div className="info">
@@ -25,7 +26,7 @@ export default function UserInfo(props: Props) {
         </div>
         <div className="column">
           <div className="title">获得积分</div>
-          <div className="value"><b>{awardPoints}</b>分</div>
+          <div className="value"><b>{todayPoints}</b>分</div>
         </div>
         <div className="column">
           <div className="title">高于平台</div>

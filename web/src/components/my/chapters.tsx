@@ -2,7 +2,7 @@ import { duration2string, ts2string } from '@/libs/common';
 import { CourseChapterData, LiveData, VideoData } from 'models/course';
 import React from 'react';
 import Progress from '../progress';
-
+import * as routers from '../../router';
 interface Props {
   chapters: CourseChapterData[];
 
@@ -47,7 +47,7 @@ export default function Chapters(props: Props) {
                     case 'video':
                       return (
                         <div className="operation">
-                          <span className="btn">看录播</span>
+                          <a href={routers.video(section.ID)} className="btn">看录播</a>
                         </div>)
                     case 'read':
                       return (

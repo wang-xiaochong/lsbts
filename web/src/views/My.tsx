@@ -52,6 +52,7 @@ function My(props: Props) {
             <UserInfo
               points={myProgressInfo.points}
               todayStudySecs={myProgressInfo.todayCourseSec}
+              todayPoints={myProgressInfo.todayPoints}
               pointRank={myProgressInfo.todayCourseRank}
             />
           ) : ''}

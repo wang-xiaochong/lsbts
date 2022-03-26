@@ -12,6 +12,7 @@ export interface UserData {
 export interface UserCourseProgressData {
     points: number;
     todayCourseSec: number;
+    todayPoints: number;
     todayCourseRank: number;
 
 }
@@ -22,8 +23,6 @@ export interface UserCourseTabData {
     expires: number;
     progress: number;
 }
-
-
 
 
 

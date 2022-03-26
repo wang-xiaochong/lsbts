@@ -2,7 +2,7 @@
 import { SearchParams } from '@/models/course'
 import Router from '@koa/router'
 import { ParesPostData } from '~/libs/req'
-import { createVideoLink, getCourseDetail, getCourseSummaryByCategory, isUserRegisted, registerCourse } from '~/models/course'
+import { addProgress, createVideoLink, getCourseDetail, getCourseSummaryByCategory, isUserRegisted, registerCourse } from '~/models/course'
 import { getAdCourse, getSearchCategoryOptions, searchCourse } from '~/models/search'
 import { getUserID } from '~/models/user'
 let router = new Router()
@@ -66,7 +66,12 @@ router.get('/regist/:courseID', async ctx => {
     ctx.body = 'ok';
 })
 
-
+router.get('/add-progress/:sectionID', async ctx => {
+    const sectionID = Number(ctx.params.sectionID);
+    const userID = await getUserID(ctx.get('token'));
+    await addProgress(sectionID, userID);
+    ctx.body = 'ok';
+});
 
 
 

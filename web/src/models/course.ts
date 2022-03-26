@@ -164,4 +164,11 @@ export interface VideoSectionData {
     videoLink: string;
 }
 
+// 每次播放进度增量
+export const progressAddTime = 30;
+//一天每个用户最多获得多少积分
+export const maxPointPerday = 50;
+//播放多少秒可以积累1积分
+export const onePointPersec = 120;
+
 

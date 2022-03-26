@@ -1,7 +1,7 @@
 
 import db from '~/libs/database'
 import { readCache, writeCache, KEY_COURSE_DETAIL_PRE } from '~/libs/redis'
-import { CourseDetail, CourseSummaryData, SearchParams, TeacherData, VideoSectionData } from '@/models/course'
+import { CourseDetail, CourseSummaryData, onePointPersec, progressAddTime, maxPointPerday,TeacherData, VideoSectionData } from '@/models/course'
 import { MAX_COURSE_LIST_COUNT } from '~/config/app'
 import { getChapters } from './course/chapter'
 import { assert, md5 } from '~/libs/common'
@@ -186,3 +186,81 @@ export async function registerCourse(courseID: number, userID: number) {
           courseRow.price
      ]);
 }
+
+//progress add
+export async function addProgress(sectionID: number, userID: number) {
+     //校验
+     //1-section存在、section对应的是video、用户报名了此课程
+     let sectionRow = await db.one<any>(`SELECT * FROM course_section_table WHERE ID=?`, [sectionID]);
+     assert(!sectionRow, 400, '章节不存在，请刷新重试');
+     assert(!(sectionRow.type === 'video'), 400, '视频类型有误，请刷新重试');
+   
+     let payRow = await db.one<any>(
+       `SELECT * FROM pay_table WHERE course_id=? AND user_id=?`,
+       [sectionRow.course_id, userID]
+     );
+     assert(!payRow, 400, '此课程未报名，请报名后重试');
+   
+     //2-加积分、播放进度
+     //播放进度
+     let progressRow = await db.one<any>(
+       `SELECT * FROM course_progress_table WHERE course_section_id=? AND user_id=?`,
+       [sectionID, userID]
+     );
+     if (progressRow) { //update
+       await db.query<any>(
+         `UPDATE course_progress_table SET progress=progress+${progressAddTime} WHERE ID=?`,
+         [progressRow.ID]
+       );
+     } else {  //insert
+       await db.query<any>(
+         `
+         INSERT INTO course_progress_table
+         (
+           user_id, course_id, course_chapter_id, course_section_id, progress, time
+         )
+         VALUE(
+           ?, ?, ?, ?, ?, ?
+         )
+         `, [
+         userID, sectionRow.course_id, sectionRow.chapter_id,
+         sectionID, progressAddTime, Math.floor(Date.now() / 1000)
+       ]
+       );
+     }
+   
+     //积分
+     let date = new Date();
+     let sDate = Number(date.getFullYear() + (date.getMonth() + 1).toString().padStart(2, '0') + date.getDate().toString().padStart(2, '0'));
+     let pointsRow = await db.one<any>(
+       `SELECT * FROM user_points_table WHERE user_id=? AND date=?`,
+       [userID, sDate]
+     );
+   
+     if (pointsRow) {//update
+       let points = Math.min(
+         maxPointPerday,
+         (pointsRow.studyTime + progressAddTime) / onePointPersec
+       );
+   
+       let addPoints = points - pointsRow.points;
+   
+       await db.query<any>(
+         `UPDATE user_points_table SET studyTime=studyTime+${progressAddTime}, points=? WHERE ID=?`,
+         [points, pointsRow.ID]
+       );
+       if (addPoints) {
+         await db.query<any>(`UPDATE user_table SET points=points+? WHERE ID=?`, [addPoints, userID]);
+       }
+     } else {//insert
+       let points = Math.floor(progressAddTime / onePointPersec);
+       await db.query<any>(
+         `INSERT INTO user_points_table (user_id, date, studyTime, points) VALUE(?,?,?,?)`,
+         [userID, sDate, progressAddTime, points]
+       );
+   
+       if (points) {
+         await db.query<any>(`UPDATE user_table SET points=points+? WHERE ID=?`, [points, userID]);
+       }
+     }
+   }
