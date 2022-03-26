@@ -15,7 +15,7 @@ export default function Chapters(props: Props) {
       {chapters.map(chapter => (
         <div key={chapter.ID} className="chapter">
           <div className="chapter-title">
-            <div className="progress">{chapter.progress}</div>
+            <div className="progress">{<Progress value={chapter.progress} />}</div>
             <div className="title">{chapter.title}</div>
           </div>
           <div className="tasks">
