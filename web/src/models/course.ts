@@ -77,6 +77,7 @@ export interface CourseSectionData {
     type: 'live' | 'video' | 'read' | 'download';
     // item_id: number;
     item: VideoData | LiveData | ReadData | DownloadData;
+    time?: number;
 }
 export interface VideoData {
     ID: number;

@@ -7,6 +7,7 @@ import CourseTabs from '@/components/my/courseTabs'
 import CourseSummary from '@/components/my/courseSummary'
 import Chapters from '@/components/my/chapters'
 import { connect, actions, UserState, Dispatch, RootState } from '@/store/index'
+import { CourseChapterData } from 'models/course';
 
 
 interface Props {
@@ -31,13 +32,34 @@ function My(props: Props) {
     if (myCourseList) {
       let course = myCourseList[courseTabsCur];
       props.dispatch(actions.user.getMyChapters(course.ID))
-
-
     }
-//eslint-disable-next-line  react-hooks/exhaustive-deps
+    //eslint-disable-next-line  react-hooks/exhaustive-deps
   }, [myCourseList, courseTabsCur])
 
+  //当前任务
+  let lastChapter: CourseChapterData | undefined = undefined;
+  let time = 0;
+  if (myChapters && myChapters[0]) {
+    lastChapter = myChapters[0];
+    myChapters.forEach(chapter => {
+      let maxTime = chapter.sections.reduce((cur, section) => {
+        if (section.time !== undefined) {
+          return Math.max(cur, section.time)
+        } else {
+          return cur;
+        }
+      }, 0);
 
+      if (maxTime > time) {
+        // maxTime = time;
+        time = maxTime;
+        lastChapter = chapter;
+      }
+    })
+  }
+  // 总章节数
+  let sectionCount = 0;
+  if (myChapters) myChapters.forEach(chapter => { sectionCount += chapter.sections.length })
   return (
     < div className="main-container" >
       <div className="main-content">
@@ -76,17 +98,17 @@ function My(props: Props) {
 
             <div className="current">
               <div className="section-title">当前任务</div>
-              {myChapters?(<Chapters chapters={myChapters} />):''}
+              {lastChapter ? (<Chapters chapters={[lastChapter]} />) : ''}
             </div>
 
 
             <div className="chapter-list">
               <div className="section-title">
                 全部任务
-                <span className="sm">(共6节)</span>
+                {sectionCount ? (<span className="sm">(共{sectionCount}节)</span>) : ''}
               </div>
-              {myChapters?(<Chapters chapters={myChapters} />):''}
-              
+              {myChapters ? (<Chapters chapters={myChapters} />) : ''}
+
             </div>
 
 

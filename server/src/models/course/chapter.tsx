@@ -8,7 +8,14 @@ export async function getChapters(courseID: number, userID?: number): Promise<Co
 
     if (!userID) userID = 0;
     const chapterRows = await db.query<any>(`SELECT * FROM course_chapter_table WHERE course_id=?`, [courseID])
-    const sectionRows = await db.query<any>(`SELECT * FROM course_section_table WHERE course_id=?`, [courseID])
+    const sectionRows = await db.query<any>(`
+    SELECT
+        section.*,progress.time
+    FROM
+        course_section_table AS section LEFT JOIN
+        course_progress_table AS progress ON progress.course_section_id=section.ID
+    WHERE
+    section.course_id=?`, [courseID])
     const progressRows = await db.query<any>(`SELECT * FROM course_progress_table WHERE course_id=? AND user_id=?`, [courseID, userID])
     // chapter
     const chapters: CourseChapterData[] = [];
@@ -50,7 +57,7 @@ export async function getChapters(courseID: number, userID?: number): Promise<Co
     // console.log(tables)
 
     // section
-    sectionRows.forEach(({ ID, title, type, item_id, chapter_id }) => {
+    sectionRows.forEach(({ ID, title, type, item_id, chapter_id,time }) => {
         let chapter = chapters.find(chapter => chapter.ID === chapter_id);
         let itemRow = tables[type].find(row => row.ID === item_id)
         if (chapter) {
@@ -65,6 +72,7 @@ export async function getChapters(courseID: number, userID?: number): Promise<Co
                 ID, title, type,
                 progress,
                 item: itemRow,
+                time,
             });
         }
     })

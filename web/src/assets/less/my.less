@@ -132,7 +132,7 @@
 
     .title {
       font-size:16px;
-      max-height:50px;
+      max-height:44px;
       overflow:hidden;
     }
     .expires {
@@ -196,6 +196,7 @@
       line-height:70px;
       padding-left:15px;
       background:#f8f8f8;
+      cursor: pointer;
 
       .progress, .title {float:left}
 
@@ -211,6 +212,8 @@
       }
     }
     .tasks {
+      transition: 0.5s all ease;
+      overflow:hidden;
       .task {
         height:94px;
         padding:16px;

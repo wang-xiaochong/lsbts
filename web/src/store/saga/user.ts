@@ -46,7 +46,7 @@ export default function* user() {
     })
     //courseList
     yield takeEvery(actions.user.getMyCourseList, function* () {
-        let { data } = yield axios.get('/api/user//my-course-list');
+        let { data } = yield axios.get('/api/user/my-course-list');
         yield put(actions.user.setMyCourseList(data))
     })
     //chapters

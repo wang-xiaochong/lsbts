@@ -1,6 +1,6 @@
 import { duration2string, ts2string } from '@/libs/common';
 import { CourseChapterData, LiveData, VideoData } from 'models/course';
-import React from 'react';
+import React, { useState } from 'react';
 import Progress from '../progress';
 import * as routers from '../../router';
 interface Props {
@@ -10,15 +10,28 @@ interface Props {
 
 export default function Chapters(props: Props) {
   const { chapters } = props
+  const [collapse, setCollapse] = useState<{
+    [key: string]: boolean;
+  }>({})
+
   return (
     <div className="chapters">
       {chapters.map(chapter => (
         <div key={chapter.ID} className="chapter">
-          <div className="chapter-title">
+
+          <div className="chapter-title" onClick={() => {
+            let { ID } = chapter
+            let newCollapse = {
+              ...collapse,
+              [ID]: !collapse[ID]
+            }
+            setCollapse(newCollapse)
+          }}>
             <div className="progress">{<Progress value={chapter.progress} />}</div>
             <div className="title">{chapter.title}</div>
           </div>
-          <div className="tasks">
+
+          <div className="tasks" style={{ height: collapse[chapter.ID] ? 0 : `${94 * chapter.sections.length}px`, }}>
             {chapter.sections.map(section => (
               <div key={section.ID} className="task">
                 <div className="progress">{section.type === 'video' ? <Progress value={section.progress} /> : ''}</div>
