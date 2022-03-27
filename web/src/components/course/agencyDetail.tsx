@@ -18,6 +18,7 @@ export default function agencyDetail(props: Props) {
     return (
         <div className="agency-detail">
             <div className="desc">
+
                 <div className="agency-title">
                     <div className="img">
                         <img src={avatar} alt="" />
@@ -26,6 +27,7 @@ export default function agencyDetail(props: Props) {
                         {agency_name}
                     </div>
                 </div>
+
                 <div className="agency-info">
                     <div className="info">
                         <div className="title">好评度</div>
@@ -44,6 +46,7 @@ export default function agencyDetail(props: Props) {
                     {summary}
                 </div>
             </div>
+
             <div className="course-list-sm">
                 <div className="title">关联的付费课程</div>
                 <div className="course-detail">
@@ -62,6 +65,7 @@ export default function agencyDetail(props: Props) {
                     </div>
                 </div>
             </div>
+
         </div>
     )
 }

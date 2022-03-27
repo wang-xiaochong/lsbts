@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import Home from './views/Home'
 import List from './views/List'
-// import Course from './views/Course'
+import Course from './views/Course'
 import NotFound from "./views/NotFound";
 // import Video from "./views/Video";
 // import MyOrder from "./views/MyOrder";
@@ -78,8 +78,8 @@ function App(props: Props) {
                 <Routes>
                     <Route path={routers.home()} element={<Home />}></Route>
                      <Route path={routers.list()} element={<List />}></Route>
-                    {/*<Route path='/course/:id' element={<Course />} ></Route>
-                    <Route path='/video/:sectionID' element={<Video />} ></Route>
+                     <Route path='/course/:id' element={<Course />} ></Route>
+                    {/*<Route path='/video/:sectionID' element={<Video />} ></Route>
                     <Route path={routers.my()} element={<My />}></Route>
                     <Route path={routers.myOrder()} element={<MyOrder />}></Route> */}
                     <Route path={routers.develop()} element={<Develop />}></Route>

@@ -28,6 +28,7 @@ function Course(props: Props) {
     const courseDetail = props.course?.courseDetail
 
     const isRegisted = props.course?.isRegisted;
+
     useEffect(() => {
         props.dispatch(actions.course.getCourseRegisted(id))
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -153,6 +154,7 @@ function Course(props: Props) {
                                 <i className="icon icon-right" />
                             </span>
                         </div>
+                        
                         <div className="course-items">
                             {
                                 [
@@ -171,6 +173,7 @@ function Course(props: Props) {
                             }
                         </div>
                     </div>
+
                     <AgencyDetail
                         avatar={agency.avatar}
                         agency_name={agency.agency_name}
