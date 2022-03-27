@@ -1,6 +1,6 @@
 
 import db from '~/libs/database'
-import { UserCourseProgressData, UserCourseTabData, UserData } from 'models/user'
+import { UserCourseProgressData, UserCourseTabData, UserData, UserOrderData } from 'models/user'
 
 // 用户相关
 type Result = boolean
@@ -120,6 +120,50 @@ export async function getUserPaiedCourse(userID: number): Promise<UserCourseTabD
         pay.status='success' AND pay.user_id=?
     `, [userID])
 
+}
 
+export async function getUserOrders(userID: number): Promise<UserOrderData[]> {
+    let rows = await db.query<any>(
+        `
+        SELECT
+          pay.ID,
+          pay.time,
+          agency.name AS agency_name,
+  
+          course.ID AS course_id,
+          course.cover,
+          course.title,
+          '' AS className,
+          course.price,
+          pay.status
+        FROM
+          pay_table AS pay LEFT JOIN
+          agency_table AS agency ON pay.agency_id=agency.ID LEFT JOIN
+          course_table AS course ON pay.course_id=course.ID
+        WHERE
+          pay.user_id=?
+  
+        ORDER BY pay.time DESC
+      `,
+        [userID]
+    );
 
+    let ret = rows.map(row => {
+        return {
+            ID: row.ID,
+            time: row.time,
+            agency_name: row.agency_name,
+            courses: [
+                {
+                    ID: row.course_id,
+                    cover: row.cover,
+                    title: row.title,
+                    className: row.className,
+                    price: row.price,
+                    status: row.status,
+                }
+            ]
+        };
+    });
+    return ret
 }

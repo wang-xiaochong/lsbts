@@ -24,6 +24,24 @@ export interface UserCourseTabData {
     progress: number;
 }
 
+export interface UserOrderData {
+    ID: number;
+    time: number;
+    agency_name: string;
+    courses: {
+        ID: number;
+        cover: string;
+        title: string;
+        className: string;
+        price: number;
+        status: 'init' | 'success' | 'canceled' | 'deleted';
+    }[]
+}
+
+
+
+
+
 
 
 

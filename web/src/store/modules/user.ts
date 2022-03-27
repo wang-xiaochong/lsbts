@@ -1,4 +1,4 @@
-import { UserCourseProgressData, UserCourseTabData, UserData } from "models/user";
+import { UserCourseProgressData, UserCourseTabData, UserData, UserOrderData } from "models/user";
 import { createReducer } from '@reduxjs/toolkit'
 import { CategoryData } from "models/category";
 import actions from '../actions/index'
@@ -11,6 +11,7 @@ export interface UserState {
     myProgressInfo?: UserCourseProgressData,
     myCourseList?: UserCourseTabData[],
     myChapters?: CourseChapterData[],
+    myOrders?: UserOrderData[],
 }
 
 
@@ -53,4 +54,9 @@ export const userReducer = createReducer(
         .addCase(actions.user.setMyChapters, (state, { payload }) => {
             return { ...state, myChapters: payload }
         })
+        //orders
+        .addCase(actions.user.setMyOrder, (state, { payload }) => {
+            return { ...state, myOrders: payload }
+        })
+
 );

@@ -63,10 +63,12 @@ function My(props: Props) {
   return (
     < div className="main-container" >
       <div className="main-content">
+
         <div className="left">
           <NavMenu />
           <CommonLeft />
         </div>
+
         <div className="right">
           <h3 className="c-title">课程表</h3>
 

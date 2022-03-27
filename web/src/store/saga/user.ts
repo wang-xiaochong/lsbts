@@ -54,4 +54,9 @@ export default function* user() {
         let { data } = yield axios.get(`/api/user/chapters/${courseID}`)
         yield put(actions.user.setMyChapters(data))
     })
+    //orders
+    yield takeEvery(actions.user.getMyOrder, function* () {
+        let { data } = yield axios.get(`/api/user/my-orders`)
+        yield put(actions.user.setMyOrder(data))
+    })
 }

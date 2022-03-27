@@ -7,7 +7,7 @@ import CourseComment from '@/components/course/courseComment';
 import CourseDescription from '@/components/course/courseDescription';
 import CourseInfo from '@/components/course/courseInfo';
 import CourseVideo from '@/components/course/courseVideo';
-import Tabs from '@/components/course/tabs';
+import Tabs from '@/components/tabs';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { CourseState, connect, RootState, Dispatch, actions } from '@/store';

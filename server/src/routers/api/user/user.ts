@@ -4,7 +4,7 @@ import Router from '@koa/router'
 import { ParesPostData } from '~/libs/req'
 import { getChapters } from '~/models/course/chapter'
 import { getSubscibe, setMySubscribe } from '~/models/subscribe'
-import { getUserCheck, getUserAdd, userData, getUserInfo, getUserID, getUserCourseProgressData, getUserPaiedCourse } from '~/models/user'
+import { getUserCheck, getUserAdd, userData, getUserInfo, getUserID, getUserCourseProgressData, getUserPaiedCourse, getUserOrders } from '~/models/user'
 
 let router = new Router()
 
@@ -75,6 +75,12 @@ router.get('/chapters/:courseID', async ctx => {
     let courseID = Number(ctx.params.courseID)
     ctx.body = await getChapters(courseID, ID)
 })
+
+router.get('/my-orders', async ctx => {
+    let ID = await getUserID(ctx.get('token'));
+    ctx.body = await getUserOrders(ID)
+})
+
 
 
 
