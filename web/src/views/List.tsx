@@ -109,13 +109,12 @@ function List(props: Props) {
                         pageSize={CourseListSearchPageSize}
                         onChange={value => setPage(value)}
                     />
-
-
                 </div>
 
                 <div className="right">
                     <AdAside items={rightAdList || []} />
                 </div>
+
             </div>
 
             <HotTopic />

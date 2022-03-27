@@ -24,7 +24,7 @@ export interface CourseState {
 }
 
 export const initState: CourseState = {
-    indexCourseList: undefined,
+    indexCourseList: {},
     searchCourseResult: { total: 0, data: [] },
     searchCategoryData: undefined,
     isRegisted: false,

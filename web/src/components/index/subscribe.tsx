@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import Dialog from './subscribe/dialog';
 import { Dispatch, actions, UserState, connect, RootState } from '@/store/index'
-import { CategoryData } from 'models/category';
 
 interface Props {
   user?: UserState,

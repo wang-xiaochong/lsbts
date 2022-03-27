@@ -32,7 +32,7 @@ interface CourseListMetas {
 function Home(props: Props) {
   props.appData && setAppData(props.appData);
   const indexCourseList = props.course?.indexCourseList
-  // if(!indexCourseList) props.dispatch(actions.site.get)
+
 
   // const allCourse = props.site.SubscribeData;
   // if (!allCourse) props.dispatch(actions.site.getAllSubscribeData())
@@ -45,43 +45,36 @@ function Home(props: Props) {
   //   { category: 4, title: '设计创作热门课程' }
   // ]
   let courseListMetas: CourseListMetas[] = [];
-  // if (props.site.SubscribeData && props.user.mySubscribe) {
-  //   courseListMetas = getCourseListMetas(props.site.SubscribeData, props.user.mySubscribe)
-  // }
+  if (props.site.SubscribeData && props.user.mySubscribe) {
+    courseListMetas = getCourseListMetas(props.site.SubscribeData, props.user.mySubscribe)
+  }
 
   if (indexCourseList) {
-    console.log(indexCourseList)
     courseListMetas.forEach(({ category }) => {
       if (!indexCourseList[category])
         props.dispatch(actions.course.getIndexCourseSummary(category))
     })
   }
 
+  if (!props.site.SubscribeData) {
+    props.dispatch(getAllSubscribeData())
+  }
 
-  useEffect(() => {
-    const { site } = props
-    if (!site.SubscribeData) {
-      props.dispatch(getAllSubscribeData())
-    }
-  })
 
   return (
     <div>
       <Banner />
       <Subscribe />
-      {/* {
+      {
         indexCourseList ? courseListMetas.map(item => (
           <CourseList key={item.category} title={item.title} data={indexCourseList[item.category]} />
         )) : ''
-      } */}
-   
-
-
+      }
 
       <div className='all-course page'>
         <a href='/list'>查看全部课程 &gt;</a>
       </div>
-      {/* <HotTopic title='热门知识' /> */}
+      <HotTopic title='热门知识' />
     </div>
   );
 }
