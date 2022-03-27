@@ -10,7 +10,7 @@ interface Props {
   dispatch: Dispatch;
 }
 
-const MAX_SELECT = 2;
+const MAX_SELECT = 6;
 
 function Dialog(props: Props) {
   const [mySubscribe, setMySubscribe] = useState(props.user?.mySubscribe ? [...props.user?.mySubscribe] : [])
@@ -46,8 +46,12 @@ function Dialog(props: Props) {
   }
 
   const saveMySubscribe = (newMySubscribe: SubscribeData[]) => {
-    props.dispatch(actions.user.submitMySubscribe(newMySubscribe))
-    
+    const token = props.user?.token
+    if (token) {
+      props.dispatch(actions.user.submitMySubscribe(newMySubscribe))
+    } else {
+      alert('请登录后再设置')
+    }
     props.onClose()
   }
 

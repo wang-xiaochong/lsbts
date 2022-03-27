@@ -1,5 +1,5 @@
 import db from '~/libs/database';
-import { BannerData } from 'models/banner'
+import { BannerData } from 'models/site'
 interface bannerRow {
     ID: number,
     img: string,

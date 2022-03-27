@@ -2,26 +2,29 @@ import React, { useState, useEffect } from 'react';
 
 import Dialog from './subscribe/dialog';
 import { Dispatch, actions, UserState, connect, RootState } from '@/store/index'
+import { CategoryData } from 'models/category';
+
 interface Props {
   user?: UserState,
   dispatch: Dispatch,
 }
 function Subscribe(props: Props) {
   const mySubscribe = props.user?.mySubscribe
+
   const cur = props.user?.myCurSubscribe
   const [dialogVisible, setDialogVisible] = useState(false);
+  if (!mySubscribe) {
+    props.dispatch(actions.user.getMySubscribe())
+  }
 
-  useEffect(() => {
+  if (mySubscribe) {
     if (!mySubscribe?.find(item => item.ID === cur)) {
       props.dispatch(actions.user.setMyCurSubscribe(0))
     }
-  }, [mySubscribe, cur,props]);
+  }
 
 
-  // if (!mySubscribe) {
-  //   props.dispatch(actions.user.getMySubscribe());
-  // }
- 
+
   return (
     <>
       <div className="subscribe">

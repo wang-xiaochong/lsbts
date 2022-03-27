@@ -34,6 +34,11 @@ function Home(props: Props) {
   const indexCourseList = props.course?.indexCourseList
   // if(!indexCourseList) props.dispatch(actions.site.get)
 
+  // const allCourse = props.site.SubscribeData;
+  // if (!allCourse) props.dispatch(actions.site.getAllSubscribeData())
+  // console.log(allCourse)
+
+
 
   // let courseListMetas = [
   //   { category: 1, title: 'IT互联网热门课程' },
@@ -63,12 +68,16 @@ function Home(props: Props) {
   return (
     <div>
       <Banner />
-      {/* <Subscribe /> */}
-      {
+      <Subscribe />
+      {/* {
         indexCourseList ? courseListMetas.map(item => (
           <CourseList key={item.category} title={item.title} data={indexCourseList[item.category]} />
         )) : ''
-      }
+      } */}
+   
+
+
+
       <div className='all-course page'>
         <a href='/list'>查看全部课程 &gt;</a>
       </div>

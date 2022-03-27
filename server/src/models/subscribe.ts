@@ -18,11 +18,12 @@ interface UserSubscribeRow {
 
 // 用户已选 (横条)
 export async function getSubscibe(userID: number): Promise<SubscribeData[]> {
+
     let rows = await db.query('SELECT category_id FROM user_subscribe_table WHERE user_id=?', [userID]) as UserSubscribeRow[]
     let data = rows[0];
     let result: SubscribeData[] = [{ ID: 0, title: '精选推荐' }]
     if (!data) {
-        result.push({ ID: 2, title: '前沿技术' }, { ID: 3, title: '互联网产品' }, { ID: 5, title: '环境艺术设计' })
+        result.push({ ID: 2, title: '前端' }, { ID: 3, title: '后端' }, { ID: 8, title: '面试求职' })
     } else {
         let category_id = JSON.parse(data.category_id)
         for (let i = 0; i < category_id.length; i++) {

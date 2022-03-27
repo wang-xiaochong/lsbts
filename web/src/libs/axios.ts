@@ -3,7 +3,7 @@ import Axios from 'axios'
 
 let token = '';
 if (typeof (window) != 'undefined') {
-    token = localStorage.token
+    token = localStorage.token || ''
 }
 const axios = Axios.create({
     // baseURL: 'http://82.156.109.119:7070/',
