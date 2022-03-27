@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit'
+import { BannerData } from 'models/site'
 import { CategoryData } from 'models/category'
 import { SearchResult } from 'models/search'
 import { SubscribeData, TopicData, LinkData } from 'models/site'
@@ -6,6 +7,11 @@ import { SubscribeData, TopicData, LinkData } from 'models/site'
 // category
 export const setAllCategory = createAction<CategoryData[]>('setAllCategory')
 export const getAllCategory = createAction<void>('getAllCategory')
+
+// banner
+export const setAllBanner = createAction<BannerData[]>('setAllBanner')
+export const getAllBanner = createAction<void>('getAllBanner')
+
 
 //search
 export const setHotKeywords = createAction<SearchResult>('setHotKeywords');

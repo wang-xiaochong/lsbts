@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
 import { appData } from '@/models/app';
-import { BannerData, getAllBanners } from '@/models/banner';
+import { BannerData } from '@/models/site';
+import { connect, SiteState, actions, Dispatch, RootState } from '@/store/index'
 
-export default function Banner() {
-  const [banners, setBanners] = useState<BannerData[] | undefined>(appData?.banners);
+interface Props {
+  site: SiteState;
+  dispatch: Dispatch;
+}
+
+function Banner(props: Props) {
+  const banners = appData?.banners || props.site.BannerData;
   const [cur, setCur] = useState(0);
 
-  useEffect(() => {
-    if (!banners) {
-      getAllBanners().then(data => {
-        setBanners(data);
-      });
-    }
-  }, [banners]);
+  if (!banners) props.dispatch(actions.site.getAllBanner())
 
   const prev = () => {
     if (banners) {
@@ -25,10 +25,10 @@ export default function Banner() {
       setCur(cur === banners.length - 1 ? 0 : cur + 1);
     }
   }
-  // console.log(banners)
+
 
   return (
-    <div className="banner" style={{ backgroundColor: banners?banners[cur].color:'#000' }}>
+    <div className="banner" style={{ backgroundColor: banners ? banners[cur].color : '#000' }}>
       <div className="page">
         <div className="content">
           <span className="btn btn-prev" onClick={prev}>
@@ -56,6 +56,7 @@ export default function Banner() {
             </>
           ) : ''}
         </div>
+
         <div className="user">
           <div className="no-user">
             <div className="title">跟进你的学习进度</div>
@@ -65,7 +66,10 @@ export default function Banner() {
             <span className="btn-login">登录</span>
           </div>
         </div>
+        
       </div>
     </div>
   );
 }
+
+export default connect((state: RootState) => state)(Banner)

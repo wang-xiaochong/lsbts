@@ -28,6 +28,13 @@ export default function* site() {
         }
     });
 
+     // banner
+     yield takeEvery(actions.site.getAllBanner, function* () {
+            let { data } = yield axios.get(`/api/site/getAllBanners`)
+            yield put(actions.site.setAllBanner(data))
+    })
+
+
     // subscribe
     yield takeEvery(actions.site.getAllSubscribeData, function* () {
         const { site } = store.getState()

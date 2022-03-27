@@ -13,11 +13,16 @@ const axios = Axios.create({
         token: token,
     }
 });
+
+// axios.interceptors.request.use(req => {
+//     // console.log(req)
+//     return req
+// })
 axios.interceptors.response.use(res => {
+    
     return res
 }, err => {
     if (err.response) {
-
         alert(err.response.data)
         return err.response.data
     } else {

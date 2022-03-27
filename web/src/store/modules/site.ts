@@ -4,8 +4,10 @@ import actions from '../actions/index'
 import { appData } from 'models/app';
 import { CategoryData } from 'models/category';
 import { SearchResult } from 'models/search';
+import { BannerData } from 'models/site';
 
 export interface SiteState {
+    BannerData?: BannerData[];
     CategoryData?: CategoryData[];
     SubscribeData?: SubscribeData[];
     hotKeywords?: SearchResult;
@@ -31,6 +33,11 @@ export const siteReducer = createReducer(
         .addCase(actions.site.setHotKeywords, (state, { payload }) => {
             return { ...state, hotKeywords: payload };
         })
+        //banner
+        .addCase(actions.site.setAllBanner, (state, { payload }) => {
+            return { ...state, BannerData: payload };
+        })
+
         .addCase(actions.site.setSuggest, (state, { payload }) => {
             return { ...state, suggest: payload };
         })

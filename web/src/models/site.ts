@@ -1,4 +1,9 @@
-
+export interface BannerData {
+    ID: number,
+    img: string,
+    href: string,
+    color:string,
+}
 export interface SubscribeItem {
     ID: number;
     title: string;

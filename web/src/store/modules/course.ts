@@ -4,12 +4,12 @@ import actions from '../actions/index'
 import { AdCourseData, CourseDetail, CourseSummaryData, SearchCategoryData, SearchCourseResult, VideoSectionData } from '@/models/course'
 
 export interface CourseState {
-    indexCourseList: {
+    indexCourseList?: {
         [key: string]: CourseSummaryData[],
     };
-    searchCourseResult: SearchCourseResult,
+    searchCourseResult?: SearchCourseResult,
     //category
-    searchCategoryData: SearchCategoryData[];
+    searchCategoryData?: SearchCategoryData[];
 
     //ad
     rightAdList?: AdCourseData[];
@@ -24,9 +24,9 @@ export interface CourseState {
 }
 
 export const initState: CourseState = {
-    indexCourseList: {},
+    indexCourseList: undefined,
     searchCourseResult: { total: 0, data: [] },
-    searchCategoryData: [],
+    searchCategoryData: undefined,
     isRegisted: false,
     rightAdList: undefined,
     bottomAdList: undefined,

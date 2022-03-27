@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 
 import Home from './views/Home'
-import List from './views/List'
-import Course from './views/Course'
+// import List from './views/List'
+// import Course from './views/Course'
 import NotFound from "./views/NotFound";
-import Video from "./views/Video";
-import MyOrder from "./views/MyOrder";
-import My from "./views/My";
+// import Video from "./views/Video";
+// import MyOrder from "./views/MyOrder";
+// import My from "./views/My";
+import Develop from './views/Developing'
 
 
 
@@ -19,8 +20,8 @@ import Header from "./components/header/header";
 
 import { connect, Dispatch } from '@/store'
 import * as routers from '@/router'
-import querystring from "./libs/querystring";
-import { getUserData, saveToken, setToken } from "./store/actions/user";
+// import querystring from "./libs/querystring";
+// import { getUserData, saveToken, setToken } from "./store/actions/user";
 
 
 // 公用样式
@@ -53,20 +54,20 @@ interface Props {
 function App(props: Props) {
     const header = props.app?.globalHeaderVisible === undefined ? true : props.app?.globalHeaderVisible;
     const footer = props.app?.globalFooterVisible === undefined ? true : props.app?.globalFooterVisible;;
-    useEffect(() => {
-        const { token } = querystring(['token']);
-        if (token) {
-            if (props.dispatch) {
-                props.dispatch(saveToken({ token }))
-                props.dispatch(setToken({ token }))
-                window.location.href = '/';
-            }
-        }
-    });
-    useEffect(() => {
-        const { user } = props
-        if (user?.token) props.dispatch(getUserData())
-    })
+    // useEffect(() => {
+    //     const { token } = querystring(['token']);
+    //     if (token) {
+    //         if (props.dispatch) {
+    //             props.dispatch(saveToken({ token }))
+    //             props.dispatch(setToken({ token }))
+    //             window.location.href = '/';
+    //         }
+    //     }
+    // });
+    // useEffect(() => {
+    //     const { user } = props
+    //     if (user?.token) props.dispatch(getUserData())
+    // })
 
 
     return (
@@ -76,11 +77,12 @@ function App(props: Props) {
 
                 <Routes>
                     <Route path={routers.home()} element={<Home />}></Route>
-                    <Route path={routers.list()} element={<List />}></Route>
+                    {/* <Route path={routers.list()} element={<List />}></Route>
                     <Route path='/course/:id' element={<Course />} ></Route>
                     <Route path='/video/:sectionID' element={<Video />} ></Route>
                     <Route path={routers.my()} element={<My />}></Route>
-                    <Route path={routers.myOrder()} element={<MyOrder />}></Route>
+                    <Route path={routers.myOrder()} element={<MyOrder />}></Route> */}
+                    <Route path={routers.develop()} element={<Develop />}></Route>
                     <Route path="*" element={<NotFound />}></Route>
                 </Routes>
 

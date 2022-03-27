@@ -9,7 +9,7 @@ let router = new Router()
 // api
 router.prefix('/api')
 router.get('/getAPI', async ctx => {
-    let apis = [{ name: 'banners' }, { name: 'users' }]
+    let apis = [{ name: 'banners' }, { name: 'users' }];
     ctx.body = apis
 })
 

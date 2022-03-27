@@ -21,7 +21,11 @@ export function my() {
 }
 
 export function myOrder() {
-    return `my/order`;
+    return `/my/order`;
+}
+
+export function develop() {
+    return `/maintain`;
 }
 
 

@@ -1,6 +1,6 @@
 import { CategoryData } from "./category";
 import { SearchResult } from "./search";
-import { BannerData } from "./banner";
+import { BannerData } from "./site";
 import { CourseSummaryData } from "./course";
 import { LinkData, TopicData } from "./site";
 

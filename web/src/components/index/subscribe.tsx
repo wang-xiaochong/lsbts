@@ -18,9 +18,9 @@ function Subscribe(props: Props) {
   }, [mySubscribe, cur,props]);
 
 
-  if (!mySubscribe) {
-    props.dispatch(actions.user.getMySubscribe());
-  }
+  // if (!mySubscribe) {
+  //   props.dispatch(actions.user.getMySubscribe());
+  // }
  
   return (
     <>
