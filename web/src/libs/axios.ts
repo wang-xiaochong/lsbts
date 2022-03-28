@@ -7,7 +7,7 @@ if (typeof (window) != 'undefined') {
 }
 const axios = Axios.create({
     // baseURL: 'http://82.156.109.119:7070/',
-    baseURL: 'http://localhost:8080/',
+    baseURL: 'http://82.156.109.119:8080/',
     // baseURL: 'http://localhost:7001/',
     headers: {
         token: token,
