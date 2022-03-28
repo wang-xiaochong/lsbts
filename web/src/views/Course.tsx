@@ -46,6 +46,11 @@ function Course(props: Props) {
         )
     }
 
+
+    // const videoSectionData = props.course?.videoSectionData;
+    // if (!videoSectionData) props.dispatch(actions.course.getVideoSectionData(sectionID))
+
+
     const { course, teachers, category, agency, chapters, comments } = courseDetail
 
     // footpoint
@@ -154,7 +159,7 @@ function Course(props: Props) {
                                 <i className="icon icon-right" />
                             </span>
                         </div>
-                        
+
                         <div className="course-items">
                             {
                                 [
@@ -166,6 +171,7 @@ function Course(props: Props) {
 
                                     <CourseChapter
                                         chapters={chapters}
+                                        onChange={sectionID => console.log(sectionID)}
                                     />,
 
                                     <CourseComment comments={comments} />,

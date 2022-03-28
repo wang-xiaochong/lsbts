@@ -1,7 +1,8 @@
 import React from "react";
-import { connect, actions, RootState, Dispatch } from '@/store/index'
+import { connect, actions, RootState, Dispatch, UserState } from '@/store/index'
 
 interface Props {
+    user?: UserState;
     course_id: number;
     title: string;
     price: number;
@@ -16,7 +17,9 @@ function CourseInfo(props: Props) {
 
     const { course_id, title, price, total_students, recently_students, rank, isRegisted } = props
     const registerCourse = () => {
-        props.dispatch(actions.course.registerCourse(course_id))
+        if(props.user?.token)
+            props.dispatch(actions.course.registerCourse(course_id))
+        else alert('请先登录')
     }
 
 

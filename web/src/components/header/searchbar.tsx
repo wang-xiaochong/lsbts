@@ -41,7 +41,7 @@ function Searchbar(props: Props) {
                     className="keyword" type="text" placeholder="搜索课程"
                     value={kw}
                     onFocus={ev => setShowList(true)}
-                    onBlur={ev => setShowList(false)}
+                    // onBlur={ev => setShowList(false)}
                     onInput={ev => setKw((ev.target as HTMLInputElement).value)}
                     onKeyDown={ev => {
                         if (ev.key === 'Enter') updateKw()
@@ -55,9 +55,11 @@ function Searchbar(props: Props) {
             {showList && keyWords && keyWords.length > 0 ? (<div className="list">
                 {suggest ? '' : (<div className="title">热门搜索</div>)}
                 <ul>
-                    {keyWords.map((kw, index) => (
-                        <li key={index}>{kw}</li>
-                    ))}
+                    {keyWords.map((kw, index) => {
+                        return <li key={index} onClick={() => { setKw(kw as string); updateKw() }
+                        }>{kw}</li>
+                    }
+                    )}
                 </ul>
             </div>) : ''}
 

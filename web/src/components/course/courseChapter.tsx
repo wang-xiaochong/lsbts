@@ -9,13 +9,21 @@ import * as routers from '../../router'
 interface Props {
 
     chapters: CourseChapterData[];
+    onChange: (sectionID: number) => void;
 
 }
 export default function courseChapter(props: Props) {
-    const { chapters } = props;
+    const { chapters, onChange } = props;
     const sectionClick = (section: CourseSectionData) => {
+
+
         switch (section.type) {
-            case 'video': routers.push(routers.video(section.ID)); break;
+            case 'video': {
+                // routers.push(routers.video(section.ID)); break;
+                onChange(section.ID)
+                alert('请先登录')
+                break;
+            }
             default: alert('暂不支持')
         }
     }
