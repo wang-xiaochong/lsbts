@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import bannerRoutes from './banner/banner'
+
 import categoryRoutes from './category/category'
 import courseRoutes from './course/course'
 import siteRoutes from './site/site'
@@ -13,7 +13,7 @@ router.get('/getAPI', async ctx => {
     ctx.body = apis
 })
 
-router.use(bannerRoutes)
+
 router.use(categoryRoutes)
 router.use(courseRoutes)
 router.use(siteRoutes)

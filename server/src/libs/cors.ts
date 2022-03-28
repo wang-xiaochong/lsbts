@@ -1,5 +1,5 @@
 
-import Koa from 'Koa'
+import Koa from 'koa'
 
 export function init(app: Koa) {
     app.use(async (ctx, next) => {

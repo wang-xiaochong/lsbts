@@ -173,6 +173,13 @@
   dependencies:
     "@types/koa" "*"
 
+"@types/koa-sslify@^4.0.3":
+  "integrity" "sha512-FfbgV4Dex2FtnonU6uAA0BhEh+pGTWY63UkP14+StrlC0e3RNOGx6GZc3HMN3wzBRNchLhcnkyO7/hHLnx3bPw=="
+  "resolved" "https://registry.npmmirror.com/@types/koa-sslify/-/koa-sslify-4.0.3.tgz"
+  "version" "4.0.3"
+  dependencies:
+    "@types/koa" "*"
+
 "@types/koa-static@^4.0.2":
   "integrity" "sha512-ns/zHg+K6XVPMuohjpOlpkR1WLa4VJ9czgUP9bxkCDn0JZBtUWbD/wKDZzPGDclkQK1bpAEScufCHOy8cbfL0w=="
   "resolved" "https://registry.npmmirror.com/@types/koa-static/-/koa-static-4.0.2.tgz"
@@ -2061,6 +2068,11 @@
     "debug" "^4.1.1"
     "http-errors" "^1.7.3"
     "resolve-path" "^1.4.0"
+
+"koa-sslify@^5.0.0":
+  "integrity" "sha512-3Qc/DxPcH4BavYkt7xOVDFbaS7nR8oCozb/0dlIpLlyGVhFXcjHETWBwE3QrDLwjKOVJj6ykwRJoNzPT9QxCag=="
+  "resolved" "https://registry.npmmirror.com/koa-sslify/-/koa-sslify-5.0.0.tgz"
+  "version" "5.0.0"
 
 "koa-static@^5.0.0":
   "integrity" "sha512-UqyYyH5YEXaJrf9S8E23GoJFQZXkBVJ9zYYMPGz919MSX1KuvAcycIuS0ci150HCoPf4XQVhQ84Qf8xRPWxFaQ=="
