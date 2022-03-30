@@ -7,14 +7,24 @@ module.exports = {
             plugin: CracoAlias,
             options: {
                 aliases: {
-                        'models': path.resolve(__dirname, './src/models'),
-                        '@': path.resolve(__dirname, './src')
-                    
+                    'models': path.resolve(__dirname, './src/models'),
+                    '@': path.resolve(__dirname, './src')
+
                 }
             }
         },
         {
-            plugin:CracoLess,
+            plugin: CracoLess,
+            options: {
+                lessLoaderOptions: {
+                    lessOptions: {
+                        modifyVars: { '@primary-color': '#1DA57A' },//配置antd主题色
+                        javascriptEnabled: true,
+                        sourceMap: false,
+                    },
+                },
+            },
         }
-    ]
+    ],
+
 }

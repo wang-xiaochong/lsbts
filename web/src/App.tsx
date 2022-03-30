@@ -28,7 +28,7 @@ import * as routers from '@/router'
 import '@/assets/less/base.less'
 import '@/assets/less/common.less'
 import '@/assets/less/alert.less'
-import '@/assets/less/my.less'
+
 
 // 首页
 import '@/assets/less/index.less'
@@ -40,6 +40,10 @@ import '@/assets/less/list.less'
 import '@/assets/less/course.less'
 // 视频
 import '@/assets/less/video.less'
+
+// 用户
+import '@/assets/less/my.less'
+
 
 // 路由
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
@@ -72,20 +76,20 @@ function App(props: Props) {
 
     return (
         <>
-            <BrowserRouter>
+            <BrowserRouter >
+
                 {header ? (<Header />) : ''}
 
                 <Routes>
                     <Route path={routers.home()} element={<Home />}></Route>
-                     <Route path={routers.list()} element={<List />}></Route>
-                     <Route path='/course/:id' element={<Course />} ></Route>
+                    <Route path={routers.list()} element={<List />}></Route>
+                    <Route path='/course/:id' element={<Course />} ></Route>
                     {/*<Route path='/video/:sectionID' element={<Video />} ></Route>
                     <Route path={routers.my()} element={<My />}></Route>
                     <Route path={routers.myOrder()} element={<MyOrder />}></Route> */}
                     <Route path={routers.develop()} element={<Develop />}></Route>
                     <Route path="*" element={<NotFound />}></Route>
                 </Routes>
-
                 <Alert />
                 {footer ? (<Footer />) : ''}
             </BrowserRouter>

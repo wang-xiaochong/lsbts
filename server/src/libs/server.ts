@@ -14,8 +14,8 @@ const app = new Koa();
 app.use(sslify());
 
 var options = {
-    key: fs.readFileSync('./private_key.pem'),
-    cert: fs.readFileSync( './ca-cert.pem')
+    key: fs.readFileSync('src/keys/private_key.pem'),
+    cert: fs.readFileSync( 'src/keys/ca-cert.pem')
 }
 
 https.createServer(options, app.callback()).listen(port, () => {
