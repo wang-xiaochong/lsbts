@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import Dialog from './subscribe/dialog';
 import { Dispatch, actions, UserState, connect, RootState } from '@/store/index'
@@ -28,7 +28,7 @@ function Subscribe(props: Props) {
     <>
       <div className="subscribe">
         <div className="page">
-          <ul className="list">
+          {/* <ul className="list">
             {mySubscribe?.map(item => (
               <li
                 key={item.ID}
@@ -38,9 +38,9 @@ function Subscribe(props: Props) {
                 {item.title}
               </li>
             ))}
-          </ul>
+          </ul> */}
           <div className="btn-container">
-            <span className="btn" onClick={ev => setDialogVisible(true)}>修改兴趣</span>
+            <span className="btn" onClick={ev => setDialogVisible(true)}>添加兴趣</span>
           </div>
         </div>
       </div>

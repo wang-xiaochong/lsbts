@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { appData } from '@/models/app';
-import { BannerData } from '@/models/site';
 import { connect, SiteState, actions, Dispatch, RootState } from '@/store/index'
 
 interface Props {
@@ -63,7 +62,7 @@ function Banner(props: Props) {
             <div className="img" />
           </div>
           <div className="login">
-            <span className="btn-login">登录</span>
+            <a className="btn-login" href="https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=101995223&response_type=token&scope=all&redirect_uri=https%3A%2F%2Fxscloud.ltd%3A8989%2Fproxy">登录</a>
           </div>
         </div>
         

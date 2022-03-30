@@ -44,10 +44,10 @@ const Logo = () => {
 const Links = () => {
   return (
     <>
-      <a className="btn" href={routers.develop()}>入驻/合作</a>
+      {/* <a className="btn" href={routers.develop()}>入驻/合作</a>
       <a className="btn" href={routers.develop()}>急速版</a>
       <a className="btn" href={routers.develop()}>客户端</a>
-      <a className="btn" href={routers.develop()}>私信</a>
+      <a className="btn" href={routers.develop()}>私信</a> */}
     </>
   )
 }

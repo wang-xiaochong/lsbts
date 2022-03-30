@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { RootState, Dispatch, SiteState, connect, actions } from '@/store/index'
 
@@ -13,13 +13,14 @@ function HotTopic(props: Props) {
   if (!topics) {
     props.dispatch(actions.site.getTopics())
   }
-  const [cur, setCur] = useState(0);
+  // const [cur, setCur] = useState(0);
 
 
 
   return (
     <div className="ad-bottom">
-      {props.title ? (<h4 className="cap">{props.title}</h4>) : ''}
+
+      {/* {props.title ? (<h4 className="cap">{props.title}</h4>) : ''}
       <ul className="tabs page">
         {
           topics?.map((item, index) => (
@@ -41,7 +42,7 @@ function HotTopic(props: Props) {
             }
           </div>
         ) : ''
-      }
+      } */}
 
     </div>
   );

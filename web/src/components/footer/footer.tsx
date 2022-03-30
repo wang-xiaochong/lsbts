@@ -16,7 +16,7 @@ function Footer(props: Props) {
     <div className="g-footer">
       <div className="page">
         <div className="links">
-          <h2>合作链接</h2>
+          {/* <h2>合作链接</h2>
           {
             links ?
               (<div className="link-list">
@@ -24,9 +24,9 @@ function Footer(props: Props) {
                   <a href={link.href} target='_blank' rel="noreferrer" key={link.ID}>{link.title}</a>
                 ))}
               </div>) : ''
-          }
+          } */}
         </div>
-        <div className="copyright" />
+        {/* <div className="copyright" /> */}
       </div>
     </div>
   );

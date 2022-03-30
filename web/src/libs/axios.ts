@@ -6,8 +6,8 @@ if (typeof (window) != 'undefined') {
     token = localStorage.token || ''
 }
 const axios = Axios.create({
-    // baseURL: 'http://82.156.109.119:7070/',
-    baseURL: 'https://localhost:7070/',
+    baseURL: 'https://82.156.109.119:7070/',
+    // baseURL: 'https://localhost:7070/',
     headers: {
         token: token,
     }

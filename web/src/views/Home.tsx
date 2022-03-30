@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 // import ReactDOMServer from 'react-dom/server'
 import Banner from '@/components/index/banner'
 import Subscribe from '@/components/index/subscribe'
@@ -12,7 +12,7 @@ import { Dispatch } from 'redux';
 import { getAllSubscribeData } from '@/store/actions/site';
 import { UserState } from '@/store/modules/user';
 import { SiteState } from '@/store/modules/site';
-import HotTopic from '@/components/footer/hotTopic';
+// import HotTopic from '@/components/footer/hotTopic';
 import { CategoryData } from 'models/category';
 
 interface Props {
@@ -74,7 +74,7 @@ function Home(props: Props) {
       <div className='all-course page'>
         <a href='/list'>查看全部课程 &gt;</a>
       </div>
-      <HotTopic title='热门知识' />
+      {/* <HotTopic title='热门知识' /> */}
     </div>
   );
 }

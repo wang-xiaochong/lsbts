@@ -27,6 +27,7 @@ export interface SearchParams {
 export interface FilterOptions {
     type?: 'free' | 'cost',
     options: ('video' | 'live' | 'playback' | 'auth' | 'living')[],
+    // options: ('video' | 'live' | 'playback' | 'auth' | 'living')[],
     sort: 'default' | 'rank' | 'students' | 'price',
 }
 

@@ -56,7 +56,10 @@ function Searchbar(props: Props) {
                 {suggest ? '' : (<div className="title">热门搜索</div>)}
                 <ul>
                     {keyWords.map((kw, index) => {
-                        return <li key={index} onClick={() => { setKw(kw as string); updateKw() }
+                        return <li key={index} onClick={() => {
+                            if (window.location.pathname !== '/list') window.location.href = '/list'
+                            setKw(kw as string); updateKw()
+                        }
                         }>{kw}</li>
                     }
                     )}

@@ -3,12 +3,16 @@ import { UserData } from "models/user";
 import React from "react";
 import { RootState } from '@/store/index'
 import { connect } from 'react-redux'
+
 // import * as routers from '../../router'
 interface Props {
   userData?: UserData,
 }
 function User(props: Props) {
   // let userInfo = props.userData
+
+
+
   return (
     <>
       {/* <span className="btn">登录</span> */}
@@ -26,7 +30,14 @@ function User(props: Props) {
           </a>)
       } */}
 
-      <span className="btn" onClick={ev => alert('待调试')}>登录</span>
+      <a href="https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=101995223&response_type=token&scope=all&redirect_uri=https%3A%2F%2Fxscloud.ltd%3A8989%2Fproxy"
+        className="btn" >
+        <img
+          style={{ width: '10px' }}
+          alt='QQ'
+          src='/image/qq.png' />
+        登录
+      </a>
 
 
     </>

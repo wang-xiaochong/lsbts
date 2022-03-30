@@ -15,27 +15,28 @@ export default function Filter(props: Props) {
     { title: '付费课', value: 'cost' }
   ];
 
-  const Option = (props: {
-    title: string;
-    option: 'video' | 'live' | 'playback' | 'auth' | 'living';
-  }) => {
-    const { title, option } = props;
-    return (
-      <label>
-        <input type="checkbox" checked={options.indexOf(option) !== -1}
-          onChange={() => {
-            let newOptions = [];
-            if (options.indexOf(option) === -1) {
-              newOptions = [...options, option]
-            } else {
-              newOptions = options.filter(item => item !== option)
-            }
-            onChange({ ...data, options: newOptions });
-          }}
-        />{title}
-      </label>
-    )
-  }
+  // const Option = (props: {
+  //   title: string;
+  //   option: 'video' | 'live' | 'playback' | 'auth' | 'living';
+
+  // }) => {
+  //   const { title, option } = props;
+  //   return (
+  //     <label>
+  //       <input type="checkbox" checked={options.indexOf(option) !== -1}
+  //         onChange={() => {
+  //           let newOptions = [];
+  //           if (options.indexOf(option) === -1) {
+  //             newOptions = [...options, option]
+  //           } else {
+  //             newOptions = options.filter(item => item !== option)
+  //           }
+  //           onChange({ ...data, options: newOptions });
+  //         }}
+  //       />{title}
+  //     </label>
+  //   )
+  // }
   const sorts: {
     title: string,
     value: 'default' | 'rank' | 'students' | 'price',
@@ -62,19 +63,19 @@ export default function Filter(props: Props) {
           ))}
         </div>
 
-        <div className="split">|</div>
+        {/* <div className="split">|</div> */}
         <div className="group check">
-          <Option title='录播' option='video' />
-          <Option title='直播' option='live' />
-          <Option title='有回放' option='playback' />
+          {/* <Option title='录播' option='video' /> */}
+          {/* <Option title='直播' option='live' /> */}
+          {/* <Option title='有回放' option='playback' /> */}
         </div>
-        <div className="split">|</div>
+        {/* <div className="split">|</div> */}
         <div className="group check">
-          <Option title='认证课程' option='auth' />
+          {/* <Option title='认证课程' option='auth' /> */}
         </div>
-        <div className="split">|</div>
+        {/* <div className="split">|</div> */}
         <div className="group check">
-          <Option title='正在直播' option='living' />
+          {/* <Option title='正在直播' option='living' /> */}
         </div>
       </div>
 
