@@ -16,7 +16,7 @@ function QQLogin(props: Props) {
     if (props.app?.globalHeaderVisible !== false) props.dispatch(actions.app.setHeaderVisible(false))
     if (props.app?.globalFooterVisible !== false) props.dispatch(actions.app.setFooterVisible(false))
     render();
-    
+
 
     return (
         <>
@@ -30,7 +30,7 @@ function QQLogin(props: Props) {
 export default connect((state: RootState) => state)(QQLogin)
 
 
-const qqBaseUrl = 'https://graph.qq.com'
+// const qqBaseUrl = 'https://graph.qq.com'
 const key = 101995223
 
 async function getQueryVariable() {
@@ -46,7 +46,7 @@ async function getQueryVariable() {
 
 async function getOpenID(token: string) {
     if (token) {
-        let ret = await axios(`${qqBaseUrl}/oauth2.0/me?access_token=${token}`);
+        let ret = await axios(`/oauth2.0/me?access_token=${token}`);
         let vars = ret.data.split(":");
         let pair = vars[2].split("\"");
         return pair[1];
@@ -58,7 +58,7 @@ async function getOpenID(token: string) {
 
 async function getUserInfo(token: string, id: string, key: number) {
     if (id) {
-        let ret = await axios(`${qqBaseUrl}/user/get_user_info?access_token=${token}&openid=${id}&oauth_consumer_key=${key}`)
+        let ret = await axios(`/user/get_user_info?access_token=${token}&openid=${id}&oauth_consumer_key=${key}`)
         return ret.data
     } else {
         console.log('openID is null')
