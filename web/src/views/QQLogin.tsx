@@ -30,7 +30,7 @@ function QQLogin(props: Props) {
 export default connect((state: RootState) => state)(QQLogin)
 
 
-// const qqBaseUrl = 'https://graph.qq.com'
+//const qqBaseUrl = 'https://graph.qq.com'
 const key = 101995223
 
 async function getQueryVariable() {
@@ -121,16 +121,18 @@ export async function GetUserInfo() {
 
 async function render() {
     let Info = await GetUserInfo();
-    if (Info) {
+    console.log(Info);
+    
+    //if (Info) {
         // 1.查询数据库是否存在该用户 存在更改用户状态 不存在则添加
-        let token = await QQlogin(Info)
-        if (token !== '') {
+        //let token = await QQlogin(Info)
+        //if (token !== '') {
             // window.location.replace(`http://localhost:8080/?token=${token}`)
-            window.location.replace(`/?token=${token}`)
-        } else {
-            alert('登录失败');
-            window.location.replace(`/`);
-        }
+            //window.location.replace(`/?token=${token}`)
+        //} else {
+        //    alert('登录失败');
+            //window.location.replace(`/`);
+        //}
         // setTimeout(() => {
         //     let nickname = document.createElement('h3')
         //     nickname.innerHTML = Info.nickname
@@ -141,9 +143,9 @@ async function render() {
         // }, 2000);
 
         // window.location.replace(`http://localhost:8080/?token=${ret}`);
-    } else {
-        alert('请重试');
-    }
+    //} else {
+        //alert('请重试');
+    //}
 }
 
 
