@@ -29,8 +29,6 @@ function QQLogin(props: Props) {
 
 export default connect((state: RootState) => state)(QQLogin)
 
-
-//const qqBaseUrl = 'https://graph.qq.com'
 const key = 101995223
 
 async function getQueryVariable() {
@@ -76,39 +74,38 @@ function guid() {
 }
 
 
-async function QQlogin(userData: any) {
-    console.log(userData);
-    let { nickname, figureurl_qq_1 } = userData
+async function QQlogin(userData: any, openID: string):Promise<boolean> {
+    // console.log(userData);
+    let { nickname, figureurl_qq } = userData
     var userdata = {
         nickname,
         token: '',
-        avatar: figureurl_qq_1,
+        avatar: figureurl_qq,
     }
-    let ret = await axios2(`/api/user/userCheck?nickname=${nickname}`)
-    if (ret.data.token === '') {
-        // 新增用户
-        userdata.token = guid()
-        let ret = await axios2.post(`/api/user/userAdd`, userdata)
-        if (ret.data) {
-            return userdata.token
-        } else {
-            return ''
-        }
-    } else {
-        // 更换用户状态
-        return ret.data.token
+    userdata.token = guid();
+    // 根据用户平台唯一openID去自己数据库查找该用户是否存在，存在则更新信息，不存在则添加用户
 
+    // 1.查找用户信息
+    let ret = await axios2(`/api/user/userCheck?openID=${openID}`)
+    // 找到了就更新用户信息
+    if (ret.data.user_id !== -1) {
+        let user_id = ret.data.user_id;
+        return await axios2.post(`/api/user/update`, {userdata,user_id});
+    } else {
+        // 新增用户信息
+        return  await axios2.post(`/api/user/add`, { userdata, openID });
     }
+
 }
 
 
 var Info = '';
-export async function GetUserInfo() {
+export async function GetUserInfo(): Promise<{ Info: any, id: string } | undefined> {
     let token = await getQueryVariable() || ''
     let id = await getOpenID(token)
     Info = await getUserInfo(token, id, key)
     if (Info) {
-        return Info
+        return { Info, id }
     } else {
         return
     }
@@ -118,34 +115,19 @@ export async function GetUserInfo() {
 }
 
 
-
 async function render() {
-    let Info = await GetUserInfo();
-    console.log(Info);
-    
-    //if (Info) {
-        // 1.查询数据库是否存在该用户 存在更改用户状态 不存在则添加
-        //let token = await QQlogin(Info)
-        //if (token !== '') {
-            // window.location.replace(`http://localhost:8080/?token=${token}`)
-            //window.location.replace(`/?token=${token}`)
-        //} else {
-        //    alert('登录失败');
-            //window.location.replace(`/`);
-        //}
-        // setTimeout(() => {
-        //     let nickname = document.createElement('h3')
-        //     nickname.innerHTML = Info.nickname
-        //     document.body.appendChild(nickname)
-        //     let headimg = document.createElement('img')
-        //     headimg.src = Info.figureurl_qq_2
-        //     document.body.appendChild(headimg)
-        // }, 2000);
-
-        // window.location.replace(`http://localhost:8080/?token=${ret}`);
-    //} else {
-        //alert('请重试');
-    //}
+    let ret = await GetUserInfo();
+    if (ret) {
+        let { Info, id } = ret;
+        let loginResult = await QQlogin(Info, id);
+        if (loginResult) {
+            window.location.replace(`/`)
+        }else {
+            alert('登录失败，请刷新重试')
+        }
+    } else {
+        alert('登录失败，请刷新重试')
+    }
 }
 
 

@@ -4,26 +4,46 @@ import Router from '@koa/router'
 import { ParesPostData } from '~/libs/req'
 import { getChapters } from '~/models/course/chapter'
 import { getSubscibe, setMySubscribe } from '~/models/subscribe'
-import { getUserCheck, getUserAdd, userData, getUserInfo, getUserID, getUserCourseProgressData, getUserPaiedCourse, getUserOrders } from '~/models/user'
+import { getUserCheck, getUserAdd, userData, getUserInfo, getUserID, getUserCourseProgressData, getUserPaiedCourse, getUserOrders, getUserUpdate } from '~/models/user'
 
 let router = new Router()
 
 router.prefix('/user')
 // usercheck
 router.get('/userCheck', async ctx => {
-    const nickname = ctx.URL.searchParams.get('nickname')
-    if (nickname) {
-        let ret = await getUserCheck(nickname)
+    const openID = ctx.URL.searchParams.get('openID')
+    if (openID) {
+        let ret = await getUserCheck(openID)
         ctx.body = ret
     } else {
-        ctx.body = { token: '' };
+        ctx.body = 'NO OPENID';
     }
 })
-
-router.post('/userAdd', async ctx => {
-    var userInfo = await ParesPostData(ctx)
+// userupdate
+router.post('/update', async ctx => {
+    interface Info{
+        userdata: userData,
+        user_id:number,
+    }
+    var userInfo= await ParesPostData(ctx)
+   
     if (userInfo) {
-        let ret = await getUserAdd(userInfo as userData)
+        let ret = await getUserUpdate((userInfo as Info).userdata,(userInfo as Info).user_id)
+        // let ret = await getUserAdd(userInfo as userData)
+        ctx.body = ret
+    } else {
+        ctx.body = false;
+    }
+})
+//useradd
+router.post('/add', async ctx => {
+    var userInfo = await ParesPostData(ctx)
+    interface Info{
+        userdata: userData,
+        openID:number,
+    }
+    if (userInfo) {
+        let ret = await getUserAdd((userInfo as Info).userdata,(userInfo as Info).openID)
         ctx.body = ret
     } else {
         ctx.body = false;

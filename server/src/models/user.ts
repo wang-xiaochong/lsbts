@@ -4,8 +4,8 @@ import { UserCourseProgressData, UserCourseTabData, UserData, UserOrderData } fr
 
 // 用户相关
 type Result = boolean
-type Token = {
-    token: string
+type User = {
+    user_id: number;
 }
 
 export type userData = {
@@ -15,27 +15,42 @@ export type userData = {
 }
 
 
-export async function getUserCheck(kw: string): Promise<Token> {
-    let rows = await db.query<{ token: string }>(`
+export async function getUserCheck(kw: string): Promise<User> {
+    let openID = parseInt(kw)
+    let rows = await db.query<{ user_id: number }>(`
     SELECT 
-    token 
-    FROM user_table 
-    WHERE nickname=?
+    user_id
+    FROM qq_user_table 
+    WHERE open_id=?
     `,
         [
-            kw,
+            openID,
         ]
     );
     if (rows.length > 0) {
-        let ret = { token: '' }
-        ret.token = rows[0].token
-        return ret
+        return {user_id:rows[0].user_id}
     }
-    return { token: '' }
+    return {user_id:-1}
 }
 
-export async function getUserAdd(payload: userData): Promise<Result> {
+export async function getUserUpdate(payload: userData,user_id:number): Promise<Result> {
     let ret = await db.execute(`
+    UPDATE user_table
+    SET nickname=?,avatar=?,token=?
+    WHERE user_id=?
+    `,
+        [
+            payload.nickname, payload.avatar, payload.token,user_id
+        ]
+    );
+    if (ret) {
+        return true
+    }
+    return false
+}
+
+export async function getUserAdd(payload: userData, openID: number): Promise<Result> {
+    await db.execute(`
     INSERT INTO user_table
     (nickname,avatar,token,qq_unionid,points,currentcy,mobile,address,blocked)
     VALUES 
@@ -43,6 +58,17 @@ export async function getUserAdd(payload: userData): Promise<Result> {
     `,
         [
             payload.nickname, payload.avatar, payload.token
+        ]
+    );
+    let { ID: user_id } = await db.one<{ ID: number }>(`SELECT ID FROM user_table WHERE token=?`, [payload.token]);
+    let ret = await db.execute(`
+    INSERT INTO qq_user_table
+    (user_id,open_id)
+    VALUES 
+    (?,?)
+    `,
+        [
+            user_id, openID
         ]
     );
     if (ret) {
