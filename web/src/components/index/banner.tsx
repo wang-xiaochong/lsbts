@@ -62,7 +62,7 @@ function Banner(props: Props) {
             <div className="img" />
           </div>
           <div className="login">
-            <a className="btn-login" href="https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=101995223&response_type=token&scope=all&redirect_uri=https%3A%2F%2Fxscloud.ltd%3A8989%2Fproxy">登录</a>
+            <a className="btn-login" href="https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=101995223&response_type=token&scope=all&redirect_uri=https%3A%2F%2Fxscloud.ltd%2Fgames">登录</a>
           </div>
         </div>
         

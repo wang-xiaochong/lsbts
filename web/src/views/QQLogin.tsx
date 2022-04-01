@@ -1,7 +1,37 @@
+import axios from "axios";
+import axios2 from '@/libs/axios'
+import React, { useState } from "react";
 
-import { axios, axios2 } from "./axios";
+import { connect, Dispatch, actions, AppState, RootState } from '../store'
 
-var key = 101490224
+
+interface Props {
+    app?: AppState;
+    dispatch: Dispatch;
+}
+
+function QQLogin(props: Props) {
+
+    const [headerVisible, setHeaderVisible] = useState(true)
+    if (props.app?.globalHeaderVisible !== false) props.dispatch(actions.app.setHeaderVisible(false))
+    if (props.app?.globalFooterVisible !== false) props.dispatch(actions.app.setFooterVisible(false))
+    render();
+    
+
+    return (
+        <>
+            <div>
+                Login...
+            </div>
+        </>
+    )
+}
+
+export default connect((state: RootState) => state)(QQLogin)
+
+
+const qqBaseUrl = 'https://graph.qq.com'
+const key = 101995223
 
 async function getQueryVariable() {
     // 返回的access_token是放在hash里面的
@@ -14,11 +44,9 @@ async function getQueryVariable() {
     return (false);
 }
 
-
-
-async function getOpenID(token) {
+async function getOpenID(token: string) {
     if (token) {
-        let ret = await axios(`/oauth2.0/me?access_token=${token}`);
+        let ret = await axios(`${qqBaseUrl}/oauth2.0/me?access_token=${token}`);
         let vars = ret.data.split(":");
         let pair = vars[2].split("\"");
         return pair[1];
@@ -28,15 +56,16 @@ async function getOpenID(token) {
     }
 }
 
-async function getUserInfo(token, id, key) {
+async function getUserInfo(token: string, id: string, key: number) {
     if (id) {
-        let ret = await axios(`/user/get_user_info?access_token=${token}&openid=${id}&oauth_consumer_key=${key}`)
+        let ret = await axios(`${qqBaseUrl}/user/get_user_info?access_token=${token}&openid=${id}&oauth_consumer_key=${key}`)
         return ret.data
     } else {
         console.log('openID is null')
         return
     }
 }
+
 
 function guid() {
     return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -47,8 +76,8 @@ function guid() {
 }
 
 
-
-async function QQLogin(userData) {
+async function QQlogin(userData: any) {
+    console.log(userData);
     let { nickname, figureurl_qq_1 } = userData
     var userdata = {
         nickname,
@@ -67,13 +96,15 @@ async function QQLogin(userData) {
         }
     } else {
         // 更换用户状态
-        return  ret.data.token 
+        return ret.data.token
 
     }
 }
+
+
 var Info = '';
 export async function GetUserInfo() {
-    let token = await getQueryVariable()
+    let token = await getQueryVariable() || ''
     let id = await getOpenID(token)
     Info = await getUserInfo(token, id, key)
     if (Info) {
@@ -86,16 +117,19 @@ export async function GetUserInfo() {
     // return Info
 }
 
+
+
 async function render() {
     let Info = await GetUserInfo();
     if (Info) {
         // 1.查询数据库是否存在该用户 存在更改用户状态 不存在则添加
-        let token = await QQLogin(Info)
+        let token = await QQlogin(Info)
         if (token !== '') {
-            window.location.replace(`http://localhost:8080/?token=${token}`)
+            // window.location.replace(`http://localhost:8080/?token=${token}`)
+            window.location.replace(`/?token=${token}`)
         } else {
             alert('登录失败');
-            window.location.replace(`http://localhost:8080/`);
+            window.location.replace(`/`);
         }
         // setTimeout(() => {
         //     let nickname = document.createElement('h3')
@@ -112,15 +146,4 @@ async function render() {
     }
 }
 
-render();
 
-
-
-
-export var Proxy = <>
-    <div>
-        Logining...
-        {/* <div style={{ display: 'none' }} innerHTML={GetUserInfo()} >Info</div>
-        <div style={{ display: 'none' }} innerHTML={render()}>render</div> */}
-    </div>
-</>

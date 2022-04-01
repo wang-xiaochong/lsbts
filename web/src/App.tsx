@@ -17,6 +17,7 @@ import Alert from "./components/alert";
 import { AppState, RootState, UserState } from "./store";
 import Footer from "./components/footer/footer";
 import Header from "./components/header/header";
+import QQLogin from "./views/QQLogin";
 
 import { connect, Dispatch } from '@/store'
 import * as routers from '@/router'
@@ -47,6 +48,7 @@ import '@/assets/less/my.less'
 
 // 路由
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 
 
 interface Props {
@@ -84,6 +86,7 @@ function App(props: Props) {
                     <Route path={routers.home()} element={<Home />}></Route>
                     <Route path={routers.list()} element={<List />}></Route>
                     <Route path='/course/:id' element={<Course />} ></Route>
+                    <Route path="/games" element={ <QQLogin /> }></Route>
                     {/*<Route path='/video/:sectionID' element={<Video />} ></Route>
                     <Route path={routers.my()} element={<My />}></Route>
                     <Route path={routers.myOrder()} element={<MyOrder />}></Route> */}

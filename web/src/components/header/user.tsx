@@ -30,7 +30,7 @@ function User(props: Props) {
           </a>)
       } */}
 
-      <a href="https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=101995223&response_type=token&scope=all&redirect_uri=https%3A%2F%2Fxscloud.ltd%3A8989%2Fproxy"
+      <a href="https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=101995223&response_type=token&scope=all&redirect_uri=https%3A%2F%2Fxscloud.ltd%2Fgames"
         className="btn" >
         <img
           style={{ width: '10px' }}
