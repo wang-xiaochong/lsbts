@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
 import Dialog from './subscribe/dialog';
 import { Dispatch, actions, UserState, connect, RootState } from '@/store/index'
@@ -12,9 +12,12 @@ function Subscribe(props: Props) {
 
   const cur = props.user?.myCurSubscribe
   const [dialogVisible, setDialogVisible] = useState(false);
+  useEffect(()=>{
   if (!mySubscribe) {
     props.dispatch(actions.user.getMySubscribe())
   }
+  })
+  
 
   if (mySubscribe) {
     if (!mySubscribe?.find(item => item.ID === cur)) {

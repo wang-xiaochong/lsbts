@@ -1,29 +1,22 @@
 nohup: ignoring input
 server start at localhost:7070
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-./start.sh: line 1:  3720 Killed                  node server.js
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
+{"message":"Unknown column 'NaN' in 'where clause'","code":"ER_BAD_FIELD_ERROR","errno":1054,"sql":"SELECT * FROM course_chapter_table WHERE course_id=NaN","sqlState":"42S22","sqlMessage":"Unknown column 'NaN' in 'where clause'"}
