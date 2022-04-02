@@ -73,7 +73,7 @@ function guid() {
     });
 }
 
-
+var token='';
 async function QQlogin(userData: any, openID: string):Promise<boolean> {
     // console.log(userData);
     let { nickname, figureurl_qq } = userData
@@ -88,19 +88,23 @@ async function QQlogin(userData: any, openID: string):Promise<boolean> {
     // 1.查找用户信息
     let ret = await axios2(`/api/user/userCheck?openID=${openID}`)
     // 找到了就更新用户信息
+
     if (ret.data.user_id && ret.data.user_id !== -1) {
+        console.log(ret)
         let user_id = ret.data.user_id;
+        token = userdata.token;
         return await axios2.post(`/api/user/update`, {userdata,user_id});
+        
     } else {
         // 新增用户信息
+        token = userdata.token;
         return  await axios2.post(`/api/user/add`, { userdata, openID });
-    }
-
+        }
 }
 
 
 var Info = '';
-export async function GetUserInfo(): Promise<{ Info: any, id: string } | undefined> {
+async function GetUserInfo(): Promise<{ Info: any, id: string } | undefined> {
     let token = await getQueryVariable() || ''
     let id = await getOpenID(token)
     Info = await getUserInfo(token, id, key)
@@ -121,7 +125,7 @@ async function render() {
         let { Info, id } = ret;
         let loginResult = await QQlogin(Info, id);
         if (loginResult) {
-            //window.location.replace(`/`)
+            window.location.replace(`/?token=${token}`)
         }else {
             alert('登录失败，请刷新重试')
         }
@@ -129,5 +133,3 @@ async function render() {
         alert('登录失败，请刷新重试')
     }
 }
-
-

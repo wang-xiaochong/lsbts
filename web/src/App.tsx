@@ -12,8 +12,8 @@ import Develop from './views/Developing'
 
 
 import Alert from "./components/alert";
-// import querystring from "./libs/querystring";
-// import { getUserData, saveToken, setToken } from "./store/actions/user";
+
+import { getUserData, saveToken, setToken } from "./store/actions/user";
 import { AppState, RootState, UserState } from "./store";
 import Footer from "./components/footer/footer";
 import Header from "./components/header/header";
@@ -21,8 +21,8 @@ import QQLogin from "./views/QQLogin";
 
 import { connect, Dispatch } from '@/store'
 import * as routers from '@/router'
-// import querystring from "./libs/querystring";
-// import { getUserData, saveToken, setToken } from "./store/actions/user";
+import querystring from "./libs/querystring";
+
 
 
 // 公用样式
@@ -60,16 +60,16 @@ interface Props {
 function App(props: Props) {
     const header = props.app?.globalHeaderVisible === undefined ? true : props.app?.globalHeaderVisible;
     const footer = props.app?.globalFooterVisible === undefined ? true : props.app?.globalFooterVisible;;
-    // useEffect(() => {
-    //     const { token } = querystring(['token']);
-    //     if (token) {
-    //         if (props.dispatch) {
-    //             props.dispatch(saveToken({ token }))
-    //             props.dispatch(setToken({ token }))
-    //             window.location.href = '/';
-    //         }
-    //     }
-    // });
+     useEffect(() => {
+        const { token } = querystring(['token']);
+         if (token) {
+            if (props.dispatch) {
+               props.dispatch(saveToken({ token }))
+                props.dispatch(setToken({ token }))
+                window.location.href = '/';
+             }
+         }
+    });
     // useEffect(() => {
     //     const { user } = props
     //     if (user?.token) props.dispatch(getUserData())

@@ -13,6 +13,7 @@ router.prefix('/user')
 // usercheck
 router.get('/userCheck', async ctx => {
     const openID = ctx.URL.searchParams.get('openID')
+    // console.log("openID:",openID)
     if (openID) {
         let ret = await getUserCheck(openID)
         ctx.body = ret
@@ -33,7 +34,6 @@ router.post('/update', async ctx => {
     if(userInfo)
         if(await debounce(String(userInfo.user_id),ctx))  return ;
     
-    console.log('aa')
  
     if (userInfo) {
         let ret = await getUserUpdate(userInfo.userdata,userInfo.user_id)
@@ -50,7 +50,7 @@ router.post('/add', async ctx => {
     // console.log(ip);
      interface Info{
         userdata: userData,
-        openID:number,
+        openID:string,
     }
     var userInfo = (await ParesPostData(ctx)) as Info;
    
@@ -59,7 +59,7 @@ router.post('/add', async ctx => {
     
     
     if (userInfo) {
-        let ret = await getUserAdd((userInfo as Info).userdata,(userInfo as Info).openID)
+        let ret = await getUserAdd(userInfo.userdata,userInfo.openID)
         ctx.body = ret
     } else {
         ctx.body = false;
