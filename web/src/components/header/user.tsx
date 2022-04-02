@@ -1,6 +1,6 @@
 // import axios from "@/libs/axios";
 import { UserData } from "models/user";
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { RootState, UserState, Dispatch, actions } from '@/store/index'
 import { connect } from 'react-redux'
 import * as routers from '../../router'
@@ -13,13 +13,13 @@ interface Props {
 }
 function User(props: Props) {
   let token = props.user?.token;
-  let userInfo: UserData | undefined;
-  if (token) {
-    userInfo = props.user?.userData
-    if (!userInfo) {
+   const[userInfo,setUserInfo] = useState<UserData|undefined>(props.user?.userData)
+  useEffect(()=>{
+    if (token&&!userInfo) {
       props.dispatch(actions.user.getUserData())
+      setUserInfo(props.user?.userData)
     }
-  }
+    },[props.user?.userData])
 
   return (
     <>
@@ -51,5 +51,5 @@ function User(props: Props) {
 }
 
 export default connect((state: RootState) => {
-  return state.user
+  return state
 })(User);

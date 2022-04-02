@@ -97,9 +97,10 @@ export async function getUserInfo(token: string): Promise<UserData | undefined> 
 export async function getUserID(token: string | undefined): Promise<number> {
     if (!token) return 0;
     else {
-        let { ID } = await db.one<{ ID: number }>(
+        let row = await db.one<{ ID: number }>(
             'SELECT ID FROM user_table WHERE token=?', [token]
         );
+        let ID =row.ID;
         if (ID) return ID
         else return 0
     }

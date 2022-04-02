@@ -68,7 +68,7 @@ router.post('/add', async ctx => {
 })
 
 router.get('/getUserInfo', async ctx => {
-    const token = ctx.get('token')
+    const token = ctx.get('token');
     // const token = ctx.URL.searchParams.get('token')
     if (token) {
         let ret = await getUserInfo(token)
@@ -78,7 +78,6 @@ router.get('/getUserInfo', async ctx => {
             ctx.status = 404;
             ctx.body = 'Not Found'
         }
-
     } else {
         ctx.body = '';
     }
