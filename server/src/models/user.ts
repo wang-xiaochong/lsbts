@@ -15,8 +15,7 @@ export type userData = {
 }
 
 
-export async function getUserCheck(kw: string): Promise<User> {
-    let openID = parseInt(kw)
+export async function getUserCheck(openID: string): Promise<User> {
     let rows = await db.query<{ user_id: number }>(`
     SELECT 
     user_id
@@ -49,8 +48,8 @@ export async function getUserUpdate(payload: userData,user_id:number): Promise<R
     return false
 }
 
-export async function getUserAdd(payload: userData, openID: number): Promise<Result> {
-    // console.log(payload,openID);
+export async function getUserAdd(payload: userData, openID: string): Promise<Result> {
+    //console.log(payload,openID);
     let userAddResult = await db.execute(`
     INSERT INTO user_table
     (nickname,avatar,token,qq_unionid,points,currency,mobile,address,blocked)
