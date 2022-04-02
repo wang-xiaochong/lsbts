@@ -24,7 +24,6 @@ export default function* user() {
 
     yield takeEvery(actions.user.getUserData, function* () {
         const { user } = store.getState();
-
         if (user.token && !user.userData) {
             let { data } = yield axios.get(`/api/user/getUserInfo`)
             yield put(actions.user.setUserData(data))

@@ -6,7 +6,7 @@ import Course from './views/Course'
 import NotFound from "./views/NotFound";
 // import Video from "./views/Video";
 // import MyOrder from "./views/MyOrder";
-// import My from "./views/My";
+import My from "./views/My";
 import Develop from './views/Developing'
 
 
@@ -60,15 +60,17 @@ interface Props {
 function App(props: Props) {
     const header = props.app?.globalHeaderVisible === undefined ? true : props.app?.globalHeaderVisible;
     const footer = props.app?.globalFooterVisible === undefined ? true : props.app?.globalFooterVisible;;
-     useEffect(() => {
+    useEffect(() => {
         const { token } = querystring(['token']);
-         if (token) {
+        if (token) {
             if (props.dispatch) {
-               props.dispatch(saveToken({ token }))
+                // localstorage
+                props.dispatch(saveToken({ token }))
+                // userstate
                 props.dispatch(setToken({ token }))
                 window.location.href = '/';
-             }
-         }
+            }
+        }
     });
     // useEffect(() => {
     //     const { user } = props
@@ -86,10 +88,10 @@ function App(props: Props) {
                     <Route path={routers.home()} element={<Home />}></Route>
                     <Route path={routers.list()} element={<List />}></Route>
                     <Route path='/course/:id' element={<Course />} ></Route>
-                    <Route path="/games" element={ <QQLogin /> }></Route>
-                    {/*<Route path='/video/:sectionID' element={<Video />} ></Route>
+                    <Route path="/games" element={<QQLogin />}></Route>
+                    {/* <Route path='/video/:sectionID' element={<Video />} ></Route> */}
                     <Route path={routers.my()} element={<My />}></Route>
-                    <Route path={routers.myOrder()} element={<MyOrder />}></Route> */}
+                    {/* <Route path={routers.myOrder()} element={<MyOrder />}></Route> */}
                     <Route path={routers.develop()} element={<Develop />}></Route>
                     <Route path="*" element={<NotFound />}></Route>
                 </Routes>
