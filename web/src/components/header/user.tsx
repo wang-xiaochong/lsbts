@@ -20,9 +20,9 @@ function User(props: Props) {
    }
    //const[tmp,setTmp] =useState(0);
    //var id:any;
-   if(!props.user?.userData){
-    id = setInterval(()=>{setTmp(tmp+1)},300)
-   }
+   //if(!props.user?.userData){
+    //id = setInterval(()=>{setTmp(tmp+1)},300)
+   //}
 
     useEffect(()=>{
         if (token&&!userInfo) {
