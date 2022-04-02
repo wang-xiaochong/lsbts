@@ -37,7 +37,7 @@ export async function getUserUpdate(payload: userData,user_id:number): Promise<R
     let ret = await db.execute(`
     UPDATE user_table
     SET nickname=?,avatar=?,token=?
-    WHERE user_id=?
+    WHERE ID=?
     `,
         [
             payload.nickname, payload.avatar, payload.token,user_id
@@ -50,9 +50,10 @@ export async function getUserUpdate(payload: userData,user_id:number): Promise<R
 }
 
 export async function getUserAdd(payload: userData, openID: number): Promise<Result> {
-    await db.execute(`
+    // console.log(payload,openID);
+    let userAddResult = await db.execute(`
     INSERT INTO user_table
-    (nickname,avatar,token,qq_unionid,points,currentcy,mobile,address,blocked)
+    (nickname,avatar,token,qq_unionid,points,currency,mobile,address,blocked)
     VALUES 
     (?,?,?,'',0,0,'','',0)
     `,
@@ -60,7 +61,8 @@ export async function getUserAdd(payload: userData, openID: number): Promise<Res
             payload.nickname, payload.avatar, payload.token
         ]
     );
-    let { ID: user_id } = await db.one<{ ID: number }>(`SELECT ID FROM user_table WHERE token=?`, [payload.token]);
+    
+    let { ID: user_id } = (await db.query<{ ID: number }>(`SELECT ID FROM user_table WHERE token=?`, [payload.token]))[0];
     let ret = await db.execute(`
     INSERT INTO qq_user_table
     (user_id,open_id)

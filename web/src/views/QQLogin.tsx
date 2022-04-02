@@ -88,7 +88,7 @@ async function QQlogin(userData: any, openID: string):Promise<boolean> {
     // 1.查找用户信息
     let ret = await axios2(`/api/user/userCheck?openID=${openID}`)
     // 找到了就更新用户信息
-    if (ret.data.user_id !== -1) {
+    if (ret.data.user_id && ret.data.user_id !== -1) {
         let user_id = ret.data.user_id;
         return await axios2.post(`/api/user/update`, {userdata,user_id});
     } else {
@@ -121,7 +121,7 @@ async function render() {
         let { Info, id } = ret;
         let loginResult = await QQlogin(Info, id);
         if (loginResult) {
-            window.location.replace(`/`)
+            //window.location.replace(`/`)
         }else {
             alert('登录失败，请刷新重试')
         }

@@ -10,17 +10,14 @@ export const KEY_APP_TOPICS = 'KEY_APP_TOPICS'
 export const KEY_APP_SITELINK = 'KEY_APP_SITELINK'
 export const KEY_APP_SEARCH_PRE = 'KEY_APP_SEARCH_PRE_'
 export const KEY_COURSE_DETAIL_PRE = 'KEY_COURSE_DETAIL_PRE'
-
-
-
+export const KEY_APP_DEBOUNCE_PRE = 'KEY_APP_DEBOUNCE_PRE'
 
 
 let client = redis.createClient(redisConf)
 
 export const get = promisify(client.get).bind(client);
 export const set = promisify(client.set).bind(client);
-
-
+export const del = promisify(client.del).bind(client);
 
 export async function readCache(key: string): Promise<any> {
     if (enableCache) {
@@ -39,6 +36,15 @@ export async function writeCache(key: string, data: any): Promise<any> {
         let setRedisCache = await set(key, JSON.stringify(data))
         if (!setRedisCache) {
             console.error("SetRedisCache Failed!")
+        }
+    }
+    return undefined
+}
+export async function deleteCache(key: string): Promise<any> {
+    if (enableCache) {
+        let deleteedisCache = await del()
+        if (!deleteedisCache) {
+            console.error("DeleteRedisCache Failed!")
         }
     }
     return undefined

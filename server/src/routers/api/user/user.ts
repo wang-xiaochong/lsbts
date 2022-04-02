@@ -1,10 +1,11 @@
 
 import { SubscribeData } from '@/models/site'
 import Router from '@koa/router'
-import { ParesPostData } from '~/libs/req'
+import { ParesPostData,getClientIP } from '~/libs/req'
 import { getChapters } from '~/models/course/chapter'
 import { getSubscibe, setMySubscribe } from '~/models/subscribe'
 import { getUserCheck, getUserAdd, userData, getUserInfo, getUserID, getUserCourseProgressData, getUserPaiedCourse, getUserOrders, getUserUpdate } from '~/models/user'
+import {debounce,undebounce} from '~/libs/req'
 
 let router = new Router()
 
@@ -21,33 +22,49 @@ router.get('/userCheck', async ctx => {
 })
 // userupdate
 router.post('/update', async ctx => {
+    // const ip = getClientIP(ctx);
+    // console.log(ip);
     interface Info{
         userdata: userData,
         user_id:number,
     }
-    var userInfo= await ParesPostData(ctx)
-   
+     var userInfo = (await ParesPostData(ctx)) as Info;
+     
+    if(userInfo)
+        if(await debounce(String(userInfo.user_id),ctx))  return ;
+    
+    console.log('aa')
+ 
     if (userInfo) {
-        let ret = await getUserUpdate((userInfo as Info).userdata,(userInfo as Info).user_id)
+        let ret = await getUserUpdate(userInfo.userdata,userInfo.user_id)
         // let ret = await getUserAdd(userInfo as userData)
         ctx.body = ret
     } else {
         ctx.body = false;
     }
+    await undebounce(String(userInfo.user_id));
 })
 //useradd
 router.post('/add', async ctx => {
-    var userInfo = await ParesPostData(ctx)
-    interface Info{
+    // const ip = getClientIP(ctx);
+    // console.log(ip);
+     interface Info{
         userdata: userData,
         openID:number,
     }
+    var userInfo = (await ParesPostData(ctx)) as Info;
+   
+    if(userInfo)
+        if(await debounce(String(userInfo.openID),ctx)) return;
+    
+    
     if (userInfo) {
         let ret = await getUserAdd((userInfo as Info).userdata,(userInfo as Info).openID)
         ctx.body = ret
     } else {
         ctx.body = false;
     }
+     await undebounce(String(userInfo.openID));
 })
 
 router.get('/getUserInfo', async ctx => {

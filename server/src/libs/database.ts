@@ -13,7 +13,6 @@ class DataBase {
     private db;
     constructor(db: Mysql.Pool | Mysql.Connection) {
         this.db = db
-
     }
     async query<T>(sql: string, args?: any[]): Promise<T[]> {
         try {
@@ -25,8 +24,12 @@ class DataBase {
         }
     }
     async execute(sql: string, args: any[]) {
-        let res = await this.db.execute(sql, args)
-        return res[0] as any[]
+        try{
+            let res = await this.db.execute(sql, args);
+            return res[0] as any[]
+        }catch(e){
+            console.log(e)
+        }
     }
     async all<T>(table: string, sortField?: string, sortBy?: 'asc' | 'desc'): Promise<T[]> {
         if (sortField) {

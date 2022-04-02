@@ -2,23 +2,22 @@ import Axios from 'axios'
 
 
 let token = '';
+// let lock = false;
 if (typeof (window) != 'undefined') {
     token = localStorage.token || ''
 }
 const axios = Axios.create({
-    baseURL: 'https://82.156.109.119:7070/',
+    baseURL: 'https://xscloud.ltd/',
     // baseURL: 'https://localhost:7070/',
     headers: {
         token: token,
     }
 });
-
-// axios.interceptors.request.use(req => {
-//     // console.log(req)
-//     return req
-// })
+   
 axios.interceptors.response.use(res => {
-    
+    if(res.data === 'Processing'){
+        return { };
+    }
     return res
 }, err => {
     if (err.response) {
