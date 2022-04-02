@@ -29,7 +29,7 @@ let removePending = (config: any) => {
         if (value.url === axios.defaults.baseURL + config.url) { //在当前请求在数组中存在时执行取消函数
             value.f(); //执行取消操作
             //pending.splice(index, 1); //根据具体情况决定是否在这里就把pending去掉
-            console.log(config)
+            
         }
     })
 }
