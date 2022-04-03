@@ -29,7 +29,7 @@ function My(props: Props) {
   }
   const myChapters = props.user.myChapters;
   useEffect(() => {
-    if (myCourseList) {
+    if (myCourseList&&myCourseList.length!==0) {
       let course = myCourseList[courseTabsCur];
       props.dispatch(actions.user.getMyChapters(course.ID))
     }
@@ -92,17 +92,19 @@ function My(props: Props) {
 
 
           <div className="chapter-container">
-            <CourseSummary
+            
+            {/*<CourseSummary
               ClassName='java1班'
               progress={0.1}
-            />
+            />*/}
 
-
+            {myCourseList&&myCourseList.length!==0?(
+            
+            <>
             <div className="current">
               <div className="section-title">当前任务</div>
               {lastChapter ? (<Chapters chapters={[lastChapter]} />) : ''}
             </div>
-
 
             <div className="chapter-list">
               <div className="section-title">
@@ -112,6 +114,14 @@ function My(props: Props) {
               {myChapters ? (<Chapters chapters={myChapters} />) : ''}
 
             </div>
+            </>
+            
+            ):(
+            <div className="current">
+              <div className="section-title">未报课程</div>
+            </div>
+            )}
+
 
 
           </div>

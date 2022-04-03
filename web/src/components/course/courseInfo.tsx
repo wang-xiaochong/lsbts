@@ -18,7 +18,14 @@ function CourseInfo(props: Props) {
     const { course_id, title, price, total_students, recently_students, rank, isRegisted } = props
     const registerCourse = () => {
         if(props.user?.token)
-            props.dispatch(actions.course.registerCourse(course_id))
+        {
+        if(price!==0){
+        alert('付费课程待完善')
+        }else{
+        alert('报名成功')
+        props.dispatch(actions.course.registerCourse(course_id));
+        }
+        }
         else alert('请先登录')
     }
 

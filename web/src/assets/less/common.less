@@ -194,6 +194,8 @@
     .user{
       padding:22px 0;
 
+      position: relative;
+
       .avatar,.nickname {float:left}
 
       .avatar {
@@ -214,6 +216,28 @@
         word-break:keep-all;
         text-overflow: ellipsis;
       }
+      
+      .logout {
+          
+          
+        display:none;
+        position: absolute;
+        left:60%;
+        top:70%;
+        padding: 4px;
+        width: 38px;
+        color: #fff;
+        cursor: pointer;
+        background:#000000;
+        box-shadow:0 0 2px #CCC;
+      }
+      
+       &:hover .logout {
+        display:block;
+      }
+      
+      
+      
     }
   }
 }

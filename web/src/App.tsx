@@ -5,7 +5,7 @@ import List from './views/List'
 import Course from './views/Course'
 import NotFound from "./views/NotFound";
 // import Video from "./views/Video";
-// import MyOrder from "./views/MyOrder";
+import MyOrder from "./views/MyOrder";
 import My from "./views/My";
 import Develop from './views/Developing'
 
@@ -91,7 +91,7 @@ function App(props: Props) {
                     <Route path="/games" element={<QQLogin />}></Route>
                     {/* <Route path='/video/:sectionID' element={<Video />} ></Route> */}
                     <Route path={routers.my()} element={<My />}></Route>
-                    {/* <Route path={routers.myOrder()} element={<MyOrder />}></Route> */}
+                    <Route path={routers.myOrder()} element={<MyOrder />}></Route>
                     <Route path={routers.develop()} element={<Develop />}></Route>
                     <Route path="*" element={<NotFound />}></Route>
                 </Routes>

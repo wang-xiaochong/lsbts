@@ -137,7 +137,7 @@ export async function getUserCourseProgressData(userID: number): Promise<UserCou
 
 // courseTabData
 export async function getUserPaiedCourse(userID: number): Promise<UserCourseTabData[]> {
-    return await db.query<any>(`
+    let rows = await db.query<UserCourseTabData>(`
     SELECT
         course.ID,course.title,course.expires,
         0 AS progress
@@ -147,6 +147,9 @@ export async function getUserPaiedCourse(userID: number): Promise<UserCourseTabD
     WHERE
         pay.status='success' AND pay.user_id=?
     `, [userID])
+
+    const ret:UserCourseTabData[] = rows
+    return ret;
 
 }
 

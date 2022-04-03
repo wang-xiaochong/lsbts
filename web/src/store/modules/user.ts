@@ -26,6 +26,7 @@ export const userReducer = createReducer(
         })
         .addCase(actions.user.clearToken, (state) => {
             let res = { ...state }
+            localStorage.removeItem("token")
             delete res.token;
             return res;
         })

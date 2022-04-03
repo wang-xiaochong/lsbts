@@ -15,6 +15,10 @@ function User(props: Props) {
    const userInfo = props.user?.userData
    const[token,setToken] = useState<string|undefined>(undefined)
    
+   const logout=()=>{
+   props.dispatch(actions.user.clearToken())
+   }
+   
    useEffect(() => {
     if (props.user?.token) setToken(props.user.token)
   })
@@ -30,14 +34,20 @@ function User(props: Props) {
       {/* <span className="btn">登录</span> */}
 
       {userInfo ? (
-        <a href={routers.my()} className="user">
-          <div className="title">
+        <span  className="user">
+        
+          <a className="title" href={routers.my()}>
             <div className="avatar">
               <img src={userInfo.avatar} alt="头像" />
             </div>
             <div className="nickname">{userInfo.nickname}</div>
-          </div>
-        </a>
+          </a>
+          
+          <div className="logout" onClick={ev=>{logout();routers.push(routers.home())}}>退出</div>
+          
+        </span>
+        
+        
       ) : (
         <a href="https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=101995223&response_type=token&scope=all&redirect_uri=https%3A%2F%2Fxscloud.ltd%2Fgames"
           className="btn" >

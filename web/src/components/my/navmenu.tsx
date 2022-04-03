@@ -22,7 +22,6 @@ export default function NavMenu(props: Props) {
   return (
     <div className="nav-menu">
       <ul>
-        <li className="active">课程表</li>
         {menus.map((menu,index) => (
           <li key={index} className={menu.href === window.location.pathname ? 'active' : ''}>
             <a href={menu.href}>{menu.title}</a>
