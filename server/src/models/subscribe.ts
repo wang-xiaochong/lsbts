@@ -19,8 +19,9 @@ interface UserSubscribeRow {
 // 用户已选 (横条)
 export async function getSubscibe(userID: number): Promise<SubscribeData[]> {
 
-    let rows = await db.query('SELECT category_id FROM user_subscribe_table WHERE user_id=?', [userID]) as UserSubscribeRow[]
-    let data = rows[0];
+    let row = await db.one<UserSubscribeRow>('SELECT * FROM user_subscribe_table WHERE user_id=?', [userID])
+    let data = row;
+    console.log('sub data:',data)
     let result: SubscribeData[] = [{ ID: 0, title: '精选推荐' }]
     if (!data) {
         result.push({ ID: 2, title: '前端' }, { ID: 3, title: '后端' }, { ID: 8, title: '面试求职' })
@@ -31,6 +32,7 @@ export async function getSubscibe(userID: number): Promise<SubscribeData[]> {
             result.push(rows[0])
         }
     }
+    console.log('sub res:',result)
     return result
 }
 

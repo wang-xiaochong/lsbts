@@ -12,27 +12,19 @@ interface Props {
   dispatch: Dispatch;
 }
 function User(props: Props) {
-  const [userInfo, setUserInfo] = useState<UserData | undefined>(props.user?.userData)
-  const [token, setToken] = useState<string | undefined>(undefined)
-  
-  if (props.user?.userData) {
-    setUserInfo(props.user?.userData)
-  }
-
-  useEffect(() => {
-    if (token && !userInfo) {
-      props.dispatch(actions.user.getUserData())
-      setUserInfo(props.user?.userData)
-    }
-  }, [token])
-
-  useEffect(() => {
+   const userInfo = props.user?.userData
+   const[token,setToken] = useState<string|undefined>(undefined)
+   
+   useEffect(() => {
     if (props.user?.token) setToken(props.user.token)
   })
 
-
-
-
+    useEffect(()=>{
+        if (token&&!userInfo) {
+            props.dispatch(actions.user.getUserData())
+        }
+    },[token])
+    
   return (
     <>
       {/* <span className="btn">登录</span> */}

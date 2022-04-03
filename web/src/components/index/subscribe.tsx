@@ -9,15 +9,14 @@ interface Props {
 }
 function Subscribe(props: Props) {
   const mySubscribe = props.user?.mySubscribe
-
   const cur = props.user?.myCurSubscribe
   const [dialogVisible, setDialogVisible] = useState(false);
-  useEffect(()=>{
+
+
   if (!mySubscribe) {
     props.dispatch(actions.user.getMySubscribe())
   }
-  })
-  
+
 
   if (mySubscribe) {
     if (!mySubscribe?.find(item => item.ID === cur)) {
