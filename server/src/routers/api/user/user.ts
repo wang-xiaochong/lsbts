@@ -91,7 +91,7 @@ router.get('/mysubscribe', async ctx => {
 
 router.post('/setMysubscribe', async ctx => {
     let ID = await getUserID(ctx.get('token'))
-    var data = (await ParesPostData(ctx)) as SubscribeData[]
+    var data = (await ParesPostData(ctx)) as SubscribeData[];
     await setMySubscribe(ID, data);
     ctx.body = 'OK'
 

@@ -18,10 +18,8 @@ interface UserSubscribeRow {
 
 // 用户已选 (横条)
 export async function getSubscibe(userID: number): Promise<SubscribeData[]> {
-
     let row = await db.one<UserSubscribeRow>('SELECT * FROM user_subscribe_table WHERE user_id=?', [userID])
     let data = row;
-    console.log('sub data:',data)
     let result: SubscribeData[] = [{ ID: 0, title: '精选推荐' }]
     if (!data) {
         result.push({ ID: 2, title: '前端' }, { ID: 3, title: '后端' }, { ID: 8, title: '面试求职' })
@@ -32,7 +30,6 @@ export async function getSubscibe(userID: number): Promise<SubscribeData[]> {
             result.push(rows[0])
         }
     }
-    console.log('sub res:',result)
     return result
 }
 
@@ -73,8 +70,8 @@ export async function setMySubscribe(userID: number, data: SubscribeData[]): Pro
     }
     // 用户不存在
     {
-        let rows = await db.query('SELECT * FROM user_table WHERE ID=?', [userID]);
-        assert(rows.length === 0, 400, '数据异常请重新登录')
+        let count = await db.one('SELECT * FROM user_table WHERE ID=?', [userID]);
+        assert(!count, 400, '数据异常请重新登录')
     }
     // 数据有问题
     { assert(!(data instanceof Array), 400, '数据异常刷新重试') }
@@ -84,9 +81,9 @@ export async function setMySubscribe(userID: number, data: SubscribeData[]): Pro
         for (let i = 1; i < data.length; i++) {
             category_id.push(data[i].ID)
         }
-        let rows = await db.query<{ ID: number, user_id: number, category_id: Text }>('SELECT * FROM user_subscribe_table WHERE user_id=?', [userID])
+        let row = await db.one<{ ID: number, user_id: number, category_id: Text }>('SELECT * FROM user_subscribe_table WHERE user_id=?', [userID])
         let ret: any;
-        if (rows[0].ID) {
+        if (row) {
             ret = await db.execute(`
     UPDATE  user_subscribe_table
     SET category_id=?

@@ -30,7 +30,7 @@ function Subscribe(props: Props) {
     <>
       <div className="subscribe">
         <div className="page">
-          {/* <ul className="list">
+           <ul className="list">
             {mySubscribe?.map(item => (
               <li
                 key={item.ID}
@@ -40,7 +40,7 @@ function Subscribe(props: Props) {
                 {item.title}
               </li>
             ))}
-          </ul> */}
+          </ul> 
           <div className="btn-container">
             <span className="btn" onClick={ev => setDialogVisible(true)}>添加兴趣</span>
           </div>
