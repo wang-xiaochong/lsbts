@@ -1,6 +1,6 @@
 // import axios from "@/libs/axios";
 import { UserData } from "models/user";
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { RootState, UserState, Dispatch, actions } from '@/store/index'
 import { connect } from 'react-redux'
 import * as routers from '../../router'
@@ -12,41 +12,26 @@ interface Props {
   dispatch: Dispatch;
 }
 function User(props: Props) {
-   const[userInfo,setUserInfo] = useState<UserData|undefined>(props.user?.userData)
-   
-   const[token,setToken] = useState<string|undefined>(undefined)
-   if(props.user?.userData){
-   setUserInfo(props.user?.userData)
-   }
-   //const[tmp,setTmp] =useState(0);
-   //var id:any;
-   //if(!props.user?.userData){
-    //id = setInterval(()=>{setTmp(tmp+1)},300)
-   //}
-
-    useEffect(()=>{
-        if (token&&!userInfo) {
-            props.dispatch(actions.user.getUserData())
-            
-            setUserInfo(props.user?.userData)
-        }
-    },[token])
-    
-     //useEffect(()=>{
-     //   clearInterval(id)
-     //   if (props.user?.userData) {
-     //   setUserInfo(props.user?.userData)
-    //    }
-   // },[tmp])
-    
-    
-   useEffect(()=>{
-    //console.log(props.user?.userData);
-   if(props.user?.token)setToken(props.user.token)
-   })
-   
-   
+  const [userInfo, setUserInfo] = useState<UserData | undefined>(props.user?.userData)
+  const [token, setToken] = useState<string | undefined>(undefined)
   
+  if (props.user?.userData) {
+    setUserInfo(props.user?.userData)
+  }
+
+  useEffect(() => {
+    if (token && !userInfo) {
+      props.dispatch(actions.user.getUserData())
+      setUserInfo(props.user?.userData)
+    }
+  }, [token])
+
+  useEffect(() => {
+    if (props.user?.token) setToken(props.user.token)
+  })
+
+
+
 
   return (
     <>
