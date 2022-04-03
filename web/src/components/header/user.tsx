@@ -12,36 +12,17 @@ interface Props {
   dispatch: Dispatch;
 }
 function User(props: Props) {
-   const[userInfo,setUserInfo] = useState<UserData|undefined>(props.user?.userData)
-   
+   const userInfo = props.user?.userData
    const[token,setToken] = useState<string|undefined>(undefined)
-   if(props.user?.userData){
-   setUserInfo(props.user?.userData)
-   }
-   //const[tmp,setTmp] =useState(0);
-   //var id:any;
-   //if(!props.user?.userData){
-    //id = setInterval(()=>{setTmp(tmp+1)},300)
-   //}
-
+   
     useEffect(()=>{
         if (token&&!userInfo) {
             props.dispatch(actions.user.getUserData())
-            
-            setUserInfo(props.user?.userData)
         }
     },[token])
     
-     //useEffect(()=>{
-     //   clearInterval(id)
-     //   if (props.user?.userData) {
-     //   setUserInfo(props.user?.userData)
-    //    }
-   // },[tmp])
-    
     
    useEffect(()=>{
-    //console.log(props.user?.userData);
    if(props.user?.token)setToken(props.user.token)
    })
    
