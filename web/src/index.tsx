@@ -11,6 +11,7 @@ import { Provider } from 'react-redux'
 import common from '@/libs/common'
 import store from '@/store/store'
 import actions from '@/store/actions/index'
+import 'lib-flexible';
 
 // ReactDOM.render(
 //   <React.StrictMode>
@@ -32,6 +33,7 @@ let render = ReactDOM.render
 // let categories: CategoryData[] = (window as any).categories
 // let appData: AppData = (window as any).appData
 // console.log(categories)
+
 render(
   // <App categories={categories} />,
   <Provider store={store}>

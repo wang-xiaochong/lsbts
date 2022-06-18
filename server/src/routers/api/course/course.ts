@@ -14,7 +14,6 @@ router.get('/index-course-list', async ctx => {
         ctx.body = await getCourseSummaryByCategory(parseInt(category), 1)
     }
 })
-
 router.get('/get-category-options', async ctx => {
     let category = ctx.query.category ? Number(ctx.query.category) : 0;
     let category_level = ctx.query.category_level ? Number(ctx.query.category_level) : 0;
@@ -23,12 +22,10 @@ router.get('/get-category-options', async ctx => {
     else
         ctx.body = [];
 });
-
 router.post('/search', async ctx => {
     var data = (await ParesPostData(ctx)) as SearchParams
     ctx.body = await searchCourse(data);
 })
-
 //
 router.get('/ad', async ctx => {
     const { type } = ctx.query;
@@ -38,34 +35,27 @@ router.get('/ad', async ctx => {
     ctx.body = { type, data }
 
 })
-
 router.get('/is-registed/:courseID', async ctx => {
     const userID = await getUserID(ctx.get('token'));
     const courseID = Number(ctx.params.courseID);
     ctx.body = await isUserRegisted(courseID, userID)
 })
-
-
-
 router.get('/detail/:courseID', async ctx => {
     const courseID = Number(ctx.params.courseID)
     let data = await getCourseDetail(courseID)
     ctx.body = data
 })
-
 router.get('/video-section/:sectionID', async ctx => {
     const sectionID = Number(ctx.params.sectionID);
     const userID = await getUserID(ctx.get('token'));
     ctx.body = await createVideoLink(sectionID, userID)
 })
-
 router.get('/regist/:courseID', async ctx => {
     const courseID = Number(ctx.params.courseID)
     const userID = await getUserID(ctx.get('token'));
     await registerCourse(courseID, userID);
     ctx.body = 'ok';
 })
-
 router.get('/add-progress/:sectionID', async ctx => {
     const sectionID = Number(ctx.params.sectionID);
     const userID = await getUserID(ctx.get('token'));

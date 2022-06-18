@@ -11,8 +11,9 @@ if (typeof (window) != 'undefined') {
     token = localStorage.token || ''
 }
 const axios = Axios.create({
-    baseURL: 'https://xscloud.ltd/',
+    // baseURL: 'https://xscloud.ltd/',
     // baseURL: 'https://localhost:7070/',
+    baseURL: 'http://localhost:7070/',
     headers: {
         token: token,
     }

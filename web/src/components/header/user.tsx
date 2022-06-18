@@ -32,22 +32,16 @@ function User(props: Props) {
   return (
     <>
       {/* <span className="btn">登录</span> */}
-
       {userInfo ? (
         <span  className="user">
-        
           <a className="title" href={routers.my()}>
             <div className="avatar">
               <img src={userInfo.avatar} alt="头像" />
             </div>
             <div className="nickname">{userInfo.nickname}</div>
           </a>
-          
           <div className="logout" onClick={ev=>{logout();routers.push(routers.home())}}>退出</div>
-          
         </span>
-        
-        
       ) : (
         <a href="https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=101995223&response_type=token&scope=all&redirect_uri=https%3A%2F%2Fxscloud.ltd%2Fgames"
           className="btn" >
@@ -58,8 +52,6 @@ function User(props: Props) {
           登录
         </a>
       )}
-
-
     </>
   )
 }

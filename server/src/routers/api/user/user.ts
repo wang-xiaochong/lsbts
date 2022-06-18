@@ -6,9 +6,7 @@ import { getChapters } from '~/models/course/chapter'
 import { getSubscibe, setMySubscribe } from '~/models/subscribe'
 import { getUserCheck, getUserAdd, userData, getUserInfo, getUserID, getUserCourseProgressData, getUserPaiedCourse, getUserOrders, getUserUpdate } from '~/models/user'
 import {debounce,undebounce} from '~/libs/req'
-
 let router = new Router()
-
 router.prefix('/user')
 // usercheck
 router.get('/userCheck', async ctx => {
@@ -66,7 +64,6 @@ router.post('/add', async ctx => {
     }
      await undebounce(String(userInfo.openID));
 })
-
 router.get('/getUserInfo', async ctx => {
     const token = ctx.get('token');
     // const token = ctx.URL.searchParams.get('token')
@@ -82,13 +79,11 @@ router.get('/getUserInfo', async ctx => {
         ctx.body = '';
     }
 })
-
 router.get('/mysubscribe', async ctx => {
     let ID = await getUserID(ctx.get('token'))
     ctx.body = await getSubscibe(ID);
 
 })
-
 router.post('/setMysubscribe', async ctx => {
     let ID = await getUserID(ctx.get('token'))
     var data = (await ParesPostData(ctx)) as SubscribeData[];
@@ -96,7 +91,6 @@ router.post('/setMysubscribe', async ctx => {
     ctx.body = 'OK'
 
 })
-
 router.get('/my-progress-info', async ctx => {
     let ID = await getUserID(ctx.get('token'));
     ctx.body = await getUserCourseProgressData(ID);
@@ -105,13 +99,11 @@ router.get('/my-course-list', async ctx => {
     let ID = await getUserID(ctx.get('token'));
     ctx.body = await getUserPaiedCourse(ID);
 })
-
 router.get('/chapters/:courseID', async ctx => {
     let ID = await getUserID(ctx.get('token'));
     let courseID = Number(ctx.params.courseID)
     ctx.body = await getChapters(courseID, ID)
 })
-
 router.get('/my-orders', async ctx => {
     let ID = await getUserID(ctx.get('token'));
     ctx.body = await getUserOrders(ID)

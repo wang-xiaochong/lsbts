@@ -1,15 +1,11 @@
 import axios from "axios";
 import axios2 from '@/libs/axios'
 import React, { useState } from "react";
-
 import { connect, Dispatch, actions, AppState, RootState } from '../store'
-
-
 interface Props {
     app?: AppState;
     dispatch: Dispatch;
 }
-
 function QQLogin(props: Props) {
 
     const [headerVisible, setHeaderVisible] = useState(true)
@@ -26,11 +22,8 @@ function QQLogin(props: Props) {
         </>
     )
 }
-
 export default connect((state: RootState) => state)(QQLogin)
-
 const key = 101995223
-
 async function getQueryVariable() {
     // 返回的access_token是放在hash里面的
     let query = window.location.hash.substring(1) + '';
@@ -41,7 +34,6 @@ async function getQueryVariable() {
     }
     return (false);
 }
-
 async function getOpenID(token: string) {
     if (token) {
         let ret = await axios(`/oauth2.0/me?access_token=${token}`);
@@ -53,7 +45,6 @@ async function getOpenID(token: string) {
         return
     }
 }
-
 async function getUserInfo(token: string, id: string, key: number) {
     if (id) {
         let ret = await axios(`/user/get_user_info?access_token=${token}&openid=${id}&oauth_consumer_key=${key}`)
@@ -63,8 +54,6 @@ async function getUserInfo(token: string, id: string, key: number) {
         return
     }
 }
-
-
 function guid() {
     return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         var r = Math.random() * 16 | 0,
@@ -72,7 +61,6 @@ function guid() {
         return v.toString(16);
     });
 }
-
 var token='';
 async function QQlogin(userData: any, openID: string):Promise<boolean> {
     // console.log(userData);
@@ -101,8 +89,6 @@ async function QQlogin(userData: any, openID: string):Promise<boolean> {
         return  await axios2.post(`/api/user/add`, { userdata, openID });
         }
 }
-
-
 var Info = '';
 async function GetUserInfo(): Promise<{ Info: any, id: string } | undefined> {
     let token = await getQueryVariable() || ''
@@ -117,8 +103,6 @@ async function GetUserInfo(): Promise<{ Info: any, id: string } | undefined> {
     // console.log(Info)
     // return Info
 }
-
-
 async function render() {
     let ret = await GetUserInfo();
     if (ret) {
