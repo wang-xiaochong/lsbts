@@ -63,15 +63,12 @@ function My(props: Props) {
   return (
     < div className="main-container" >
       <div className="main-content">
-
         <div className="left">
           <NavMenu />
           <CommonLeft />
         </div>
-
         <div className="right">
           <h3 className="c-title">课程表</h3>
-
           {myProgressInfo ? (
             <UserInfo
               points={myProgressInfo.points}
@@ -80,8 +77,6 @@ function My(props: Props) {
               pointRank={myProgressInfo.todayCourseRank}
             />
           ) : ''}
-
-
           {myCourseList ? (
             <CourseTabs
               items={myCourseList}
@@ -89,41 +84,30 @@ function My(props: Props) {
               onChange={index => setCourseTabsCur(index)}
             />
           ) : ''}
-
-
           <div className="chapter-container">
-            
             {/*<CourseSummary
               ClassName='java1班'
               progress={0.1}
             />*/}
-
             {myCourseList&&myCourseList.length!==0?(
-            
             <>
             <div className="current">
               <div className="section-title">当前任务</div>
               {lastChapter ? (<Chapters chapters={[lastChapter]} />) : ''}
             </div>
-
             <div className="chapter-list">
               <div className="section-title">
                 全部任务
                 {sectionCount ? (<span className="sm">(共{sectionCount}节)</span>) : ''}
               </div>
               {myChapters ? (<Chapters chapters={myChapters} />) : ''}
-
             </div>
             </>
-            
             ):(
             <div className="current">
               <div className="section-title">未报课程</div>
             </div>
             )}
-
-
-
           </div>
         </div>
       </div>

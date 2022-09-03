@@ -75,16 +75,13 @@ function List(props: Props) {
         <>
             <div className="main-container page">
                 <div className="left">
-
                     {keyword ? (
                         <Keyword
                             kw={keyword} total={searchCourseResult?.total || 0}
                             onClearKw={() => { props.dispatch(actions.app.setSearchBarKw('')) }}
                         />
                     ) : ''}
-
                     <SiteFootPoint />
-
                     {/* coursecategories */}
                     {
                         categoryDatas?.map(item => (
@@ -98,11 +95,8 @@ function List(props: Props) {
                             />
                         ))
                     }
-
                     <CourseFilter data={filter} onChange={options => setFilter(options)} />
-
                     <CourseList data={searchCourseResult?.data} />
-
                     <Pagination
                         cur={page}
                         total={searchCourseResult?.total || 0}
@@ -110,16 +104,12 @@ function List(props: Props) {
                         onChange={value => setPage(value)}
                     />
                 </div>
-
                 <div className="right">
                     <AdAside items={rightAdList || []} />
                 </div>
-
             </div>
-
             <HotTopic />
         </>
-
     );
 }
 
